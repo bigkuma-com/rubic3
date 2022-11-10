@@ -1,3 +1,21 @@
+// html,
+// body {
+//   scroll-behavior: smooth;
+// }
+
+// html,
+// body {
+//   height: 100vh;
+//   overflow: hidden;
+// }
+
+.homepage {
+  overflow-y: scroll;
+  height: 100vh;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+
 .page1 {
   .swiper {
     position: relative;

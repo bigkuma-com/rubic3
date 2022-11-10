@@ -7,12 +7,12 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import LandingImage1 from "../../assets/images/Homepage Background 1.webp";
 import LandingImage2 from "../../assets/images/Monkey-Express_Portfolio-Website-scaled.webp";
 import LandingImage3 from "../../assets/images/Pegadaian-Web-template-thumbnail-scaled.webp";
-import { marginX, marginY } from "../../utils/consts";
+import { animateBottomToTop, marginX, marginY } from "../../utils/consts";
 import BoxMotion from "../BoxMotion";
 
-export default function Page1() {
+export default function Section1() {
   return (
-    <Box bg="black">
+    <Box bg="black" scrollSnapAlign="start">
       <BoxMotion
         h="100vh"
         position="relative"
@@ -37,18 +37,22 @@ export default function Page1() {
           {landingImages.map(({ image, title, subtitle }, i) => {
             return (
               <SwiperSlide key={i}>
-                <Box
+                <BoxMotion
                   position="fixed"
                   bottom={marginY}
                   left={marginX}
-                  zIndex={1}
+                  zIndex={1000}
                   color="white"
+                  variants={animateBottomToTop}
+                  initial="initial"
+                  animate="animate"
+                  exit="exit"
                 >
-                  <Text textDecoration="underline">{title} </Text>
+                  <Text textDecoration="underline">{title}</Text>
                   <Text fontSize="small" color="whiteAlpha.700">
                     {subtitle}
                   </Text>
-                </Box>
+                </BoxMotion>
                 <Image
                   src={image}
                   alt={`landing image ${i + 1}`}

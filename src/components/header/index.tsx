@@ -2,7 +2,7 @@ import { Box } from "@chakra-ui/react";
 import Image from "next/image";
 import { useRef, useState } from "react";
 import LogoGroup from "../../assets/svg/rubicube_group.svg";
-import { marginX, marginY } from "../../utils/consts";
+import { animateTopToBottom, marginX, marginY } from "../../utils/consts";
 import { useDimensions } from "../../utils/hooks";
 import BoxMotion from "../BoxMotion";
 import MenuToggle from "./MenuToggle";
@@ -25,7 +25,7 @@ export default function Header() {
       px={marginX}
       pt={marginY}
       zIndex={1000}
-      variants={variants}
+      variants={animateTopToBottom}
       initial="initial"
       animate="animate"
       exit="exit"
@@ -49,23 +49,3 @@ export default function Header() {
     </BoxMotion>
   );
 }
-
-const variants = {
-  initial: { y: -50, opacity: 0 },
-  animate: {
-    y: 0,
-    opacity: 1,
-    transition: {
-      duration: 1,
-      ease: "easeInOut",
-    },
-  },
-  exit: {
-    y: -50,
-    opacity: 0,
-    transition: {
-      duration: 1,
-      ease: "easeInOut",
-    },
-  },
-};
