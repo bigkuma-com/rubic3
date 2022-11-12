@@ -12,7 +12,7 @@ import BoxMotion from "../BoxMotion";
 
 export default function Section1() {
   return (
-    <Box bg="black" scrollSnapAlign="start">
+    <Box bg="dark">
       <BoxMotion
         h="100vh"
         position="relative"

@@ -5,8 +5,10 @@ import SocialButtons from "./SocialButtons";
 
 export default function Footer({
   isHomepage = false,
+  isShowing = true,
 }: {
   isHomepage?: boolean;
+  isShowing?: boolean;
 }) {
   const [scrollPosition, setScrollPosition] = useState(0);
 
@@ -23,10 +25,14 @@ export default function Footer({
     };
   }, []);
 
+  console.log("scroll pos : ", scrollPosition);
+
   return (
     <>
       <AnimatePresence>
-        {(scrollPosition > 400 || !isHomepage) && <Copyright key="copyright" />}
+        {(scrollPosition > 400 || !isHomepage || isShowing) && (
+          <Copyright key="copyright" />
+        )}
       </AnimatePresence>
       <SocialButtons />
     </>
