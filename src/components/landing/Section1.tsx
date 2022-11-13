@@ -12,7 +12,7 @@ import BoxMotion from "../BoxMotion";
 
 export default function Section1() {
   return (
-    <Box bg="dark">
+    <Box bg="dark" zIndex={40}>
       <BoxMotion
         h="100vh"
         position="relative"

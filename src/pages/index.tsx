@@ -19,7 +19,7 @@ export default function Home() {
       createScrollSnap(element, {
         snapDestinationY: "100%",
         snapStop: true,
-        threshold: 0,
+        threshold: 0.1,
         // timeout: 300,
         // duration: 200,
         // easing: function easeInOutCubic(x: number): number {
@@ -54,7 +54,7 @@ export default function Home() {
       </Box>
       <Box
         position="fixed"
-        zIndex={10}
+        zIndex={50}
         right={marginX}
         top="50%"
         transform="translateY(-50%)"
@@ -71,6 +71,7 @@ export default function Home() {
           / 04
         </Text>
       </Box>
+
       <Footer isHomepage isShowing={scrollPosition > 400} />
     </HomeContext.Provider>
   );
