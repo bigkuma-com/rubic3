@@ -74,7 +74,7 @@ export default function Home() {
           onSlideChange={(swiper) => {
             setSection(swiper.realIndex);
           }}
-          initialSlide={2}
+          // initialSlide={0}
         >
           <SwiperSlide>
             <Section1 />

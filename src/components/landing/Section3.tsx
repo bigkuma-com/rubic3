@@ -10,8 +10,6 @@ export default function Section3() {
   const { section } = useContext(HomeContext);
   const [menuHover, setMenuHover] = useState(-1);
 
-  console.log("kontol:", menuHover);
-
   return (
     <Box
       h="100vh"
