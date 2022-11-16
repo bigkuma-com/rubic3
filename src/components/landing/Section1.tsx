@@ -7,18 +7,23 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import LandingImage1 from "../../assets/images/Homepage Background 1.webp";
 import LandingImage2 from "../../assets/images/Monkey-Express_Portfolio-Website-scaled.webp";
 import LandingImage3 from "../../assets/images/Pegadaian-Web-template-thumbnail-scaled.webp";
-import { animateBottomToTop, marginX, marginY } from "../../utils/consts";
+import {
+  animateBottomToTop,
+  animateOpacity,
+  marginX,
+  marginY,
+} from "../../utils/consts";
 import BoxMotion from "../BoxMotion";
 
 export default function Section1() {
   return (
-    <Box bg="dark" zIndex={40}>
+    <Box bg="dark">
       <BoxMotion
         h="100vh"
         position="relative"
         w="full"
         className="page1"
-        variants={variants}
+        variants={animateOpacity}
         initial="initial"
         animate="animate"
         exit="exit"
@@ -48,8 +53,17 @@ export default function Section1() {
                   animate="animate"
                   exit="exit"
                 >
-                  <Text textDecoration="underline">{title}</Text>
-                  <Text fontSize="small" color="whiteAlpha.700">
+                  <Text
+                    textDecoration="underline"
+                    className="swiper-no-swiping"
+                  >
+                    {title}
+                  </Text>
+                  <Text
+                    fontSize="small"
+                    color="whiteAlpha.700"
+                    className="swiper-no-swiping"
+                  >
                     {subtitle}
                   </Text>
                 </BoxMotion>
@@ -89,21 +103,3 @@ const landingImages = [
     image: LandingImage3,
   },
 ];
-
-const variants = {
-  initial: { opacity: 0 },
-  animate: {
-    opacity: 1,
-    transition: {
-      duration: 1,
-      ease: "easeInOut",
-    },
-  },
-  exit: {
-    opacity: 0,
-    transition: {
-      duration: 1,
-      ease: "easeInOut",
-    },
-  },
-};

@@ -8,6 +8,9 @@ const theme = extendTheme({
   colors: {
     dark: "#141314",
   },
+  components: {
+    Button: {},
+  },
 });
 
 export default theme;

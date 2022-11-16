@@ -1,26 +1,25 @@
-export default function ArrowRightSm() {
+export default function IconPlus() {
   return (
     <svg
-      width="15"
-      height="11"
-      viewBox="0 0 15 11"
+      width="10"
+      height="10"
+      viewBox="0 0 10 10"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
-        d="M0.550049 5.52979H13.7401"
+        d="M0 5H10"
         stroke="currentColor"
-        strokeWidth="0.6"
+        strokeWidth="0.474"
         strokeMiterlimit="10"
         strokeLinecap="round"
       />
       <path
-        d="M8.55005 10.61L13.7401 5.52995L8.55005 0.459961"
+        d="M5 0V10"
         stroke="currentColor"
-        strokeWidth="0.6"
+        strokeWidth="0.474"
         strokeMiterlimit="10"
         strokeLinecap="round"
-        strokeLinejoin="round"
       />
     </svg>
   );

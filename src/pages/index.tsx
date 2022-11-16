@@ -1,11 +1,15 @@
-import { Box, Text } from "@chakra-ui/react";
-import { useEffect, useRef, useState } from "react";
-import createScrollSnap from "scroll-snap";
+import { Box } from "@chakra-ui/react";
+import { useRef, useState } from "react";
+import { Mousewheel } from "swiper";
+import "swiper/css";
+import { Swiper, SwiperSlide } from "swiper/react";
 import Footer from "../components/footer";
 import Header from "../components/header";
+import HomePagination from "../components/landing/HomePagination";
 import Section1 from "../components/landing/Section1";
 import Section2 from "../components/landing/Section2";
-import { marginX } from "../utils/consts";
+import Section3 from "../components/landing/Section3";
+import Section4 from "../components/landing/Section4";
 import { HomeContext } from "../utils/hooks";
 
 export default function Home() {
@@ -13,26 +17,28 @@ export default function Home() {
   const [scrollPosition, setScrollPosition] = useState(0);
   const homepageRef = useRef<any>(null);
 
-  useEffect(() => {
-    if (homepageRef?.current) {
-      const element = homepageRef.current;
-      createScrollSnap(element, {
-        snapDestinationY: "100%",
-        snapStop: true,
-        threshold: 0.1,
-        // timeout: 300,
-        // duration: 200,
-        // easing: function easeInOutCubic(x: number): number {
-        //   return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
-        // },
-      });
-    }
-  });
+  // useEffect(() => {
+  //   if (homepageRef?.current) {
+  //     const element = homepageRef.current;
+  //     createScrollSnap(element, {
+  //       snapDestinationY: "100vh",
+  //       snapStop: true,
+  //       threshold: 0.3,
+  //       timeout: 600,
+  //       duration: 100,
+  //       easing: function easeInOutCubic(x: number): number {
+  //         return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+  //       },
+  //     });
+  //   }
+  // });
+
+  console.log(section);
 
   return (
     <HomeContext.Provider value={{ section, setSection }}>
       <Header />
-      <Box
+      {/* <Box
         h="100vh"
         position="absolute"
         top={0}
@@ -47,30 +53,45 @@ export default function Home() {
           );
         }}
       >
-        <Section1 />
+        <Section3 />
         <Section2 />
+        <Section1 />
         <Box h="100vh" bg="purple.900"></Box>
         <Box h="100vh" bg="pink.900"></Box>
-      </Box>
-      <Box
-        position="fixed"
-        zIndex={50}
-        right={marginX}
-        top="50%"
-        transform="translateY(-50%)"
-      >
-        <Text
-          as="span"
-          letterSpacing="widest"
-          fontSize="small"
-          color="whiteAlpha.700"
+      </Box> */}
+
+      {/* <Section1 />
+      <Section2 />
+      <Section3 /> */}
+
+      <Box w="full" h="100vh">
+        <Swiper
+          direction={"vertical"}
+          mousewheel={true}
+          modules={[Mousewheel]}
+          className="mySwiper"
+          simulateTouch={false}
+          onSlideChange={(swiper) => {
+            setSection(swiper.realIndex);
+          }}
+          initialSlide={2}
         >
-          <Text as="span" color="white">
-            0{section + 1}
-          </Text>{" "}
-          / 04
-        </Text>
+          <SwiperSlide>
+            <Section1 />
+          </SwiperSlide>
+          <SwiperSlide>
+            <Section2 />
+          </SwiperSlide>
+          <SwiperSlide>
+            <Section3 />
+          </SwiperSlide>
+          <SwiperSlide>
+            <Section4 />
+          </SwiperSlide>
+        </Swiper>
       </Box>
+
+      <HomePagination section={section} />
 
       <Footer isHomepage isShowing={scrollPosition > 400} />
     </HomeContext.Provider>

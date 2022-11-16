@@ -34,7 +34,7 @@ export default function SocialButtons() {
         {socials.map(({ image, url }, i) => {
           return (
             <Box
-              className="social-buttons"
+              className="animate-fade"
               key={i}
               position="relative"
               w="24px"
