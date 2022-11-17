@@ -50,6 +50,7 @@ export default function RunningText({ text }: { text: any }) {
             whiteSpace="nowrap"
             w="full"
             letterSpacing="wide"
+            userSelect="none"
           >
             {text}
           </Text>
@@ -101,6 +102,7 @@ export default function RunningText({ text }: { text: any }) {
             whiteSpace="nowrap"
             w="full"
             letterSpacing="wide"
+            userSelect="none"
           >
             {text}
           </Text>
