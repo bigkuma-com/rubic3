@@ -25,8 +25,6 @@ export default function Footer({
     };
   }, []);
 
-  console.log("scroll pos : ", scrollPosition);
-
   return (
     <>
       <AnimatePresence>

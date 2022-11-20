@@ -16,7 +16,7 @@ export default function SocialButtons() {
       position="fixed"
       bottom={marginY}
       right={marginX}
-      zIndex={1000}
+      zIndex={500}
       variants={animateBottomToTop}
       initial="initial"
       animate="animate"

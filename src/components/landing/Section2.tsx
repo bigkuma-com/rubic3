@@ -58,7 +58,7 @@ export default function Section2() {
       <RunningText
         text={
           <span>
-            Advso<span style={{ color: "white" }}>r</span>
+            Adviso<span style={{ color: "white" }}>r</span>
           </span>
         }
       />

@@ -8,7 +8,7 @@ export default function Copyright() {
       position="fixed"
       bottom={marginY}
       left={marginX}
-      zIndex={1000}
+      zIndex={500}
       variants={animateBottomToTop}
       initial="initial"
       animate="animate"

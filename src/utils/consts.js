@@ -19,6 +19,7 @@ export const animateBottomToTop = {
     },
   },
 };
+
 export const animateTopToBottom = {
   initial: { y: -50, opacity: 0 },
   animate: {
@@ -38,6 +39,7 @@ export const animateTopToBottom = {
     },
   },
 };
+
 export const animateRightLeft = {
   initial: { x: 50, opacity: 0 },
   animate: {
@@ -57,6 +59,27 @@ export const animateRightLeft = {
     },
   },
 };
+
+export const animateRightLeftHalf = {
+  initial: { x: 10, opacity: 0 },
+  animate: {
+    x: 0,
+    opacity: 1,
+    transition: {
+      duration: 0.2,
+      ease: "easeInOut",
+    },
+  },
+  exit: {
+    x: 10,
+    opacity: 0,
+    transition: {
+      duration: 0.1,
+      ease: "easeInOut",
+    },
+  },
+};
+
 export const animateOpacity = {
   initial: { opacity: 0 },
   animate: {
@@ -70,6 +93,46 @@ export const animateOpacity = {
     opacity: 0,
     transition: {
       duration: 1,
+      ease: "easeInOut",
+    },
+  },
+};
+export const animateOpacityHalf = {
+  initial: { opacity: 0 },
+  animate: {
+    opacity: 1,
+    transition: {
+      duration: 0.5,
+      ease: "easeInOut",
+    },
+  },
+  exit: {
+    opacity: 0,
+    transition: {
+      duration: 0.5,
+      ease: "easeInOut",
+    },
+  },
+};
+
+export const animateDiagonalTopRight = {
+  initial: {
+    x: "100%",
+    y: "-100%",
+  },
+  animate: {
+    x: "0%",
+    y: "0%",
+    transition: {
+      duration: 0.5,
+      ease: "easeInOut",
+    },
+  },
+  exit: {
+    x: "100%",
+    y: "-100%",
+    transition: {
+      duration: 0.5,
       ease: "easeInOut",
     },
   },
