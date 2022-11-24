@@ -18,9 +18,6 @@ export default function Works() {
     setMousePosition({ left: ev.pageX, top: ev.pageY });
   }
 
-  console.log("kontol", wrapperDimensions, boxDimensions);
-  console.log(mousePosition);
-
   function onPan(event: any, info: { point: { x: any; y: any } }) {
     console.log(info.point.x, info.point.y);
     console.log("ha", event.pageX, event.pageY);

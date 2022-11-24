@@ -175,17 +175,17 @@ export default function About({
           </SwiperSlide>
           <SwiperSlide>
             <Center h="full">
-              <Heading>kon2</Heading>
+              <Heading>section3</Heading>
             </Center>
           </SwiperSlide>
           <SwiperSlide>
             <Center h="full">
-              <Heading>kon2</Heading>
+              <Heading>section4</Heading>
             </Center>
           </SwiperSlide>
           <SwiperSlide>
             <Center h="full">
-              <Heading>kon2</Heading>
+              <Heading>section5</Heading>
             </Center>
           </SwiperSlide>
         </Swiper>
