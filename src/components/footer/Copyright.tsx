@@ -1,8 +1,13 @@
-import { Box, Text } from "@chakra-ui/react";
-import { animateBottomToTop, marginX, marginY } from "../../utils/consts";
+import { Text } from "@chakra-ui/react";
+import {
+  animateBottomToTop,
+  marginX,
+  marginY,
+  themeColor,
+} from "../../utils/consts";
 import BoxMotion from "../BoxMotion";
 
-export default function Copyright() {
+export default function Copyright({ isLight = true }: { isLight?: boolean }) {
   return (
     <BoxMotion
       position="fixed"
@@ -14,11 +19,20 @@ export default function Copyright() {
       animate="animate"
       exit="exit"
       p={2}
-      color="white"
     >
-      <Box>
-        <Text fontSize="small">©2022 Rubicube Group. All Right Reserved</Text>
-      </Box>
+      <BoxMotion
+        animate={{
+          color: themeColor[+isLight],
+          transition: {
+            duration: 0.2,
+            ease: "easeInOut",
+          },
+        }}
+      >
+        <Text fontSize="small" as="span" color="inherit">
+          ©2022 Rubicube Group. All Right Reserved
+        </Text>
+      </BoxMotion>
     </BoxMotion>
   );
 }

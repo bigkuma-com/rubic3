@@ -1,10 +1,11 @@
-import { Box, Heading, Text } from "@chakra-ui/react";
+import { Box, Heading, Text, useOutsideClick } from "@chakra-ui/react";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import IconArrowRightDark from "../../assets/js/IconArrowRightDark";
+import LogoRubicGroup from "../../assets/js/LogoRubicGroup";
 import IconAdhya from "../../assets/svg/icon-member-of-adhya.svg";
-import LogoGroup from "../../assets/svg/rubicube_group.svg";
 import {
   animateDiagonalTopRight,
   animateOpacityHalf,
@@ -12,18 +13,33 @@ import {
   animateTopToBottom,
   marginX,
   marginY,
+  themeColor,
 } from "../../utils/consts";
 import BoxMotion from "../BoxMotion";
 import MenuToggle from "./MenuToggle";
 
-export default function Header() {
-  const [isNavOpen, setIsNavOpen] = useState(false);
+export default function Header({ isLight = true }: { isLight?: boolean }) {
+  const { push } = useRouter();
+
+  const navRef = useRef<any>(null);
   const containerRef = useRef<any>(null);
+
+  const [isNavOpen, setIsNavOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [navHover, setNavHover] = useState(-1);
 
   useEffect(() => {
     !isNavOpen && setNavHover(-1);
   }, [isNavOpen]);
+
+  useEffect(() => {
+    !isModalOpen && setIsNavOpen(false);
+  }, [isModalOpen]);
+
+  useOutsideClick({
+    ref: navRef,
+    handler: () => setIsModalOpen(false),
+  });
 
   return (
     <BoxMotion
@@ -43,41 +59,54 @@ export default function Header() {
       exit="exit"
       zIndex={1000}
     >
-      <Box w={140} h={45} position="relative">
-        <Image alt="Rubicube Group Logo" src={LogoGroup} fill />
-      </Box>
-      <BoxMotion
-        zIndex={1005}
-        position={`relative`}
-        initial={false}
-        animate={isNavOpen ? "open" : "closed"}
-        ref={containerRef}
-        display="flex"
-        alignItems="center"
-        gap={1}
-      >
-        <AnimatePresence>
-          {isNavOpen && (
-            <Text
-              as={motion.span}
-              fontSize="small"
-              color="dark"
-              variants={animateOpacityHalf}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-            >
-              Close
-            </Text>
-          )}
-        </AnimatePresence>
-        <MenuToggle
-          isNavOpen={isNavOpen}
-          setIsNavOpen={() => {
-            setIsNavOpen(!isNavOpen);
+      <Box position="relative" cursor="pointer" onClick={() => push("/")}>
+        <BoxMotion
+          animate={{
+            color: themeColor[isLight ? 1 : 0],
+            transition: {
+              duration: 0.5,
+              ease: "easeInOut",
+            },
           }}
-        />
-      </BoxMotion>
+        >
+          <LogoRubicGroup />
+        </BoxMotion>
+      </Box>
+      <Box
+        cursor="pointer"
+        onClick={() => {
+          setIsModalOpen(true);
+          setIsNavOpen(!isNavOpen);
+        }}
+      >
+        <BoxMotion
+          zIndex={1005}
+          position={`relative`}
+          initial={false}
+          animate={isNavOpen ? "open" : "closed"}
+          ref={containerRef}
+          display="flex"
+          alignItems="center"
+          gap={1}
+        >
+          <AnimatePresence>
+            {isNavOpen && (
+              <Text
+                as={motion.span}
+                fontSize="small"
+                color="dark"
+                variants={animateOpacityHalf}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+              >
+                Close
+              </Text>
+            )}
+          </AnimatePresence>
+          <MenuToggle isLight={isLight} isNavOpen={isNavOpen} />
+        </BoxMotion>
+      </Box>
       <AnimatePresence>
         {isNavOpen && (
           <BoxMotion
@@ -99,6 +128,7 @@ export default function Header() {
       <AnimatePresence>
         {isNavOpen && (
           <BoxMotion
+            ref={navRef}
             zIndex={1001}
             position="fixed"
             top={0}
@@ -126,7 +156,7 @@ export default function Header() {
                 setNavHover(-1);
               }}
             >
-              {navbarContents.map(({ name }, i) => {
+              {navbarContents.map(({ name, path }, i) => {
                 return (
                   <Heading
                     as="li"
@@ -134,6 +164,7 @@ export default function Header() {
                     fontWeight={500}
                     fontSize="3xl"
                     className="animate-fade"
+                    color="dark"
                     cursor="pointer"
                     _hover={{
                       opacity: navHover === i ? 1 : 0.6,
@@ -142,6 +173,7 @@ export default function Header() {
                     onMouseEnter={() => {
                       setNavHover(i);
                     }}
+                    onClick={() => push(path)}
                     position="relative"
                   >
                     <Box
@@ -188,8 +220,8 @@ export default function Header() {
 }
 
 const navbarContents = [
-  { name: "About" },
-  { name: "Works" },
-  { name: "Services" },
-  { name: "Contact" },
+  { name: "About", path: "/about" },
+  { name: "Works", path: "/works" },
+  { name: "Services", path: "/services" },
+  { name: "Contact", path: "/contact" },
 ];

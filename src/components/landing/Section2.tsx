@@ -1,5 +1,6 @@
 import { Box, Heading, Text } from "@chakra-ui/react";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { useContext } from "react";
 import Section2Image from "../../assets/images/Rubicube Office.webp";
 import { HomeContext } from "../../utils/hooks";
@@ -8,6 +9,7 @@ import Button from "../Button";
 import RunningText from "./Runningtext";
 
 export default function Section2() {
+  const { push } = useRouter();
   const { section } = useContext(HomeContext);
 
   return (
@@ -41,7 +43,7 @@ export default function Section2() {
           deliver transformative business results to become leading brands.
         </Text>
         <Box>
-          <Button text="Discover more" />
+          <Button text="Discover more" onClick={() => push("/about")} />
         </Box>
       </Box>
       <Box w="50%" pr="12%">

@@ -14,12 +14,14 @@ const theme = extendTheme({
       baseStyle: {
         fontWeight: 400,
         letterSpacing: "wide",
+        color: "light",
       },
     },
     Text: {
       baseStyle: {
         fontWeight: 400,
         letterSpacing: "wide",
+        color: "light",
       },
     },
     Divider: {

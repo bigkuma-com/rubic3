@@ -1,14 +1,22 @@
 import { Box } from "@chakra-ui/react";
-import Image from "next/image";
 import { useState } from "react";
-import LogoFB from "../../assets/svg/icon-fb.svg";
-import LogoIG from "../../assets/svg/icon-ig.svg";
-import LogoYT from "../../assets/svg/icon-yt.svg";
-import { animateBottomToTop, marginX, marginY } from "../../utils/consts";
+import IconFacebook from "../../assets/js/IconFacebook";
+import IconInstagram from "../../assets/js/IconInstagram";
+import IconYoutube from "../../assets/js/IconYoutube";
+import {
+  animateBottomToTop,
+  marginX,
+  marginY,
+  themeColor,
+} from "../../utils/consts";
 import { toHTTPS } from "../../utils/functions.js";
 import BoxMotion from "../BoxMotion";
 
-export default function SocialButtons() {
+export default function SocialButtons({
+  isLight = true,
+}: {
+  isLight?: boolean;
+}) {
   const [socialHover, setSocialHover] = useState(-1);
 
   return (
@@ -22,7 +30,6 @@ export default function SocialButtons() {
       animate="animate"
       exit="exit"
       p={2}
-      color="white"
     >
       <Box
         display="flex"
@@ -31,14 +38,11 @@ export default function SocialButtons() {
           setSocialHover(-1);
         }}
       >
-        {socials.map(({ image, url }, i) => {
+        {socials.map(({ icon, url }, i) => {
           return (
             <Box
               className="animate-fade"
               key={i}
-              position="relative"
-              w="24px"
-              h="24px"
               cursor="pointer"
               onClick={() => window.open(toHTTPS(url), "_blank")}
               _hover={{
@@ -49,7 +53,17 @@ export default function SocialButtons() {
                 setSocialHover(i);
               }}
             >
-              <Image alt="" src={image} fill sizes="24px" />
+              <BoxMotion
+                animate={{
+                  color: themeColor[+isLight],
+                  transition: {
+                    duration: 0.2,
+                    ease: "easeInOut",
+                  },
+                }}
+              >
+                {icon}
+              </BoxMotion>
             </Box>
           );
         })}
@@ -59,7 +73,13 @@ export default function SocialButtons() {
 }
 
 const socials = [
-  { image: LogoIG, url: "instagram.com" },
-  { image: LogoFB, url: "fb.com" },
-  { image: LogoYT, url: "youtube.com" },
+  {
+    icon: <IconInstagram />,
+    url: "instagram.com",
+  },
+  {
+    icon: <IconFacebook />,
+    url: "fb.com",
+  },
+  { icon: <IconYoutube />, url: "youtube.com" },
 ];

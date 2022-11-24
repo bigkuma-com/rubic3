@@ -1,8 +1,14 @@
 import { Box } from "@chakra-ui/react";
-import { useState } from "react";
+import { useSize } from "@chakra-ui/react-use-size";
+import { useRef, useState } from "react";
 import BoxMotion from "../components/BoxMotion";
 
 export default function Works() {
+  const boxRef = useRef(null);
+  const wrapperRef = useRef(null);
+  const boxDimensions = useSize(boxRef);
+  const wrapperDimensions = useSize(wrapperRef);
+
   const [mousePosition, setMousePosition] = useState({
     left: 0,
     top: 0,
@@ -12,6 +18,7 @@ export default function Works() {
     setMousePosition({ left: ev.pageX, top: ev.pageY });
   }
 
+  console.log("kontol", wrapperDimensions, boxDimensions);
   console.log(mousePosition);
 
   function onPan(event: any, info: { point: { x: any; y: any } }) {
@@ -19,26 +26,73 @@ export default function Works() {
     console.log("ha", event.pageX, event.pageY);
   }
 
+  // window.onmousemove = (e) => {
+  //   const mouseX = e.clientX,
+  //     mouseY = e.clientY;
+
+  //   const xDecimal = mouseX / window.innerWidth,
+  //     yDecimal = mouseY / window.innerHeight;
+
+  //   const maxX = gallery.offsetWidth - window.innerWidth,
+  //     maxY = gallery.offsetHeight - window.innerHeight;
+
+  //   const panX = maxX * xDecimal * -1,
+  //     panY = maxY * yDecimal * -1;
+
+  //   gallery.animate(
+  //     {
+  //       transform: `translate(${panX}px, ${panY}px)`,
+  //     },
+  //     {
+  //       duration: 4000,
+  //       fill: "forwards",
+  //       easing: "ease",
+  //     }
+  //   );
+  // };
+
   return (
-    <Box h="100vh" w="100vw">
-      <BoxMotion
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-        h="150vh"
-        w="150vw"
-        bg="pink.700"
-        animate={{
-          y: -200,
+    <Box
+      h="100vh"
+      w="100vw"
+      bg="green.600"
+      // overflow="hidden"
+      position="relative"
+      margin={0}
+    >
+      <Box
+        w="full"
+        h="full"
+        ref={wrapperRef}
+        onMouseMove={(ev) => {
+          handleMouseMove(ev);
         }}
-        onPan={onPan}
-        // onMouseMove={(ev) => {
-        //   // console.log(ev.currentTarget.hei)
-        //   handleMouseMove(ev);
-        // }}
       >
-        <Box h="100vh" w="100vw" bg="yellow.500"></Box>
-      </BoxMotion>
+        <BoxMotion
+          position="absolute"
+          // top={0}
+          // left={0}
+          ref={boxRef}
+          w="140vw"
+          h="140vh"
+          display="flex"
+          gap={5}
+          alignItems="center"
+          justifyContent="center"
+          bg="pink.700"
+          initial={
+            {
+              // top: "50%",
+              // y: "-50%",
+              // x: "-50%",
+              // transform: "translate(-50%, -50%)",
+            }
+          }
+        >
+          <Box h="200px" w="200px" bg="yellow.500"></Box>
+          <Box h="200px" w="200px" bg="yellow.500"></Box>
+        </BoxMotion>
+      </Box>
     </Box>
   );
 }

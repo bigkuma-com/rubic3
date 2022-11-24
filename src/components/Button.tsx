@@ -1,9 +1,16 @@
 import { Box } from "@chakra-ui/react";
 import ArrowRightSm from "../assets/js/ArrowRightSm";
 
-export default function Button({ text }: { text: string }) {
+export default function Button({
+  text,
+  onClick,
+}: {
+  text: string;
+  onClick?: any;
+}) {
   return (
     <Box
+      onClick={onClick ?? null}
       as="button"
       height="24px"
       lineHeight="1.2"

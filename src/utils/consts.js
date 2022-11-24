@@ -1,5 +1,11 @@
 export const marginX = [16];
 export const marginY = [12];
+
+export const themeColor = [
+  "var(--chakra-colors-dark)",
+  "var(--chakra-colors-light)",
+];
+
 export const animateBottomToTop = {
   initial: { y: 50, opacity: 0 },
   animate: {
