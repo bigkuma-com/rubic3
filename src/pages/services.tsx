@@ -35,11 +35,12 @@ export default function About({
     const i = sidebarServices.findIndex(
       (item) => item.query === query?.selected
     );
-    if (i > -1) {
+
+    if (i > -1 && swiper?.enabled) {
       slideTo(i);
       setSection(i);
     }
-  }, [query]);
+  }, [query, swiper]);
 
   return (
     <BoxMotion position="relative" display="flex" bg="dark">

@@ -44,11 +44,11 @@ export default function About({
   useEffect(() => {
     const i = sidebarAbout.findIndex((item) => item.query === query?.selected);
 
-    if (i > -1) {
+    if (i > -1 && swiper?.enabled) {
       slideTo(i);
       setSection(i);
     }
-  }, [query]);
+  }, [query, swiper]);
 
   return (
     <BoxMotion
@@ -181,7 +181,6 @@ export default function About({
           direction={"vertical"}
           mousewheel={true}
           modules={[Mousewheel]}
-          className="mySwiper"
           simulateTouch={false}
           onSlideChange={(swiper) => {
             setSection(swiper.realIndex);
