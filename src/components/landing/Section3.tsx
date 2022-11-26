@@ -1,12 +1,15 @@
 import { Box, Divider, Heading, Text } from "@chakra-ui/react";
 import { AnimatePresence, LayoutGroup } from "framer-motion";
+import { useRouter } from "next/router";
 import { useContext, useState } from "react";
 import IconPlus from "../../assets/js/IconPlus";
+import { sidebarServices } from "../../utils/consts";
 import { HomeContext } from "../../utils/hooks";
 import BoxMotion from "../BoxMotion";
 import RunningText from "./Runningtext";
 
 export default function Section3() {
+  const { push } = useRouter();
   const { section } = useContext(HomeContext);
   const [menuHover, setMenuHover] = useState(-1);
 
@@ -44,7 +47,15 @@ export default function Section3() {
               >
                 <Box display="flex" flexDir="column" gap={2}>
                   <BoxMotion layout>
-                    <Heading fontWeight="thin">{title}</Heading>
+                    <Heading
+                      fontWeight="thin"
+                      cursor="pointer"
+                      onClick={() =>
+                        push(`/services?selected=${sidebarServices[i].query}`)
+                      }
+                    >
+                      {title}
+                    </Heading>
                   </BoxMotion>
                   <AnimatePresence>
                     {menuHover === i && (
@@ -84,6 +95,12 @@ export default function Section3() {
                             display="flex"
                             alignItems="center"
                             gap={1}
+                            cursor="pointer"
+                            onClick={() =>
+                              push(
+                                `/services?selected=${sidebarServices[i].query}`
+                              )
+                            }
                           >
                             View more <IconPlus />
                           </Text>

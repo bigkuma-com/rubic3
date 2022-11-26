@@ -1,20 +1,12 @@
-// html,
-// body {
-//   scroll-behavior: smooth;
-// }
-
-// html,
-// body {
-//   height: 100vh;
-//   overflow: hidden;
-// }
-
-// .homepage {
-//   overflow-y: scroll;
-//   height: 100vh;
-//   scroll-snap-type: y mandatory;
-//   scroll-behavior: smooth;
-// }
+* {
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+*::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+  width: 0; /* Remove scrollbar space */
+  background: transparent; /* Optional: just make scrollbar invisible */
+}
 
 .swiper {
   width: 100%;

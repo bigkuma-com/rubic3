@@ -6,6 +6,22 @@ export const themeColor = [
   "var(--chakra-colors-light)",
 ];
 
+export const sidebarAbout = [
+  { name: "Company Overview", query: "overview" },
+  { name: "Clients", query: "clients" },
+  { name: "Leadership", query: "leadership" },
+  { name: "Partners", query: "partners" },
+  { name: "Careers", query: "careers" },
+];
+
+
+export const sidebarServices = [
+  { name: "Rubicube Creative", query: "creative" },
+  { name: "Rubicube Hospitality", query: "hospitality" },
+  { name: "Rubicube Connoisseur", query: "connoisseur" },
+  { name: "Rubicube 360 Digital", query: "360" },
+];
+
 export const animateBottomToTop = {
   initial: { y: 50, opacity: 0 },
   animate: {

@@ -1,20 +1,15 @@
 import { Box, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { Mousewheel } from "swiper";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import ArrowLeftSm from "../assets/js/ArrowLeftSm";
-import Section1 from "../components/about/Section1";
-import Section2 from "../components/about/Section2";
-import Section3 from "../components/about/Section3";
-import Section4 from "../components/about/Section4";
-import Section5 from "../components/about/Section5";
 import BoxMotion from "../components/BoxMotion";
 import Footer from "../components/footer";
 import Header from "../components/header";
+import Section1 from "../components/services/Section1";
 import { getFullList } from "../utils/api";
-import { sidebarAbout, themeColor } from "../utils/consts";
+import { sidebarServices } from "../utils/consts";
 import { arrayChunk } from "../utils/functions";
 
 export default function About({
@@ -33,14 +28,11 @@ export default function About({
   const { push, query, replace } = useRouter();
   const [section, setSection] = useState(0);
   const [swiper, setSwiper] = useState<any>(null);
-  const [isEven, setIsEven] = useState(true);
 
   useEffect(() => {
-    setIsEven(!!(section % 2));
-  }, [section]);
-
-  useEffect(() => {
-    const i = sidebarAbout.findIndex((item) => item.query === query?.selected);
+    const i = sidebarServices.findIndex(
+      (item) => item.query === query?.selected
+    );
     if (i > -1) {
       setSection(i);
     }
@@ -49,26 +41,15 @@ export default function About({
   const slideTo = (index: any) => swiper.slideTo(index);
 
   return (
-    <BoxMotion
-      position="relative"
-      display="flex"
-      initial={{ backgroundColor: themeColor[0] }}
-      animate={{
-        backgroundColor: themeColor[+isEven],
-        transition: {
-          duration: 0.5,
-          ease: "easeInOut",
-        },
-      }}
-    >
-      <Header isLight={!isEven} />
+    <BoxMotion position="relative" display="flex" bg="dark">
+      <Header />
       <Box
         position="fixed"
         top="50%"
         left="5%"
         transform="translate(-50%, -50%)"
         zIndex={50}
-        color={themeColor[+!isEven]}
+        color="light"
       >
         <Box
           display="flex"
@@ -104,7 +85,7 @@ export default function About({
         display="flex"
         alignItems="center"
         pl="10%"
-        color={themeColor[+!isEven]}
+        color="light"
       >
         <Box
           as="ul"
@@ -113,10 +94,11 @@ export default function About({
           gap={4}
           listStyleType="none"
         >
-          {sidebarAbout.map((item, i) => {
+          {sidebarServices.map((item, i) => {
             return (
               <Box
                 as="li"
+                fontWeight={300}
                 key={i}
                 opacity={section == i ? 1 : 0.6}
                 _hover={{ opacity: 1 }}
@@ -125,7 +107,7 @@ export default function About({
                   slideTo(i);
                   setSection(i);
                   replace({
-                    query: { ...query, selected: sidebarAbout[i].query },
+                    query: { ...query, selected: sidebarServices[i].query },
                   });
                 }}
                 className="animate-fade"
@@ -137,7 +119,7 @@ export default function About({
         </Box>
         <BoxMotion
           w="2px"
-          h={`${(section + 1) * 20}%`}
+          h={`${(section + 1) * 25}%`}
           position="absolute"
           opacity={0.6}
           right={0}
@@ -145,7 +127,7 @@ export default function About({
           zIndex={5}
           layout
           animate={{
-            backgroundColor: themeColor[+!isEven],
+            backgroundColor: "var(--chakra-colors-light)",
             transition: {
               backgroundColor: {
                 duration: 0.5,
@@ -166,7 +148,7 @@ export default function About({
           top={0}
           zIndex={4}
           animate={{
-            backgroundColor: themeColor[+!isEven],
+            backgroundColor: "var(--chakra-colors-light)",
             transition: {
               duration: 0.5,
               ease: "easeInOut",
@@ -176,13 +158,16 @@ export default function About({
       </Box>
       <Box h="100vh" w="70%">
         <Swiper
-          direction={"vertical"}
-          mousewheel={true}
-          modules={[Mousewheel]}
-          className="mySwiper"
-          simulateTouch={false}
+          direction={"horizontal"}
+          simulateTouch={true}
           onSlideChange={(swiper) => {
             setSection(swiper.realIndex);
+            replace({
+              query: {
+                ...query,
+                selected: sidebarServices[swiper.realIndex].query,
+              },
+            });
           }}
           onSwiper={setSwiper}
         >
@@ -190,20 +175,17 @@ export default function About({
             <Section1 />
           </SwiperSlide>
           <SwiperSlide>
-            <Section2 clients={clients} />
+            <Box h="100vh" bg="green.800" w="full"></Box>
           </SwiperSlide>
           <SwiperSlide>
-            <Section3 leaders={leaders} />
+            <Box h="100vh" bg="blue.800" w="full"></Box>
           </SwiperSlide>
           <SwiperSlide>
-            <Section4 associates={associates} partners={partners} />
-          </SwiperSlide>
-          <SwiperSlide>
-            <Section5 careers={careers} />
+            <Box h="100vh" bg="yellow.800" w="full"></Box>
           </SwiperSlide>
         </Swiper>
       </Box>
-      <Footer isLight={!isEven} />
+      <Footer />
     </BoxMotion>
   );
 }
