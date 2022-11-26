@@ -29,16 +29,17 @@ export default function About({
   const [section, setSection] = useState(0);
   const [swiper, setSwiper] = useState<any>(null);
 
+  const slideTo = (index: any) => swiper.slideTo(index);
+
   useEffect(() => {
     const i = sidebarServices.findIndex(
       (item) => item.query === query?.selected
     );
     if (i > -1) {
+      slideTo(i);
       setSection(i);
     }
   }, [query]);
-
-  const slideTo = (index: any) => swiper.slideTo(index);
 
   return (
     <BoxMotion position="relative" display="flex" bg="dark">

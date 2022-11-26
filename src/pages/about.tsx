@@ -39,14 +39,16 @@ export default function About({
     setIsEven(!!(section % 2));
   }, [section]);
 
+  const slideTo = (index: any) => swiper.slideTo(index);
+
   useEffect(() => {
     const i = sidebarAbout.findIndex((item) => item.query === query?.selected);
+
     if (i > -1) {
+      slideTo(i);
       setSection(i);
     }
   }, [query]);
-
-  const slideTo = (index: any) => swiper.slideTo(index);
 
   return (
     <BoxMotion
