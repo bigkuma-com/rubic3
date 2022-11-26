@@ -79,7 +79,12 @@ export default function Section3() {
                         </BoxMotion>
 
                         <BoxMotion layout>
-                          <Text fontSize="x-small" display="flex" gap={1}>
+                          <Text
+                            fontSize="x-small"
+                            display="flex"
+                            alignItems="center"
+                            gap={1}
+                          >
                             View more <IconPlus />
                           </Text>
                         </BoxMotion>

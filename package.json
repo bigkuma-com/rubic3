@@ -12,8 +12,8 @@
     "@chakra-ui/react": "^2.3.7",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
-    "@fontsource/domine": "^4.5.9",
-    "@fontsource/questrial": "^4.5.10",
+    "@fontsource/dm-serif-display": "^4.5.9",
+    "@fontsource/roboto": "^4.5.8",
     "@types/node": "18.11.9",
     "@types/react": "18.0.25",
     "@types/react-dom": "18.0.8",
@@ -26,7 +26,6 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "sass": "^1.56.0",
-    "scroll-snap": "^4.0.3",
     "swiper": "^8.4.4",
     "typescript": "4.8.4"
   }

@@ -24,6 +24,18 @@ export function dynamicSort(property) {
   };
 }
 
+export function arrayChunk(array, chunkSize = 4) {
+  const resultArray = [];
+
+  for (let i = 0; i < array.length; i += chunkSize) {
+    const chunk = array.slice(i, i + chunkSize);
+
+    resultArray.push(chunk);
+  }
+
+  return resultArray;
+}
+
 export const fetcher = axios.create({
   baseURL: process.env.NEXT_PUBLIC_URL_CMS,
   timeout: 20000,

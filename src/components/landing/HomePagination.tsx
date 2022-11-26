@@ -1,30 +1,27 @@
 import { Text } from "@chakra-ui/react";
-import { animateRightLeft, marginX } from "../../utils/consts";
+import { animateRightLeft } from "../../utils/consts";
 import BoxMotion from "../BoxMotion";
 
-export default function HomePagination({ section }: { section: number }) {
+export default function HomePagination({
+  section,
+  maxSection,
+}: {
+  section: number;
+  maxSection: number;
+}) {
   return (
     <BoxMotion
-      position="fixed"
-      zIndex={50}
-      right={marginX}
-      top="50%"
-      transform="translateY(-50%)"
       variants={animateRightLeft}
       initial="initial"
       animate="animate"
       exit="exit"
+      letterSpacing="widest"
     >
-      <Text
-        as="span"
-        letterSpacing="widest"
-        fontSize="small"
-        color="whiteAlpha.700"
-      >
-        <Text as="span" color="white">
-          0{section + 1}
-        </Text>{" "}
-        / 04
+      <Text as="span" fontSize="small" color="light" letterSpacing={2}>
+        0{section + 1}{" "}
+        <Text as="span" color="light" opacity={0.6} letterSpacing={2}>
+          / 0{maxSection}
+        </Text>
       </Text>
     </BoxMotion>
   );

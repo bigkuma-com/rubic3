@@ -951,15 +951,15 @@
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
 
-"@fontsource/domine@^4.5.9":
+"@fontsource/dm-serif-display@^4.5.9":
   version "4.5.9"
-  resolved "https://registry.yarnpkg.com/@fontsource/domine/-/domine-4.5.9.tgz#019076bf07531d5479faed9bd596048b552e70bf"
-  integrity sha512-mmGDyjnIZy44R2+abcREAA7Azl/2d8zChYS1F6hxOQ2jnRYGs+Ydz5wGQ9t2ofnip3sOqNqFsszkL/jY12+lOQ==
+  resolved "https://registry.yarnpkg.com/@fontsource/dm-serif-display/-/dm-serif-display-4.5.9.tgz#2be835a895471385c6ed5e8639e7c389ca07490e"
+  integrity sha512-SiuNT7PIHE0nHZqvdQ09NhpFygMzZPupOr7juWJlurad4jyelr1cFm7vW5JGaWhH2ZaaG7QAwpGyhKss5ii0+g==
 
-"@fontsource/questrial@^4.5.10":
-  version "4.5.10"
-  resolved "https://registry.yarnpkg.com/@fontsource/questrial/-/questrial-4.5.10.tgz#84b0b67ec31a37668f2e1c3588e012953a3bc7e7"
-  integrity sha512-CGNeB+9dGcie/vKoUC8DXmodglRHww8G1p7mx4TfOF2C2MvWx1u1k82by73HC8v0WTUaGT53oVoR/tiECxUWaA==
+"@fontsource/roboto@^4.5.8":
+  version "4.5.8"
+  resolved "https://registry.yarnpkg.com/@fontsource/roboto/-/roboto-4.5.8.tgz#56347764786079838faf43f0eeda22dd7328437f"
+  integrity sha512-CnD7zLItIzt86q4Sj3kZUiLcBk1dSk81qcqgMGaZe7SQ1P8hFNxhMl5AZthK1zrDM5m74VVhaOpuMGIL4gagaA==
 
 "@humanwhocodes/config-array@^0.11.6":
   version "0.11.7"
@@ -2938,11 +2938,6 @@ scheduler@^0.23.0:
   integrity sha512-CtuThmgHNg7zIZWAXi3AsyIzA3n4xx7aNyjwC2VJldO2LMVDhFK+63xGqq6CsJH4rTAt6/M+N4GhZiDYPx9eUw==
   dependencies:
     loose-envify "^1.1.0"
-
-scroll-snap@^4.0.3:
-  version "4.0.3"
-  resolved "https://registry.yarnpkg.com/scroll-snap/-/scroll-snap-4.0.3.tgz#015ef1e2661249acfe99c673408a3710f74c7b3d"
-  integrity sha512-7am2JXqY/0jHN9+3b2zhZtm55NmzEQhZTXZBIdC/fVb6aVN5nonjbRpf+OghU9LhguJB+rq5ty9SmQcYzMvMxw==
 
 semver@^6.3.0:
   version "6.3.0"

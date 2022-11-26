@@ -1,4 +1,4 @@
-import { Box, Center, Heading, Text } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Mousewheel } from "swiper";
@@ -7,21 +7,28 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import ArrowLeftSm from "../assets/js/ArrowLeftSm";
 import Section1 from "../components/about/Section1";
 import Section2 from "../components/about/Section2";
+import Section3 from "../components/about/Section3";
+import Section4 from "../components/about/Section4";
+import Section5 from "../components/about/Section5";
 import BoxMotion from "../components/BoxMotion";
 import Footer from "../components/footer";
 import Header from "../components/header";
 import { getFullList } from "../utils/api";
 import { themeColor } from "../utils/consts";
-import { dynamicSort } from "../utils/functions";
+import { arrayChunk } from "../utils/functions";
 
 export default function About({
   clients,
   partners,
   associates,
+  leaders,
+  careers,
 }: {
   clients: any;
   partners: any;
   associates: any;
+  leaders: any;
+  careers: any;
 }) {
   const { push } = useRouter();
   const [section, setSection] = useState(0);
@@ -73,6 +80,8 @@ export default function About({
               transform: "rotate(-180deg)",
             }}
             fontSize="small"
+            letterSpacing="wider"
+            fontWeight={400}
           >
             Back to Home
           </Text>
@@ -83,7 +92,7 @@ export default function About({
         position="relative"
         left={0}
         top={0}
-        w="35%"
+        w="30%"
         h="100vh"
         display="flex"
         alignItems="center"
@@ -155,7 +164,7 @@ export default function About({
           }}
         />
       </Box>
-      <Box h="100vh" w="full">
+      <Box h="100vh" w="70%">
         <Swiper
           direction={"vertical"}
           mousewheel={true}
@@ -174,19 +183,13 @@ export default function About({
             <Section2 clients={clients} />
           </SwiperSlide>
           <SwiperSlide>
-            <Center h="full">
-              <Heading>section3</Heading>
-            </Center>
+            <Section3 leaders={leaders} />
           </SwiperSlide>
           <SwiperSlide>
-            <Center h="full">
-              <Heading>section4</Heading>
-            </Center>
+            <Section4 associates={associates} partners={partners} />
           </SwiperSlide>
           <SwiperSlide>
-            <Center h="full">
-              <Heading>section5</Heading>
-            </Center>
+            <Section5 careers={careers} />
           </SwiperSlide>
         </Swiper>
       </Box>
@@ -204,25 +207,36 @@ const sidebarItems = [
 ];
 
 export async function getStaticProps() {
-  const results = await getFullList({ collection: "clients_partners" });
+  const resultsClients = await getFullList({
+    collection: "clients_partners",
+    params: { sort: "order" },
+  });
+  const resultLeaders = await getFullList({
+    collection: "leaderships",
+    params: { sort: "order" },
+  });
+  const resultCareers = await getFullList({
+    collection: "careers",
+    params: { sort: "-created" },
+  });
 
-  const partners = results
-    .filter((client) => client.type === "partner")
-    .sort(dynamicSort("order"));
+  const partners = resultsClients.filter((client) => client.type === "partner");
+  const associates = resultsClients.filter(
+    (client) => client.type === "associate"
+  );
+  const clients = resultsClients.filter((client) => client.type === "client");
 
-  const associates = results
-    .filter((client) => client.type === "associate")
-    .sort(dynamicSort("order"));
-
-  const clients = results
-    .filter((client) => client.type === "client")
-    .sort(dynamicSort("order"));
+  const leaders = arrayChunk(resultLeaders, 4);
+  const careers = arrayChunk(resultCareers, 3);
 
   return {
     props: {
       partners: JSON.parse(JSON.stringify(partners)),
       clients: JSON.parse(JSON.stringify(clients)),
       associates: JSON.parse(JSON.stringify(associates)),
+      leaders: JSON.parse(JSON.stringify(leaders)),
+      careers: JSON.parse(JSON.stringify(careers)),
     },
+    revalidate: 2,
   };
 }

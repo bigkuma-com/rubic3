@@ -31,7 +31,7 @@ export default function Section2() {
         gap={8}
         zIndex={5}
       >
-        <Heading fontWeight={400} fontSize="3xl">
+        <Heading fontSize="3xl">
           We use the power of creativity to build better futures for our people,
           planet, businesses, and communities.
         </Heading>

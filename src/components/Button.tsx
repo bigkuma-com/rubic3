@@ -24,7 +24,8 @@ export default function Button({
         borderColor: "#ffffff",
       }}
       _focus={{}}
-      fontWeight={200}
+      fontWeight={300}
+      letterSpacing="wider"
       borderRadius={32}
       fontSize="sm"
       px={5}

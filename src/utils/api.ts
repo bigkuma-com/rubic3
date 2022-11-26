@@ -5,7 +5,7 @@ const pb = new PocketBase(process.env.NEXT_PUBLIC_URL_CMS);
 export async function getFullList({
   collection,
   params = {
-    sort: "-created",
+    sort: "created",
   },
 }: {
   collection: string;
@@ -21,7 +21,7 @@ export async function getList({
   page = 1,
   perPage = 50,
   params = {
-    sort: "-created",
+    sort: "created",
   },
 }: {
   page?: number;
@@ -40,7 +40,7 @@ export async function getOne({
   id,
   collection,
   params = {
-    sort: "-created",
+    sort: "created",
   },
 }: {
   id: string;

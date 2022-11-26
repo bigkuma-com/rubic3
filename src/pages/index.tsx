@@ -10,6 +10,7 @@ import Section1 from "../components/landing/Section1";
 import Section2 from "../components/landing/Section2";
 import Section3 from "../components/landing/Section3";
 import Section4 from "../components/landing/Section4";
+import { marginX } from "../utils/consts";
 import { HomeContext } from "../utils/hooks";
 
 export default function Home() {
@@ -26,12 +27,10 @@ export default function Home() {
           direction={"vertical"}
           mousewheel={true}
           modules={[Mousewheel]}
-          className="mySwiper"
           simulateTouch={false}
           onSlideChange={(swiper) => {
             setSection(swiper.realIndex);
           }}
-          // initialSlide={0}
         >
           <SwiperSlide>
             <Section1 />
@@ -48,7 +47,15 @@ export default function Home() {
         </Swiper>
       </Box>
 
-      <HomePagination section={section} />
+      <Box
+        position="fixed"
+        zIndex={50}
+        right={marginX}
+        top="50%"
+        transform="translateY(-50%)"
+      >
+        <HomePagination section={section} maxSection={4} />
+      </Box>
 
       <Footer isHomepage isShowing={section > 0} />
     </HomeContext.Provider>

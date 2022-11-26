@@ -2,8 +2,8 @@ import { extendTheme } from "@chakra-ui/react";
 
 const theme = extendTheme({
   fonts: {
-    heading: `'Domine', sans-serif`,
-    body: `'Questrial', sans-serif`,
+    heading: `'DM Serif Display', sans-serif`,
+    body: `Roboto`,
   },
   colors: {
     dark: "#141314",
@@ -12,22 +12,21 @@ const theme = extendTheme({
   components: {
     Heading: {
       baseStyle: {
-        fontWeight: 400,
+        fontWeight: "thin",
         letterSpacing: "wide",
         color: "light",
       },
     },
     Text: {
       baseStyle: {
-        fontWeight: 400,
-        letterSpacing: "wide",
+        fontWeight: 300,
+        letterSpacing: "wider",
         color: "light",
       },
     },
     Divider: {
       baseStyle: { opacity: 0.2 },
     },
-    Button: {},
   },
 });
 
