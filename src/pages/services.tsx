@@ -1,13 +1,20 @@
 import { Box, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { Navigation, Pagination } from "swiper";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import ArrowLeftSm from "../assets/js/ArrowLeftSm";
+import LogoRubicGroup from "../assets/js/LogoRubicGroup";
+import LogoRubicubeConnoisseur from "../assets/js/LogoRubicubeConnoisseur";
+import LogoRubicubeHospitality from "../assets/js/LogoRubicubeHospitality";
 import BoxMotion from "../components/BoxMotion";
 import Footer from "../components/footer";
 import Header from "../components/header";
 import Section1 from "../components/services/Section1";
+import Section2 from "../components/services/Section2";
+import Section3 from "../components/services/Section3";
+import Section4 from "../components/services/Section4";
 import { getFullList } from "../utils/api";
 import { sidebarServices } from "../utils/consts";
 import { arrayChunk } from "../utils/functions";
@@ -26,6 +33,10 @@ export default function About({
   careers: any;
 }) {
   const { push, query, replace } = useRouter();
+
+  const prevRefSlides = useRef(null);
+  const nextRefSlides = useRef(null);
+
   const [section, setSection] = useState(0);
   const [swiper, setSwiper] = useState<any>(null);
 
@@ -79,7 +90,7 @@ export default function About({
         </Box>
       </Box>
       <Box
-        position="relative"
+        position="fixed"
         left={0}
         top={0}
         w="30%"
@@ -158,9 +169,12 @@ export default function About({
           }}
         />
       </Box>
-      <Box h="100vh" w="70%">
+
+      <Box w="30%" />
+      <Box h="100vh" w="70%" className="page-services" position="relative">
         <Swiper
           direction={"horizontal"}
+          modules={[Pagination, Navigation]}
           simulateTouch={true}
           onSlideChange={(swiper) => {
             setSection(swiper.realIndex);
@@ -171,19 +185,25 @@ export default function About({
               },
             });
           }}
+          onInit={(swiper: any) => {
+            swiper.params.navigation.prevEl = prevRefSlides.current;
+            swiper.params.navigation.nextEl = nextRefSlides.current;
+            swiper.navigation.init();
+            swiper.navigation.update();
+          }}
           onSwiper={setSwiper}
         >
           <SwiperSlide>
             <Section1 />
           </SwiperSlide>
           <SwiperSlide>
-            <Box h="100vh" bg="green.800" w="full"></Box>
+            <Section2 />
           </SwiperSlide>
           <SwiperSlide>
-            <Box h="100vh" bg="blue.800" w="full"></Box>
+            <Section3 />
           </SwiperSlide>
           <SwiperSlide>
-            <Box h="100vh" bg="yellow.800" w="full"></Box>
+            <Section4 />
           </SwiperSlide>
         </Swiper>
       </Box>
@@ -191,6 +211,13 @@ export default function About({
     </BoxMotion>
   );
 }
+
+const serviceLogos = [
+  <LogoRubicGroup key={1} />,
+  <LogoRubicubeHospitality key={2} />,
+  <LogoRubicubeConnoisseur key={3} />,
+  <LogoRubicGroup key={4} />,
+];
 
 export async function getStaticProps() {
   const resultsClients = await getFullList({

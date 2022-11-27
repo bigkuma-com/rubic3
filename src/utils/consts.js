@@ -1,6 +1,9 @@
 export const marginX = [16];
 export const marginY = [12];
 
+export const sectionMarginLeft = [16];
+export const sectionMarginRight = [52];
+
 export const themeColor = [
   "var(--chakra-colors-dark)",
   "var(--chakra-colors-light)",
@@ -13,7 +16,6 @@ export const sidebarAbout = [
   { name: "Partners", query: "partners" },
   { name: "Careers", query: "careers" },
 ];
-
 
 export const sidebarServices = [
   { name: "Rubicube Creative", query: "creative" },

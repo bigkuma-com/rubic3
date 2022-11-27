@@ -26,6 +26,14 @@
   }
 }
 
+.page-services {
+  .swiper {
+    .swiper-slide {
+      overflow-y: scroll;
+    }
+  }
+}
+
 .section-leaders {
   .swiper {
     overflow-y: visible;

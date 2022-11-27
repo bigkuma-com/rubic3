@@ -2,6 +2,7 @@ import { Box, Heading, SimpleGrid } from "@chakra-ui/react";
 import Image from "next/image";
 import { useState } from "react";
 import { getImage } from "../../utils/api";
+import { sectionMarginLeft, sectionMarginRight } from "../../utils/consts";
 
 export default function Section2({ clients }: { clients: any }) {
   const [maxItem, setMaxItem] = useState(24);
@@ -12,8 +13,8 @@ export default function Section2({ clients }: { clients: any }) {
       h="full"
       display="flex"
       alignItems="center"
-      pl="7%"
-      pr="16%"
+      pl={sectionMarginLeft}
+      pr={sectionMarginRight}
       py="10%"
     >
       <Box display="flex" flexDirection="column" w="full">

@@ -7,6 +7,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import IconArrowLeft from "../../assets/js/IconArrowLeft";
 import IconArrowRight from "../../assets/js/IconArrowRight";
 import { getImage } from "../../utils/api";
+import { sectionMarginLeft, sectionMarginRight } from "../../utils/consts";
 import HomePagination from "../landing/HomePagination";
 
 export default function Section3({ leaders }: { leaders: any }) {
@@ -21,8 +22,8 @@ export default function Section3({ leaders }: { leaders: any }) {
       h="full"
       display="flex"
       alignItems="center"
-      pl="7%"
-      pr="16%"
+      pl={sectionMarginLeft}
+      pr={sectionMarginRight}
       py="10%"
     >
       <Box display="flex" flexDirection="column" w="full">

@@ -1,6 +1,7 @@
 import { Box, Heading, SimpleGrid, Text } from "@chakra-ui/react";
 import Image from "next/image";
 import { getImage } from "../../utils/api";
+import { sectionMarginLeft, sectionMarginRight } from "../../utils/consts";
 
 export default function Section4({
   partners,
@@ -15,8 +16,8 @@ export default function Section4({
       h="full"
       display="flex"
       alignItems="center"
-      pl="7%"
-      pr="16%"
+      pl={sectionMarginLeft}
+      pr={sectionMarginRight}
       py="10%"
       color="dark"
     >
