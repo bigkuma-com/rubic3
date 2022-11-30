@@ -7,10 +7,16 @@ import {
 } from "../../utils/consts";
 import BoxMotion from "../BoxMotion";
 
-export default function Copyright({ isLight = true }: { isLight?: boolean }) {
+export default function Copyright({
+  isLight = true,
+  position = "fixed",
+}: {
+  isLight?: boolean;
+  position?: any;
+}) {
   return (
     <BoxMotion
-      position="fixed"
+      position={position}
       bottom={marginY}
       left={marginX}
       zIndex={500}
@@ -29,7 +35,7 @@ export default function Copyright({ isLight = true }: { isLight?: boolean }) {
           },
         }}
       >
-        <Text fontSize="small" as="span" color="inherit">
+        <Text fontSize="small" as="span" color="inherit" className="text-shadow">
           ©2022 Rubicube Group. All Right Reserved
         </Text>
       </BoxMotion>

@@ -9,6 +9,9 @@ export const themeColor = [
   "var(--chakra-colors-light)",
 ];
 
+export const phoneRegExp =
+  /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+
 export const sidebarAbout = [
   { name: "Company Overview", query: "overview" },
   { name: "Clients", query: "clients" },
@@ -132,6 +135,24 @@ export const animateOpacityHalf = {
   },
   exit: {
     opacity: 0,
+    transition: {
+      duration: 0.5,
+      ease: "easeInOut",
+    },
+  },
+};
+
+export const animateScaling = {
+  initial: { scale: 0 },
+  animate: {
+    scale: 1,
+    transition: {
+      duration: 0.5,
+      ease: "easeInOut",
+    },
+  },
+  exit: {
+    scale: 0,
     transition: {
       duration: 0.5,
       ease: "easeInOut",

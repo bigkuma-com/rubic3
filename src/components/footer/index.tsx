@@ -7,10 +7,12 @@ export default function Footer({
   isHomepage = false,
   isShowing = true,
   isLight = true,
+  position,
 }: {
   isHomepage?: boolean;
   isShowing?: boolean;
   isLight?: boolean;
+  position?: any;
 }) {
   const [scrollPosition, setScrollPosition] = useState(0);
 
@@ -31,10 +33,10 @@ export default function Footer({
     <>
       <AnimatePresence>
         {(scrollPosition > 400 || !isHomepage || isShowing) && (
-          <Copyright key="copyright" isLight={isLight} />
+          <Copyright key="copyright" isLight={isLight} position={position} />
         )}
       </AnimatePresence>
-      <SocialButtons isLight={isLight} />
+      <SocialButtons isLight={isLight} position={position} />
     </>
   );
 }

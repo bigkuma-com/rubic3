@@ -8,6 +8,29 @@
   background: transparent; /* Optional: just make scrollbar invisible */
 }
 
+input:-internal-autofill-selected {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* Change Autocomplete styles in Chrome*/
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  border: 0px solid var(--chakra-colors-light);
+  border-bottom: 1px solid var(--chakra-colors-light);
+  -webkit-text-fill-color: var(--chakra-colors-light);
+  box-shadow: 0 0 0px 1000px transparent inset;
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
 .swiper {
   width: 100%;
   height: 100%;
@@ -47,4 +70,37 @@
 
 .opacity-100 {
   opacity: 1 !important;
+}
+
+.box-shadow {
+  box-shadow: 4px 4px 8px 0px rgba(20, 19, 20, 0.3);
+  -webkit-box-shadow: 4px 4px 8px 0px rgba(20, 19, 20, 0.3);
+  -moz-box-shadow: 4px 4px 8px 0px rgba(20, 19, 20, 0.3);
+}
+
+.drop-shadow {
+  svg {
+    filter: drop-shadow(4px 4px 10px rgba(20, 19, 20, 0.3));
+  }
+}
+
+.text-shadow {
+  text-shadow: 4px 4px 10px rgba(20, 19, 20, 0.3);
+}
+
+.checkbox {
+  display: flex;
+  align-items: flex-start !important;
+  .chakra-checkbox__control {
+    border-radius: 50%;
+    width: 1.2rem;
+    height: 1.2rem;
+    opacity: 0.6;
+  }
+  .chakra-checkbox__label {
+    margin-left: 10px;
+    opacity: 0.6;
+    font-size: var(--chakra-fontSizes-sm);
+    font-weight: 300;
+  }
 }

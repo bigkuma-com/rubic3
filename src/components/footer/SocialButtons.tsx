@@ -14,14 +14,16 @@ import BoxMotion from "../BoxMotion";
 
 export default function SocialButtons({
   isLight = true,
+  position = "fixed",
 }: {
   isLight?: boolean;
+  position?: any;
 }) {
   const [socialHover, setSocialHover] = useState(-1);
 
   return (
     <BoxMotion
-      position="fixed"
+      position={position}
       bottom={marginY}
       right={marginX}
       zIndex={500}
@@ -61,6 +63,7 @@ export default function SocialButtons({
                     ease: "easeInOut",
                   },
                 }}
+                className="drop-shadow"
               >
                 {icon}
               </BoxMotion>

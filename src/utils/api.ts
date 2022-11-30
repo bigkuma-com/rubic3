@@ -52,6 +52,18 @@ export async function getOne({
   return record;
 }
 
+export async function postOne({
+  collection,
+  data,
+}: {
+  collection: string;
+  data: any;
+}) {
+  const record = await pb.collection(collection).create(data);
+
+  return record;
+}
+
 export function getImage({
   collectionName,
   recordId,

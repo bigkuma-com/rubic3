@@ -18,7 +18,13 @@ import {
 import BoxMotion from "../BoxMotion";
 import MenuToggle from "./MenuToggle";
 
-export default function Header({ isLight = true }: { isLight?: boolean }) {
+export default function Header({
+  isLight = true,
+  isTransparent = true,
+}: {
+  isLight?: boolean;
+  isTransparent?: boolean;
+}) {
   const { push } = useRouter();
 
   const navRef = useRef<any>(null);
@@ -48,16 +54,17 @@ export default function Header({ isLight = true }: { isLight?: boolean }) {
       alignItems="center"
       w="full"
       h="fit-content"
-      bg="transparent"
       position="fixed"
       top={0}
       px={marginX}
       pt={marginY}
+      pb={isTransparent ? 0 : 8}
       variants={animateTopToBottom}
       initial="initial"
       animate="animate"
       exit="exit"
       zIndex={1000}
+      bg={isTransparent ? "transparent" : "dark"}
     >
       <Box position="relative" cursor="pointer" onClick={() => push("/")}>
         <BoxMotion
@@ -68,6 +75,7 @@ export default function Header({ isLight = true }: { isLight?: boolean }) {
               ease: "easeInOut",
             },
           }}
+          className="drop-shadow"
         >
           <LogoRubicGroup />
         </BoxMotion>
@@ -88,6 +96,7 @@ export default function Header({ isLight = true }: { isLight?: boolean }) {
           display="flex"
           alignItems="center"
           gap={1}
+          className={isNavOpen ? "" : "drop-shadow"}
         >
           <AnimatePresence>
             {isNavOpen && (
