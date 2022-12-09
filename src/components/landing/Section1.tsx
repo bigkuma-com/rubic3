@@ -11,7 +11,7 @@ import {
   animateBottomToTop,
   animateOpacity,
   marginX,
-  marginY,
+  marginY
 } from "../../utils/consts";
 import BoxMotion from "../BoxMotion";
 
@@ -55,14 +55,14 @@ export default function Section1() {
                 >
                   <Text
                     textDecoration="underline"
-                    className="swiper-no-swiping"
+                    className="swiper-no-swiping text-shadow"
                   >
                     {title}
                   </Text>
                   <Text
                     fontSize="small"
                     color="whiteAlpha.700"
-                    className="swiper-no-swiping"
+                    className="swiper-no-swiping text-shadow"
                   >
                     {subtitle}
                   </Text>

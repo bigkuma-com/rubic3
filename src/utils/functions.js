@@ -40,3 +40,7 @@ export const fetcher = axios.create({
   baseURL: process.env.NEXT_PUBLIC_URL_CMS,
   timeout: 20000,
 });
+
+export const objectToParams = (obj) => new URLSearchParams(obj).toString();
+
+export const fetcherSWR = (...args) => fetch(...args).then((res) => res.json());

@@ -1,4 +1,5 @@
 import { createContext, useEffect, useRef, useState } from "react";
+import useSWR from "swr";
 
 export const HomeContext = createContext();
 
@@ -44,3 +45,4 @@ export function useWindowDimensions() {
 
   return windowDimensions;
 }
+

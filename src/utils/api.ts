@@ -1,6 +1,20 @@
 import PocketBase from "pocketbase";
+import useSWR from "swr";
 
 const pb = new PocketBase(process.env.NEXT_PUBLIC_URL_CMS);
+
+export const useFetchAll = (collection: string, params?: any) => {
+  const { data, error } = useSWR({ collection, params }, fetcher);
+
+  return {
+    data,
+    isLoading: !error && !data,
+    isError: error,
+  };
+};
+
+const fetcher = ({ collection, params }: any) =>
+  pb.collection(collection).getFullList(200, params);
 
 export async function getFullList({
   collection,

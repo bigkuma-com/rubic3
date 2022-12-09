@@ -33,22 +33,25 @@ export default function Works() {
   useEffect(() => {
     const isTouch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
 
-    console.log("hai", isTouch);
-
-    // if (isTouch) {
-    //   window.scrollTo({
-    //     top: 2000,
-    //     left: 2000,
-    //     behavior: "smooth",
-    //   });
-    // }
+    console.log("hai", isTouch, wrapperRef);
 
     setIsTouchDevice(isTouch);
-  }, []);
+  }, [wrapperRef]);
 
-  console.log(isTouchDevice);
-
-  useEffect(() => {}, [windowSize, containerSize, isTouchDevice]);
+  useEffect(() => {
+    if (
+      isTouchDevice &&
+      wrapperRef !== null &&
+      containerSize !== null &&
+      windowSize !== null
+    ) {
+      window.scrollTo({
+        top: containerSize.x / 2 - windowSize.x / 2,
+        left: containerSize.y / 2 - windowSize.y / 2,
+        behavior: "smooth",
+      });
+    }
+  }, [wrapperRef, isTouchDevice, containerSize, windowSize]);
 
   return (
     <Box

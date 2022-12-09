@@ -12,3 +12,8 @@ export interface Iitem {
 }
 
 export type Iitems = Iitem[];
+
+export interface ICoordinate {
+  x: number;
+  y: number;
+}
