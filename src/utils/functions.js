@@ -44,3 +44,10 @@ export const fetcher = axios.create({
 export const objectToParams = (obj) => new URLSearchParams(obj).toString();
 
 export const fetcherSWR = (...args) => fetch(...args).then((res) => res.json());
+
+export function makeBold(input, wordsToBold) {
+  return input.replace(
+    new RegExp("(\\b)(" + wordsToBold.join("|") + ")(\\b)", "ig"),
+    "$1<b>$2</b>$3"
+  );
+}

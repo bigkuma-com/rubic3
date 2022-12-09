@@ -1,12 +1,12 @@
-// * {
-//   -ms-overflow-style: none; /* Internet Explorer 10+ */
-//   scrollbar-width: none; /* Firefox */
-// }
-// *::-webkit-scrollbar {
-//   display: none; /* Safari and Chrome */
-//   width: 0; /* Remove scrollbar space */
-//   background: transparent; /* Optional: just make scrollbar invisible */
-// }
+* {
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+*::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+  width: 0; /* Remove scrollbar space */
+  background: transparent; /* Optional: just make scrollbar invisible */
+}
 
 input:-internal-autofill-selected {
   background: transparent !important;
@@ -105,6 +105,26 @@ select:-webkit-autofill:focus {
   }
 }
 
+.card-text {
+  color: rgba(255, 255, 255, 0.7) !important;
+
+  b {
+    color: #ffffff !important;
+  }
+}
+
+.horizontal-scroll-wrapper {
+  overflow-y: auto;
+  overflow-x: hidden;
+  transform: rotate(-90deg);
+  transform-origin: right top;
+  // transform: rotate(-90deg) translateY(-100px);
+  div {
+    transform: rotate(90deg);
+    // transform-origin: right top;
+  }
+}
+
 .tile {
   border-radius: 1vmax;
   position: absolute;
@@ -126,8 +146,7 @@ select:-webkit-autofill:focus {
   object-fit: cover;
   border-radius: inherit;
   opacity: 0;
-  transition: opacity 800ms ease,
-    transform 800ms ease;
+  transition: opacity 800ms ease, transform 800ms ease;
 }
 
 .tile:nth-child(1) {

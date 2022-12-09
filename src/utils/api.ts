@@ -50,6 +50,22 @@ export async function getList({
   return records;
 }
 
+export async function findOne({
+  collection,
+  keyword,
+  params = {},
+}: {
+  collection: string;
+  keyword: string;
+  params?: any;
+}) {
+  const record = await pb
+    .collection(collection)
+    .getFirstListItem(keyword, params);
+
+  return record;
+}
+
 export async function getOne({
   id,
   collection,
