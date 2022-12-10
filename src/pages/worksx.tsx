@@ -32,8 +32,6 @@ export default function Works() {
     });
   }, []);
 
-  console.log("knontol", scrollPosition);
-
   function handleMouseMove(ev: any) {
     setWrapperPosition({ left: ev.pageX, top: ev.pageY });
   }

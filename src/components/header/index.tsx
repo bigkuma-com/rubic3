@@ -63,7 +63,7 @@ export default function Header({
       initial="initial"
       animate="animate"
       exit="exit"
-      zIndex={1000}
+      zIndex={isNavOpen ? 1002 : 1000}
       bg={isTransparent ? "transparent" : "dark"}
     >
       <Box position="relative" cursor="pointer" onClick={() => push("/")}>

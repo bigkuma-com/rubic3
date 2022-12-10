@@ -1,5 +1,5 @@
 import { Box, Heading, Spinner, Text } from "@chakra-ui/react";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
@@ -22,14 +22,21 @@ const blockSpacing = {
 };
 
 export default function Works() {
-  const { data, isError, isLoading } = useFetchAll(`works`);
-
   const wrapperRef = useRef<any>(null);
 
   const [pan, setPan] = useState<null | ICoordinate>(null);
   const [windowSize, setWindowSize] = useState<null | ICoordinate>(null);
   const [containerSize, setContainerSize] = useState<null | ICoordinate>(null);
   const [isTouchDevice, setIsTouchDevice] = useState<null | boolean>(null);
+
+  const [isFilterOpen, setIsFilterOpen] = useState<boolean>(false);
+  const [selectedFilter, setSelectedFilter] = useState<string>("");
+
+  const { data, isError, isLoading } = useFetchAll(`works`, {
+    sort: `order`,
+    filter: `filters ~ '${selectedFilter}'`,
+  });
+  const { data: filters, isLoading: isLoadingFilters } = useFetchAll(`filters`);
 
   useEffect(() => {
     if (wrapperRef === null) return;
@@ -57,7 +64,8 @@ export default function Works() {
     width: w,
   } = blockSpacing;
 
-  console.log("test");
+  console.log(data);
+  console.log("filters", filters);
 
   return (
     <Box
@@ -81,6 +89,72 @@ export default function Works() {
       }}
     >
       <Header />
+
+      <Box position="fixed" zIndex={1001} top={14} right={32}>
+        <Button
+          text="Filter by Industry"
+          arrowDown
+          onClick={() => {
+            setIsFilterOpen(!isFilterOpen);
+          }}
+        />
+        <AnimatePresence>
+          {isFilterOpen && (
+            <BoxMotion
+              mt={6}
+              ml={5}
+              display="flex"
+              flexDirection="column"
+              gap={3}
+              variants={containerFilter}
+              initial="hidden"
+              animate="show"
+              exit="hidden"
+            >
+              {filters?.map(({ name, id }) => {
+                return (
+                  <Box
+                    key={id}
+                    _hover={{ opacity: 0.6 }}
+                    cursor="pointer"
+                    onClick={() => {
+                      setSelectedFilter(id);
+                      setIsFilterOpen(false);
+                    }}
+                  >
+                    <Text as={motion.span} variants={itemFilter} fontSize="sm">
+                      {name}
+                    </Text>
+                  </Box>
+                );
+              })}
+            </BoxMotion>
+          )}
+        </AnimatePresence>
+      </Box>
+
+      <AnimatePresence>
+        {isFilterOpen && (
+          <BoxMotion
+            w="100vw"
+            h="100vh"
+            position="fixed"
+            top={0}
+            left={0}
+            zIndex={1000}
+            bg="black"
+            initial={{ opacity: 0 }}
+            animate={{
+              opacity: 0.7,
+              transition: { ease: "easeInOut", duration: 0.5 },
+            }}
+            exit={{
+              opacity: 0,
+              transition: { ease: "easeInOut", duration: 0.5 },
+            }}
+          />
+        )}
+      </AnimatePresence>
 
       <Box
         bg="dark"
@@ -124,6 +198,7 @@ export default function Works() {
                       y:
                         pan?.y ?? (containerSize.y / 2 - windowSize.y / 2) * -1,
                       opacity: 1,
+                      scale: 1,
                       transition: {
                         ease: "easeOut",
                         duration: 3,
@@ -347,3 +422,21 @@ function ImageWrapper({
     </Box>
   );
 }
+
+const containerFilter = {
+  hidden: { opacity: 0, transition: { duration: 0.5, ease: "easeInOut" } },
+  show: {
+    opacity: 1,
+    transition: {
+      duration: 0.2,
+      staggerChildren: 0.1,
+      delayChildren: 0.05,
+      ease: "easeInOut",
+    },
+  },
+};
+
+const itemFilter = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1 },
+};
