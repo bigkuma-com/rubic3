@@ -261,6 +261,7 @@ export async function getStaticProps({ params }: any) {
       work: JSON.parse(JSON.stringify(work)),
       others: JSON.parse(JSON.stringify(others)).items,
     },
+    revalidate: 10,
   };
 }
 
