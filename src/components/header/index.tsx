@@ -1,4 +1,10 @@
-import { Box, Heading, Text, useOutsideClick } from "@chakra-ui/react";
+import {
+  Box,
+  Heading,
+  Text,
+  useMediaQuery,
+  useOutsideClick,
+} from "@chakra-ui/react";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -9,6 +15,7 @@ import IconAdhya from "../../assets/svg/icon-member-of-adhya.svg";
 import {
   animateDiagonalTopRight,
   animateOpacityHalf,
+  animateRightLeft100,
   animateRightLeftHalf,
   animateTopToBottom,
   marginX,
@@ -33,6 +40,11 @@ export default function Header({
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [navHover, setNavHover] = useState(-1);
+
+  const [isLarge] = useMediaQuery("(min-width: 991px)", {
+    ssr: true,
+    fallback: false,
+  });
 
   useEffect(() => {
     !isNavOpen && setNavHover(-1);
@@ -142,13 +154,14 @@ export default function Header({
             position="fixed"
             top={0}
             right={0}
-            w="50%"
+            w={{ base: "full", lg: "50%" }}
             display="flex"
             alignItems="center"
-            pl={32}
-            h="80vh"
+            justifyContent={{ base: "center", lg: "flex-start" }}
+            pl={{ base: 0, lg: 32 }}
+            h={{ base: "100vh", lg: "80vh" }}
             bg="light"
-            variants={animateDiagonalTopRight}
+            variants={!isLarge ? animateRightLeft100 : animateDiagonalTopRight}
             initial="initial"
             animate="animate"
             exit="exit"
@@ -159,6 +172,7 @@ export default function Header({
               color="dark"
               display="flex"
               flexDirection="column"
+              alignItems={{ base: "center", lg: "flex-start" }}
               gap={5}
               mt={-12}
               onMouseLeave={() => {
@@ -209,18 +223,22 @@ export default function Header({
                 );
               })}
             </Box>
-            <Image
-              src={IconAdhya}
-              height={35}
-              width={160}
-              alt="Adhya"
-              style={{
-                position: "absolute",
-                bottom: "5rem",
-                left: "8rem",
-                objectFit: "contain",
-              }}
-            />
+            <Box
+              position="absolute"
+              bottom={"5rem"}
+              left={{ base: "50%", lg: "8rem" }}
+              transform={{ base: "translateX(-50%)", lg: "unset" }}
+            >
+              <Image
+                src={IconAdhya}
+                height={35}
+                width={160}
+                alt="Adhya"
+                style={{
+                  objectFit: "contain",
+                }}
+              />
+            </Box>
           </BoxMotion>
         )}
       </AnimatePresence>

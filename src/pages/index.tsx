@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/react";
+import { Box, useMediaQuery } from "@chakra-ui/react";
 import { useRef, useState } from "react";
 import { Mousewheel } from "swiper";
 import "swiper/css";
@@ -10,44 +10,63 @@ import Section1 from "../components/landing/Section1";
 import Section2 from "../components/landing/Section2";
 import Section3 from "../components/landing/Section3";
 import Section4 from "../components/landing/Section4";
+import { getFullList } from "../utils/api";
 import { marginX } from "../utils/consts";
 import { HomeContext } from "../utils/hooks";
 
-export default function Home() {
+export default function Home({ sliders }: any) {
   const [section, setSection] = useState(0);
   const [scrollPosition, setScrollPosition] = useState(0);
   const homepageRef = useRef<any>(null);
+
+  const [isLarge] = useMediaQuery("(min-width: 991px)", {
+    ssr: true,
+    fallback: false,
+  });
 
   return (
     <HomeContext.Provider value={{ section, setSection }}>
       <Header />
 
-      <Box w="full" h="100vh">
-        <Swiper
-          direction={"vertical"}
-          mousewheel={true}
-          modules={[Mousewheel]}
-          simulateTouch={false}
-          onSlideChange={(swiper) => {
-            setSection(swiper.realIndex);
-          }}
-        >
-          <SwiperSlide>
-            <Section1 />
-          </SwiperSlide>
-          <SwiperSlide>
+      {isLarge ? (
+        <Box w="full" h="100vh">
+          <Swiper
+            direction={"vertical"}
+            mousewheel={true}
+            modules={[Mousewheel]}
+            simulateTouch={false}
+            onSlideChange={(swiper) => {
+              setSection(swiper.realIndex);
+            }}
+          >
+            <SwiperSlide>
+              <Section1 sliders={sliders} />
+            </SwiperSlide>
+            <SwiperSlide>
+              <Section2 />
+            </SwiperSlide>
+
+            <SwiperSlide>
+              <Section3 />
+            </SwiperSlide>
+            <SwiperSlide>
+              <Section4 />
+            </SwiperSlide>
+          </Swiper>
+        </Box>
+      ) : (
+        <>
+          <Box bg="dark" display="flex" flexDirection="column" gap={16}>
+            <Section1 sliders={sliders} />
             <Section2 />
-          </SwiperSlide>
-          <SwiperSlide>
             <Section3 />
-          </SwiperSlide>
-          <SwiperSlide>
             <Section4 />
-          </SwiperSlide>
-        </Swiper>
-      </Box>
+          </Box>
+        </>
+      )}
 
       <Box
+        display={{ base: "none", lg: "unset" }}
         position="fixed"
         zIndex={50}
         right={marginX}
@@ -60,4 +79,18 @@ export default function Home() {
       <Footer isHomepage isShowing={section > 0} />
     </HomeContext.Provider>
   );
+}
+
+export async function getStaticProps() {
+  const sliders = await getFullList({
+    collection: "home_slider",
+    params: { sort: "order", expand: "work" },
+  });
+
+  return {
+    props: {
+      sliders: JSON.parse(JSON.stringify(sliders)),
+    },
+    revalidate: 10,
+  };
 }

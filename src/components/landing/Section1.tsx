@@ -1,45 +1,50 @@
 import { Box, Text } from "@chakra-ui/react";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { Autoplay, EffectFade, Lazy } from "swiper";
 import "swiper/css";
 import "swiper/css/effect-fade";
 import { Swiper, SwiperSlide } from "swiper/react";
-import LandingImage1 from "../../assets/images/Homepage Background 1.webp";
-import LandingImage2 from "../../assets/images/Monkey-Express_Portfolio-Website-scaled.webp";
-import LandingImage3 from "../../assets/images/Pegadaian-Web-template-thumbnail-scaled.webp";
+import { getImage } from "../../utils/api";
 import {
   animateBottomToTop,
   animateOpacity,
   marginX,
-  marginY
+  marginY,
 } from "../../utils/consts";
 import BoxMotion from "../BoxMotion";
 
-export default function Section1() {
+export default function Section1({ sliders }: { sliders: any }) {
+  const { push } = useRouter();
+
   return (
-    <Box bg="dark">
-      <BoxMotion
-        h="100vh"
-        position="relative"
-        w="full"
-        className="page1"
-        variants={animateOpacity}
-        initial="initial"
-        animate="animate"
-        exit="exit"
+    <BoxMotion
+      bg="dark"
+      position="relative"
+      w="full"
+      h="full"
+      className="page1"
+      variants={animateOpacity}
+      initial="initial"
+      animate="animate"
+      exit="exit"
+    >
+      <Swiper
+        speed={1000}
+        autoplay={{
+          delay: 3000,
+          disableOnInteraction: false,
+        }}
+        effect={"fade"}
+        loop={true}
+        lazy={true}
+        modules={[Autoplay, EffectFade, Lazy]}
       >
-        <Swiper
-          speed={1000}
-          autoplay={{
-            delay: 3000,
-            disableOnInteraction: false,
-          }}
-          effect={"fade"}
-          loop={true}
-          lazy={true}
-          modules={[Autoplay, EffectFade, Lazy]}
-        >
-          {landingImages.map(({ image, title, subtitle }, i) => {
+        {sliders.map(
+          (
+            { image, title, description, expand, collectionName, id }: any,
+            i: any
+          ) => {
             return (
               <SwiperSlide key={i}>
                 <BoxMotion
@@ -54,52 +59,52 @@ export default function Section1() {
                   exit="exit"
                 >
                   <Text
+                    // display={{ base: "none", lg: "block" }}
+                    fontSize={{ base: "xs", lg: "unset" }}
                     textDecoration="underline"
                     className="swiper-no-swiping text-shadow"
+                    cursor={expand.work ? "pointer" : "unset"}
+                    w="fit-content"
+                    onClick={() => {
+                      expand.work && push(`/works/${expand.work.slug}`);
+                    }}
                   >
                     {title}
                   </Text>
                   <Text
+                    display={{ base: "none", lg: "block" }}
                     fontSize="small"
                     color="whiteAlpha.700"
                     className="swiper-no-swiping text-shadow"
                   >
-                    {subtitle}
+                    {description}
                   </Text>
                 </BoxMotion>
-                <Image
-                  src={image}
-                  alt={`landing image ${i + 1}`}
-                  fill
-                  placeholder="blur"
-                  style={{ objectFit: "cover", userSelect: "none" }}
-                />
+                <Box
+                  h={{ base: "35vmax", md: "100vh" }}
+                  position="relative"
+                  bg="dark"
+                >
+                  <Image
+                    src={getImage({
+                      collectionName: collectionName,
+                      recordId: id,
+                      filename: image,
+                    })}
+                    alt={image}
+                    fill
+                    style={{
+                      objectFit: "cover",
+                      objectPosition: "center center",
+                      backgroundColor: "var(--chakra-colors-dark)",
+                    }}
+                  />
+                </Box>
               </SwiperSlide>
             );
-          })}
-        </Swiper>
-      </BoxMotion>
-    </Box>
+          }
+        )}
+      </Swiper>
+    </BoxMotion>
   );
 }
-
-const landingImages = [
-  {
-    title: "Copper – The Urban Grill",
-    subtitle:
-      "Xerum fugia quodios molut alignia evellis dolore ducipicius int quas doluptia quam.",
-    image: LandingImage1,
-  },
-  {
-    title: "Monkey Express",
-    subtitle:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-    image: LandingImage2,
-  },
-  {
-    title: "Pegadaian",
-    subtitle:
-      "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium",
-    image: LandingImage3,
-  },
-];

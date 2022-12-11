@@ -1,26 +1,48 @@
-import { Box, Divider, Heading, Text } from "@chakra-ui/react";
+import { Box, Divider, Heading, Text, useMediaQuery } from "@chakra-ui/react";
 import { AnimatePresence, LayoutGroup } from "framer-motion";
 import { useRouter } from "next/router";
 import { useContext, useState } from "react";
 import IconPlus from "../../assets/js/IconPlus";
-import { sidebarServices } from "../../utils/consts";
+import { marginXSection, sidebarServices } from "../../utils/consts";
 import { HomeContext } from "../../utils/hooks";
 import BoxMotion from "../BoxMotion";
 import RunningText from "./Runningtext";
+
+const itemBotToTop = (delay = 0) => ({
+  offscreen: {
+    opacity: 0,
+    y: 20,
+  },
+  onscreen: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      duration: 0.5,
+      delay: delay,
+      ease: "easeInOut",
+    },
+  },
+});
 
 export default function Section3() {
   const { push } = useRouter();
   const { section } = useContext(HomeContext);
   const [menuHover, setMenuHover] = useState(-1);
 
+  const [isLarge] = useMediaQuery("(min-width: 991px)", {
+    ssr: true,
+    fallback: false,
+  });
+
   return (
-    <Box
-      h="100vh"
+    <BoxMotion
+      h={{ base: "60vh", lg: "100vh" }}
       w="full"
       bg="dark"
       display="flex"
       alignItems="center"
-      px="8%"
+      px={marginXSection}
+      py={{ base: "15%", lg: 0 }}
       position="relative"
     >
       <LayoutGroup>
@@ -29,29 +51,46 @@ export default function Section3() {
           flexDir="column"
           gap={3}
           w="full"
-          mr="25%"
+          mr={{ base: 0, lg: "25%" }}
           color={"white"}
-          onMouseLeave={() => setMenuHover(-1)}
+          onMouseLeave={() => {
+            isLarge && setMenuHover(-1);
+          }}
           zIndex={5}
         >
           {contents.map(({ title, subtitle }, i) => {
             return (
               <Box
                 key={i}
-                onMouseEnter={() => setMenuHover(i)}
+                onMouseEnter={() => {
+                  isLarge && setMenuHover(i);
+                }}
                 _hover={{
                   opacity: menuHover === i ? 1 : 0.6,
                 }}
                 opacity={menuHover === -1 ? 1 : 0.6}
                 className="animate-fade"
               >
-                <Box display="flex" flexDir="column" gap={2}>
+                <BoxMotion
+                  layout
+                  display="flex"
+                  flexDir="column"
+                  gap={2}
+                  variants={itemBotToTop(i * 0.2)}
+                  initial="offscreen"
+                  whileInView="onscreen"
+                  viewport={{ once: false }}
+                >
                   <BoxMotion layout>
                     <Heading
                       fontWeight="thin"
                       cursor="pointer"
                       onClick={() =>
-                        push(`/services?selected=${sidebarServices[i].query}`)
+                        isLarge
+                          ? push(
+                              `/services?selected=${sidebarServices[i].query}`
+                            )
+                          : setMenuHover(menuHover === i ? -1 : i)
                       }
                     >
                       {title}
@@ -62,7 +101,8 @@ export default function Section3() {
                       <BoxMotion
                         display="flex"
                         justifyContent="space-between"
-                        alignItems="flex-end"
+                        flexDirection={{ base: "column", lg: "row" }}
+                        alignItems={{ base: "flex-start", lg: "flex-end" }}
                         initial={{ opacity: 0 }}
                         animate={{
                           opacity: 1,
@@ -96,6 +136,7 @@ export default function Section3() {
                             alignItems="center"
                             gap={1}
                             cursor="pointer"
+                            mt={{ base: 5, lg: 0 }}
                             onClick={() =>
                               push(
                                 `/services?selected=${sidebarServices[i].query}`
@@ -111,7 +152,7 @@ export default function Section3() {
                   <BoxMotion layout>
                     <Divider />
                   </BoxMotion>
-                </Box>
+                </BoxMotion>
               </Box>
             );
           })}
@@ -125,7 +166,7 @@ export default function Section3() {
           </span>
         }
       />
-    </Box>
+    </BoxMotion>
   );
 }
 

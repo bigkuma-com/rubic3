@@ -37,8 +37,8 @@ select:-webkit-autofill:focus {
 }
 
 .page1 {
-  height: 100vh;
   .swiper {
+    background-color: var(--chakra-colors-dark);
     position: relative;
     .swiper-wrapper {
       transition-timing-function: cubic-bezier(0.87, 0, 0.13, 1);

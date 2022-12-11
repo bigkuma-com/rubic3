@@ -39,7 +39,7 @@ const theme = extendTheme({
   },
   colors: {
     dark: "#141314",
-    light: "#f0f1f1",
+    light: "#ffffff",
   },
   components: {
     Heading: {

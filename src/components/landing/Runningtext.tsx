@@ -5,6 +5,7 @@ export default function RunningText({ text }: { text: any }) {
   return (
     <>
       <BoxMotion
+        display={{ base: "none", lg: "unset" }}
         position="absolute"
         right="6%"
         top="0%"
@@ -57,6 +58,7 @@ export default function RunningText({ text }: { text: any }) {
         </BoxMotion>
       </BoxMotion>
       <BoxMotion
+        display={{ base: "none", lg: "unset" }}
         position="absolute"
         right="6%"
         top="0%"

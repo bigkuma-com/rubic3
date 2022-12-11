@@ -1,10 +1,29 @@
 import { Box, Divider, Heading, Link, Text } from "@chakra-ui/react";
+import { motion } from "framer-motion";
 import { useRouter } from "next/router";
 import IconEmailSm from "../assets/js/IconEmailSm";
 import IconFacebookSm from "../assets/js/IconFacebookSm";
 import IconInstagramSm from "../assets/js/IconInstagramSm";
 import IconWhatsappSm from "../assets/js/IconWhatsappSm";
+import { showOnLarge } from "../utils/consts";
+import BoxMotion from "./BoxMotion";
 import Button from "./Button";
+
+const itemBotToTop = (delay = 0) => ({
+  offscreen: {
+    opacity: 0,
+    y: 20,
+  },
+  onscreen: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      duration: 0.5,
+      delay: delay,
+      ease: "easeInOut",
+    },
+  },
+});
 
 export default function Contacts({
   hasContactButton = false,
@@ -22,76 +41,106 @@ export default function Contacts({
       color={"white"}
       zIndex={5}
     >
-      <Box display="flex">
+      <Box display="flex" gap={{ base: "10%", lg: 0 }}>
         {contents.address.map(({ name, description }, i) => {
           return (
-            <Box key={i} w="30%" lineHeight="1">
-              <Heading fontSize="md" mb={2}>
+            <BoxMotion
+              variants={itemBotToTop(i * 0.2)}
+              initial="offscreen"
+              whileInView="onscreen"
+              viewport={{ once: false }}
+              key={i}
+              w={{ base: "45%", lg: "30%" }}
+              lineHeight="1"
+            >
+              <Heading fontSize="md" mb={2} as="h4">
                 {name}
               </Heading>
+
               <Link fontSize="small" opacity={0.6}>
                 {description}
               </Link>
-            </Box>
+            </BoxMotion>
           );
         })}
-        <Box w="40%" />
+        <Box display={showOnLarge} w="40%" />
       </Box>
 
       <Divider />
 
-      <Text fontSize="x-small" letterSpacing="widest">
+      <Text
+        fontSize="x-small"
+        letterSpacing="widest"
+        as={motion.h3}
+        variants={itemBotToTop(0)}
+        initial="offscreen"
+        whileInView="onscreen"
+        viewport={{ once: false }}
+      >
         Marketing Representative
       </Text>
 
-      <Box display="flex">
+      <Box display="flex" flexWrap="wrap" gap={{ base: "10%", lg: 0 }}>
         {contents.contacts.map(
           ({ email, facebook, instagram, location, name, whatsapp }, i) => {
             return (
-              <Box key={i} w="30%">
+              <BoxMotion
+                variants={itemBotToTop(i * 0.2)}
+                initial="offscreen"
+                whileInView="onscreen"
+                viewport={{ once: false }}
+                key={i}
+                w={{ base: "45%", lg: "30%" }}
+                mb={{ base: i === 2 ? 0 : "10%", lg: 0 }}
+              >
                 <Heading fontSize="md" mb={2}>
                   {location}
                 </Heading>
                 <Box fontSize="small">
                   <span>: : {name}</span>
                   <Box opacity={0.6}>
-                    <Link display="flex" gap={1} alignItems="center">
+                    <Link display="flex" gap={2} alignItems="center">
                       <IconWhatsappSm />
                       {whatsapp}
                     </Link>
-                    <Link display="flex" gap={1} alignItems="center">
+                    <Link display="flex" gap={2} alignItems="center">
                       <IconEmailSm />
                       {email}
                     </Link>
-                    <Link display="flex" gap={1} alignItems="center">
+                    <Link display="flex" gap={2} alignItems="center">
                       <IconInstagramSm />
                       {instagram}
                     </Link>
-                    <Link display="flex" gap={1} alignItems="center">
+                    <Link display="flex" gap={2} alignItems="center">
                       <IconFacebookSm />
                       {facebook}
                     </Link>
                   </Box>
                 </Box>
-              </Box>
+              </BoxMotion>
             );
           }
         )}
-        <Box w="10%" />
+        <Box display={showOnLarge} w="10%" />
       </Box>
 
       {hasContactButton && (
         <>
           <Divider />
 
-          <Box>
+          <BoxMotion
+            variants={itemBotToTop(0.6)}
+            initial="offscreen"
+            whileInView="onscreen"
+            viewport={{ once: false }}
+          >
             <Button
               text={"Contact us"}
               onClick={() => {
                 push("/contact");
               }}
             />
-          </Box>
+          </BoxMotion>
         </>
       )}
     </Box>

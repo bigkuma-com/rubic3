@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/react";
+import { Box, useMediaQuery } from "@chakra-ui/react";
 import { useState } from "react";
 import IconFacebook from "../../assets/js/IconFacebook";
 import IconInstagram from "../../assets/js/IconInstagram";
@@ -21,6 +21,11 @@ export default function SocialButtons({
 }) {
   const [socialHover, setSocialHover] = useState(-1);
 
+  const [isLarge] = useMediaQuery("(min-width: 991px)", {
+    ssr: true,
+    fallback: false,
+  });
+
   return (
     <BoxMotion
       position={position}
@@ -32,6 +37,7 @@ export default function SocialButtons({
       animate="animate"
       exit="exit"
       p={2}
+      mr={-2}
     >
       <Box
         display="flex"

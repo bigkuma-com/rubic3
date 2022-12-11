@@ -3,6 +3,7 @@ import {
   animateBottomToTop,
   marginX,
   marginY,
+  showOnLarge,
   themeColor,
 } from "../../utils/consts";
 import BoxMotion from "../BoxMotion";
@@ -16,6 +17,7 @@ export default function Copyright({
 }) {
   return (
     <BoxMotion
+      display={showOnLarge}
       position={position}
       bottom={marginY}
       left={marginX}
@@ -35,7 +37,12 @@ export default function Copyright({
           },
         }}
       >
-        <Text fontSize="small" as="span" color="inherit" className="text-shadow">
+        <Text
+          fontSize="small"
+          as="span"
+          color="inherit"
+          className="text-shadow"
+        >
           ©2022 Rubicube Group. All Right Reserved
         </Text>
       </BoxMotion>

@@ -8,6 +8,7 @@ import "@fontsource/roboto/700.css";
 import "@fontsource/roboto/900.css";
 import type { AppProps } from "next/app";
 import Head from "next/head";
+import NextNProgress from "nextjs-progressbar";
 import "../assets/css/main.scss";
 import theme from "../theme/theme";
 
@@ -21,6 +22,15 @@ function MyApp({ Component, pageProps }: AppProps) {
         />
       </Head>
       <ChakraProvider theme={theme}>
+        <NextNProgress
+          color="#ffffff"
+          startPosition={0.3}
+          stopDelayMs={200}
+          height={4}
+          showOnShallow={true}
+          options={{ showSpinner: false }}
+        />
+
         <Component {...pageProps} />
       </ChakraProvider>
     </>

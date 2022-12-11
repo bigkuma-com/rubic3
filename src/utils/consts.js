@@ -1,5 +1,8 @@
-export const marginX = [16];
-export const marginY = [12];
+export const marginX = [5, 6, 10, 16];
+export const marginY = [6, 8, 10, 12];
+export const marginXSection = [5, 6, 10, "8%"];
+
+export const showOnLarge = { base: "none", lg: "unset" };
 
 export const sectionMarginLeft = [16];
 export const sectionMarginRight = [52];
@@ -41,6 +44,7 @@ export const animateBottomToTop = {
     y: 50,
     opacity: 0,
     transition: {
+      staggerChildren: 0.5,
       duration: 0.5,
       ease: "easeInOut",
     },
@@ -176,6 +180,26 @@ export const animateDiagonalTopRight = {
   exit: {
     x: "100%",
     y: "-100%",
+    transition: {
+      duration: 0.5,
+      ease: "easeInOut",
+    },
+  },
+};
+
+export const animateRightLeft100 = {
+  initial: {
+    x: "100%",
+  },
+  animate: {
+    x: "0%",
+    transition: {
+      duration: 0.5,
+      ease: "easeInOut",
+    },
+  },
+  exit: {
+    x: "100%",
     transition: {
       duration: 0.5,
       ease: "easeInOut",
