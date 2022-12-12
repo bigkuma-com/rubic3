@@ -297,13 +297,6 @@ export default function Work({ work, others }: any) {
             <Text mb={[2, 3, 4, 6]}>Other Works</Text>
             <Box display="flex" flexDirection="column" gap={7}>
               {others.map((other: any, i: any) => {
-                console.log(
-                  getImage({
-                    collectionName: other.collectionName,
-                    recordId: other.id,
-                    filename: other.showcase,
-                  })
-                );
                 return (
                   <Box
                     key={i}

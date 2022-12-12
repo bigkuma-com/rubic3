@@ -26,7 +26,10 @@ const blockSpacing = {
 export default function Works() {
   const wrapperRef = useRef<any>(null);
 
-  const [isLarge] = useMediaQuery("(min-width: 991px)");
+  const [isLarge] = useMediaQuery("(min-width: 991px)", {
+    ssr: true,
+    fallback: false,
+  });
 
   const [pan, setPan] = useState<null | ICoordinate>(null); //set pan to null to make it center
   const [isCenter, setIsCenter] = useState(true);
@@ -63,6 +66,32 @@ export default function Works() {
     }, 2500);
   }, []);
 
+  const onIdle = () => {
+    if (
+      windowSize !== null &&
+      containerSize !== null &&
+      isTouchDevice !== null
+    ) {
+      isTouchDevice
+        ? window.scrollTo({
+            top: containerSize.y / 2 - windowSize.y / 2,
+            left: containerSize.x / 2 - windowSize.x / 2,
+            behavior: "smooth",
+          })
+        : setIsCenter(true);
+    }
+  };
+
+  const onActive = (event: any) => {
+    setIsCenter(false);
+  };
+
+  const {} = useIdleTimer({ onIdle, onActive, timeout: 2000 });
+
+  function toCenterNoTouch(a: number, b: number) {
+    return (a / 2 - b / 2) * -1;
+  }
+
   const {
     gapX: gx,
     gapY: gy,
@@ -72,37 +101,6 @@ export default function Works() {
     marginTop: mt,
     width: w,
   } = blockSpacing;
-
-  const onIdle = () => {
-    if (!windowSize || !containerSize) return;
-    isTouchDevice
-      ? window.scrollTo({
-          top: containerSize.y / 2 - windowSize.y / 2,
-          left: containerSize.x / 2 - windowSize.x / 2,
-          behavior: "smooth",
-        })
-      : setPan(null);
-  };
-
-  const onActive = (event: any) => {};
-
-  const idleTimer = useIdleTimer({ onIdle, onActive, timeout: 2000 });
-
-  function toCenterNoTouch(a: number, b: number) {
-    return (a / 2 - b / 2) * -1;
-  }
-
-  useEffect(() => {
-    if (!containerSize || !windowSize) return;
-
-    isCenter &&
-      isTouchDevice &&
-      window.scrollTo({
-        top: containerSize.y / 2 - windowSize.y / 2,
-        left: containerSize.x / 2 - windowSize.x / 2,
-        behavior: "smooth",
-      });
-  }, [containerSize, isCenter, isTouchDevice, windowSize]);
 
   return (
     <Box
@@ -444,7 +442,10 @@ function ImageWrapper({
   const { push } = useRouter();
   const [hover, setHover] = useState(false);
 
-  const [isLarge] = useMediaQuery("(min-width: 991px)");
+  const [isLarge] = useMediaQuery("(min-width: 991px)", {
+    ssr: true,
+    fallback: false,
+  });
 
   if (!data) return null;
 
@@ -468,6 +469,9 @@ function ImageWrapper({
       }}
     >
       <BoxMotion
+        position="relative"
+        w="full"
+        h="full"
         initial={{ opacity: 0 }}
         animate={{
           opacity: 1,
@@ -479,6 +483,9 @@ function ImageWrapper({
         }}
       >
         <BoxMotion
+          position="relative"
+          w="full"
+          h="full"
           animate={{
             opacity: hover ? 0.2 : 1,
             transition: {
@@ -495,12 +502,7 @@ function ImageWrapper({
             })}
             alt={data.thumbnail}
             fill
-            placeholder="blur"
-            blurDataURL={`/_next/image?url=${getImage({
-              collectionName: data.collectionName,
-              recordId: data.id,
-              filename: data.thumbnail,
-            })}&w=16&q=1`}
+            sizes="30vw"
             style={{
               objectFit: "cover",
               objectPosition: "center center",
