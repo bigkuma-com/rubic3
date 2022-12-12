@@ -1,13 +1,15 @@
-import { Box, Heading, Spinner, Text } from "@chakra-ui/react";
+import { Box, Heading, Spinner, Text, useMediaQuery } from "@chakra-ui/react";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
+import { useIdleTimer } from "react-idle-timer";
 import BoxMotion from "../../components/BoxMotion";
 import Button from "../../components/Button";
 import Footer from "../../components/footer";
 import Header from "../../components/header";
 import { getImage, useFetchAll } from "../../utils/api";
+import { itemBotToTop, marginX } from "../../utils/consts";
 import { makeBold } from "../../utils/functions";
 import { ICoordinate } from "../../utils/types";
 
@@ -24,7 +26,10 @@ const blockSpacing = {
 export default function Works() {
   const wrapperRef = useRef<any>(null);
 
-  const [pan, setPan] = useState<null | ICoordinate>(null);
+  const [isLarge] = useMediaQuery("(min-width: 991px)");
+
+  const [pan, setPan] = useState<null | ICoordinate>(null); //set pan to null to make it center
+  const [isCenter, setIsCenter] = useState(true);
   const [windowSize, setWindowSize] = useState<null | ICoordinate>(null);
   const [containerSize, setContainerSize] = useState<null | ICoordinate>(null);
   const [isTouchDevice, setIsTouchDevice] = useState<null | boolean>(null);
@@ -52,6 +57,10 @@ export default function Works() {
     const isTouch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
 
     setIsTouchDevice(isTouch);
+
+    setTimeout(() => {
+      setIsCenter(false);
+    }, 2500);
   }, []);
 
   const {
@@ -64,8 +73,36 @@ export default function Works() {
     width: w,
   } = blockSpacing;
 
-  console.log(data);
-  console.log("filters", filters);
+  const onIdle = () => {
+    if (!windowSize || !containerSize) return;
+    isTouchDevice
+      ? window.scrollTo({
+          top: containerSize.y / 2 - windowSize.y / 2,
+          left: containerSize.x / 2 - windowSize.x / 2,
+          behavior: "smooth",
+        })
+      : setPan(null);
+  };
+
+  const onActive = (event: any) => {};
+
+  const idleTimer = useIdleTimer({ onIdle, onActive, timeout: 2000 });
+
+  function toCenterNoTouch(a: number, b: number) {
+    return (a / 2 - b / 2) * -1;
+  }
+
+  useEffect(() => {
+    if (!containerSize || !windowSize) return;
+
+    isCenter &&
+      isTouchDevice &&
+      window.scrollTo({
+        top: containerSize.y / 2 - windowSize.y / 2,
+        left: containerSize.x / 2 - windowSize.x / 2,
+        behavior: "smooth",
+      });
+  }, [containerSize, isCenter, isTouchDevice, windowSize]);
 
   return (
     <Box
@@ -90,14 +127,39 @@ export default function Works() {
     >
       <Header />
 
-      <Box position="fixed" zIndex={1001} top={14} right={32}>
-        <Button
-          text="Filter by Industry"
-          arrowDown
-          onClick={() => {
-            setIsFilterOpen(!isFilterOpen);
-          }}
-        />
+      <Box
+        position="fixed"
+        zIndex={1001}
+        {...(isLarge
+          ? {
+              top: 14,
+              right: 32,
+            }
+          : {
+              top: [24],
+              left: marginX,
+            })}
+        onMouseOver={() => {
+          setIsCenter(true);
+        }}
+        onMouseLeave={() => {
+          setIsCenter(false);
+        }}
+      >
+        <BoxMotion
+          variants={itemBotToTop(0.2)}
+          initial="offscreen"
+          whileInView="onscreen"
+          viewport={{ once: true }}
+        >
+          <Button
+            text={isLarge ? "Filter by Industry" : "Filter"}
+            arrowDown
+            onClick={() => {
+              setIsFilterOpen(!isFilterOpen);
+            }}
+          />
+        </BoxMotion>
         <AnimatePresence>
           {isFilterOpen && (
             <BoxMotion
@@ -111,6 +173,19 @@ export default function Works() {
               animate="show"
               exit="hidden"
             >
+              <Box
+                key="all"
+                _hover={{ opacity: 0.6 }}
+                cursor="pointer"
+                onClick={() => {
+                  setSelectedFilter("");
+                  setIsFilterOpen(false);
+                }}
+              >
+                <Text as={motion.span} variants={itemFilter} fontSize="sm">
+                  All
+                </Text>
+              </Box>
               {filters?.map(({ name, id }) => {
                 return (
                   <Box
@@ -184,8 +259,8 @@ export default function Works() {
                 isTouchDevice
                   ? {}
                   : {
-                      x: (containerSize.x / 2 - windowSize.x / 2) * -1,
-                      y: (containerSize.y / 2 - windowSize.y / 2) * -1,
+                      x: toCenterNoTouch(containerSize.x, windowSize.x),
+                      y: toCenterNoTouch(containerSize.y, windowSize.y),
                       opacity: 0,
                     }
               }
@@ -194,9 +269,13 @@ export default function Works() {
                   ? {}
                   : {
                       x:
-                        pan?.x ?? (containerSize.x / 2 - windowSize.x / 2) * -1,
+                        pan && !isCenter
+                          ? pan.x
+                          : toCenterNoTouch(containerSize.x, windowSize.x),
                       y:
-                        pan?.y ?? (containerSize.y / 2 - windowSize.y / 2) * -1,
+                        pan && !isCenter
+                          ? pan.y
+                          : toCenterNoTouch(containerSize.y, windowSize.y),
                       opacity: 1,
                       scale: 1,
                       transition: {
@@ -207,7 +286,7 @@ export default function Works() {
               }
             >
               <Box className="row-1">
-                {[data[7], data[8], data[9]].map((x, i) => {
+                {[7, 8, 9].map((x, i) => {
                   const top = `${m + mt}%`;
                   const left = `${m + w * (i + 1) + gx * (i + 1)}%`;
                   return (
@@ -216,14 +295,15 @@ export default function Works() {
                       top={top}
                       left={left}
                       className="block-8"
-                      data={x}
+                      data={data[x]}
+                      idx={x}
                     />
                   );
                 })}
               </Box>
 
               <Box className="row-2">
-                {[data[6], data[0], data[1], data[10]].map((x, i) => {
+                {[6, 0, 1, 10].map((x, i) => {
                   const top = `${m + h + gy + mt}%`;
                   const left = `${me + gx * i + w * i}%`;
                   return (
@@ -232,20 +312,22 @@ export default function Works() {
                       top={top}
                       left={left}
                       className="block-8"
-                      data={x}
+                      data={data[x]}
+                      idx={x}
                     />
                   );
                 })}
               </Box>
 
               <Box className="row-3">
-                {[data[17], data[5], null, data[2], data[11]].map((x, i) => {
+                {[17, 5, null, 2, 11].map((x, i) => {
                   const top = `${m + h * 2 + gy * 2 + mt}%`;
                   const left = `${m + w * i + gx * i}%`;
 
-                  if (i === 2)
+                  if (x === null)
                     return (
                       <Box
+                        key="main-block"
                         w="15%"
                         h="10%"
                         position="absolute"
@@ -256,11 +338,36 @@ export default function Works() {
                         justifyContent="center"
                         alignItems="center"
                       >
-                        <Heading mb={2}>Our Works</Heading>
-                        <Text mb={6} opacity={0.6}>
+                        <Heading
+                          mb={2}
+                          as={motion.h1}
+                          variants={itemBotToTop(0.2)}
+                          initial="offscreen"
+                          whileInView="onscreen"
+                          viewport={{ once: true }}
+                        >
+                          Our Works
+                        </Heading>
+                        <Text
+                          mb={6}
+                          opacity={0.6}
+                          as={motion.h2}
+                          variants={itemBotToTop(0.4)}
+                          initial="offscreen"
+                          whileInView="onscreen"
+                          viewport={{ once: true }}
+                          textAlign="center"
+                        >
                           Excellent work done for great clients
                         </Text>
-                        <Button text="Watch Our Reel" />
+                        <BoxMotion
+                          variants={itemBotToTop(0.6)}
+                          initial="offscreen"
+                          whileInView="onscreen"
+                          viewport={{ once: true }}
+                        >
+                          <Button text="Watch Our Reel" />
+                        </BoxMotion>
                       </Box>
                     );
 
@@ -270,14 +377,15 @@ export default function Works() {
                       top={top}
                       left={left}
                       className="block-8"
-                      data={x}
+                      data={data[x]}
+                      idx={x}
                     />
                   );
                 })}
               </Box>
 
               <Box className="row-4">
-                {[data[16], data[4], data[3], data[12]].map((x, i) => {
+                {[16, 4, 3, 12].map((x, i) => {
                   const top = `${m + h * 3 + gy * 3 + mt}%`;
                   const left = `${me + gx * i + w * i}%`;
                   return (
@@ -286,14 +394,15 @@ export default function Works() {
                       top={top}
                       left={left}
                       className="block-8"
-                      data={x}
+                      data={data[x]}
+                      idx={x}
                     />
                   );
                 })}
               </Box>
 
               <Box className="row-5">
-                {[data[7], data[8], data[9]].map((x, i) => {
+                {[15, 14, 13].map((x, i) => {
                   const top = `${m + h * 4 + gy * 4 + mt}%`;
                   const left = `${m + w * (i + 1) + gx * (i + 1)}%`;
                   return (
@@ -302,7 +411,8 @@ export default function Works() {
                       top={top}
                       left={left}
                       className="block-8"
-                      data={x}
+                      data={data[x]}
+                      idx={x}
                     />
                   );
                 })}
@@ -323,14 +433,18 @@ function ImageWrapper({
   left,
   className,
   data,
+  idx = 20,
 }: {
   top: string;
   left: string;
   className?: any;
   data?: any;
+  idx?: number;
 }) {
   const { push } = useRouter();
   const [hover, setHover] = useState(false);
+
+  const [isLarge] = useMediaQuery("(min-width: 991px)");
 
   if (!data) return null;
 
@@ -344,43 +458,55 @@ function ImageWrapper({
       className={className}
       cursor="pointer"
       onMouseEnter={() => {
-        setHover(true);
+        isLarge && setHover(true);
       }}
       onMouseLeave={() => {
-        setHover(false);
+        isLarge && setHover(false);
       }}
       onClick={() => {
-        push(`/works/${data.slug}`);
+        isLarge ? push(`/works/${data.slug}`) : setHover(!hover);
       }}
     >
       <BoxMotion
+        initial={{ opacity: 0 }}
         animate={{
-          opacity: hover ? 0.2 : 1,
+          opacity: 1,
           transition: {
+            delay: 0.2 + idx * 0.2,
             ease: "easeInOut",
-            duration: 0.2,
+            duration: 1,
           },
         }}
       >
-        <Image
-          src={getImage({
-            collectionName: data.collectionName,
-            recordId: data.id,
-            filename: data.thumbnail,
-          })}
-          alt={data.thumbnail}
-          fill
-          placeholder="blur"
-          blurDataURL={`/_next/image?url=${getImage({
-            collectionName: data.collectionName,
-            recordId: data.id,
-            filename: data.thumbnail,
-          })}&w=16&q=1`}
-          style={{
-            objectFit: "cover",
-            objectPosition: "center center",
+        <BoxMotion
+          animate={{
+            opacity: hover ? 0.2 : 1,
+            transition: {
+              ease: "easeInOut",
+              duration: 0.2,
+            },
           }}
-        />
+        >
+          <Image
+            src={getImage({
+              collectionName: data.collectionName,
+              recordId: data.id,
+              filename: data.thumbnail,
+            })}
+            alt={data.thumbnail}
+            fill
+            placeholder="blur"
+            blurDataURL={`/_next/image?url=${getImage({
+              collectionName: data.collectionName,
+              recordId: data.id,
+              filename: data.thumbnail,
+            })}&w=16&q=1`}
+            style={{
+              objectFit: "cover",
+              objectPosition: "center center",
+            }}
+          />
+        </BoxMotion>
       </BoxMotion>
       <AnimatePresence>
         {hover && (
@@ -411,6 +537,9 @@ function ImageWrapper({
             }}
           >
             <Text
+              onClick={() => {
+                !isLarge && push(`/works/${data.slug}`);
+              }}
               className="card-text"
               dangerouslySetInnerHTML={{
                 __html: makeBold(data.description_short, [data.name]),

@@ -1,4 +1,4 @@
-import { Box, Heading, Text } from "@chakra-ui/react";
+import { Box, Heading, Text, useMediaQuery } from "@chakra-ui/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { Mousewheel, Pagination } from "swiper";
@@ -9,19 +9,23 @@ import ArrowRightSm from "../../assets/js/ArrowRightSm";
 import Footer from "../../components/footer";
 import Header from "../../components/header";
 import { findOne, getFullList, getImage, getList } from "../../utils/api";
-import { marginX } from "../../utils/consts";
+import { marginX, showOnLarge } from "../../utils/consts";
 
 export default function Work({ work, others }: any) {
   const { push } = useRouter();
 
+  const [isLarge] = useMediaQuery("(min-width: 991px)", {
+    ssr: true,
+    fallback: false,
+  });
+
   const { name, description_long, services } = work;
 
-  console.log(others);
-
   return (
-    <Box bg="dark" w="full" h="100vh">
+    <Box bg="dark" w="full" h={{ base: "full", lg: "100vh" }}>
       <Header />
       <Box
+        display={showOnLarge}
         position="fixed"
         top="50%"
         left="5%"
@@ -56,22 +60,23 @@ export default function Work({ work, others }: any) {
       </Box>
 
       <Box
-        position="fixed"
+        position={{ base: "relative", lg: "fixed" }}
         left={0}
         top={0}
-        w="33%"
-        h="100vh"
+        w={{ base: "full", lg: "33%" }}
+        h={{ base: "full", lg: "100vh" }}
         display="flex"
         flexDirection="column"
         justifyContent="center"
-        pl="10%"
-        pr="5%"
+        pl={[5, 6, 10, "10%"]}
+        pr={[5, 6, 10, "5%"]}
+        pt={{ base: 28, lg: 0 }}
         color="light"
       >
-        <Heading as="h1" mb={6}>
+        <Heading as="h1" mb={[2, 3, 4, 6]}>
           {name}
         </Heading>
-        <Box maxH="40%" overflowY="scroll" mb={6}>
+        <Box maxH={{ base: "full", lg: "40%" }} overflowY="scroll" mb={[6]}>
           <Text fontSize="small" opacity={0.6} whiteSpace="pre-line">
             {description_long}
           </Text>
@@ -79,12 +84,12 @@ export default function Work({ work, others }: any) {
         <Text as="h5" fontSize="small" fontWeight={500}>
           Services
         </Text>
-        <Text fontSize="small" opacity={0.6}>
+        <Text fontSize="small" opacity={0.6} mb={{ base: 8, lg: 0 }}>
           {services.join(", ")}
         </Text>
 
         <Box
-          display="flex"
+          display={{ base: "none", lg: "flex" }}
           alignItems="center"
           gap={2}
           cursor="pointer"
@@ -105,140 +110,272 @@ export default function Work({ work, others }: any) {
         </Box>
       </Box>
 
-      <Box display="flex">
-        <Box w="33%" />
-        <Box w="67%" h="100vh" position="relative">
-          <Swiper
-            slidesPerView={"auto"}
-            mousewheel={true}
-            modules={[Mousewheel, Pagination]}
+      {isLarge ? (
+        <Box display="flex">
+          <Box w="33%" display={showOnLarge} />
+          <Box
+            w={{ base: "full", lg: "67%" }}
+            h={{ base: "full", lg: "100vh" }}
+            position="relative"
           >
-            {work.showcases.map((showcase: string, i: any) => {
-              return (
-                <SwiperSlide key={i} style={{ width: "85%" }}>
-                  <Box
-                    position="relative"
-                    w="100%"
-                    h="100vh"
-                    display="inline-block"
+            <Swiper
+              slidesPerView={"auto"}
+              mousewheel={true}
+              modules={[Mousewheel, Pagination]}
+            >
+              {work.showcases.map((showcase: string, i: any) => {
+                return (
+                  <SwiperSlide
+                    key={i}
+                    style={{ width: isLarge ? "85%" : "100%" }}
                   >
-                    <Image
-                      src={getImage({
-                        collectionName: work.collectionName,
-                        recordId: work.id,
-                        filename: showcase,
-                      })}
-                      alt={showcase}
-                      fill
-                      placeholder="blur"
-                      blurDataURL={`/_next/image?url=${getImage({
-                        collectionName: work.collectionName,
-                        recordId: work.id,
-                        filename: showcase,
-                      })}&w=16&q=1`}
-                      style={{
-                        objectFit: "cover",
-                        objectPosition: "center center",
-                      }}
-                    />
+                    <Box
+                      position="relative"
+                      w="100%"
+                      h="100vh"
+                      display="inline-block"
+                    >
+                      <Image
+                        src={getImage({
+                          collectionName: work.collectionName,
+                          recordId: work.id,
+                          filename: showcase,
+                        })}
+                        alt={showcase}
+                        fill
+                        placeholder="blur"
+                        blurDataURL={`/_next/image?url=${getImage({
+                          collectionName: work.collectionName,
+                          recordId: work.id,
+                          filename: showcase,
+                        })}&w=16&q=1`}
+                        style={{
+                          objectFit: "cover",
+                          objectPosition: "center center",
+                        }}
+                      />
+                    </Box>
+                  </SwiperSlide>
+                );
+              })}
+              <SwiperSlide style={{ width: "50%" }}>
+                <Box
+                  h="full"
+                  w="full"
+                  position="relative"
+                  display="flex"
+                  flexDirection="column"
+                  justifyContent="center"
+                  pl={16}
+                >
+                  <Text mb={[2, 3, 4, 6]}>Other Works</Text>
+                  <Box display="flex" flexDirection="column" gap={7}>
+                    {others.map((other: any, i: any) => {
+                      console.log(
+                        getImage({
+                          collectionName: other.collectionName,
+                          recordId: other.id,
+                          filename: other.showcase,
+                        })
+                      );
+                      return (
+                        <Box
+                          key={i}
+                          cursor="pointer"
+                          onClick={() => {
+                            push(`/works/${other.slug}`);
+                          }}
+                        >
+                          <Box position="relative" w="60%" h="25vmin" mb={2}>
+                            <Image
+                              src={getImage({
+                                collectionName: other.collectionName,
+                                recordId: other.id,
+                                filename: other.thumbnail,
+                              })}
+                              alt={other.name}
+                              fill
+                              placeholder="blur"
+                              blurDataURL={`/_next/image?url=${getImage({
+                                collectionName: other.collectionName,
+                                recordId: other.id,
+                                filename: other.thumbnail,
+                              })}&w=16&q=1`}
+                              style={{
+                                objectFit: "cover",
+                                objectPosition: "center center",
+                              }}
+                            />
+                          </Box>
+                          <Text opacity={0.7} fontSize="sm">
+                            {other.name}
+                          </Text>
+                        </Box>
+                      );
+                    })}
                   </Box>
-                </SwiperSlide>
-              );
-            })}
-            <SwiperSlide style={{ width: "50%" }}>
+                  <Box
+                    position="absolute"
+                    top="50%"
+                    right={marginX}
+                    transform="translate(-50%, -50%)"
+                    zIndex={50}
+                    color="light"
+                  >
+                    <Box
+                      display="flex"
+                      flexDirection="column"
+                      alignItems="center"
+                      gap={2}
+                      cursor="pointer"
+                      color="inherit"
+                      onClick={() => push(`/works/${others[0].slug}`)}
+                    >
+                      <Text
+                        color="inherit"
+                        as="span"
+                        style={{
+                          writingMode: "vertical-lr",
+                          transform: "rotate(0deg)",
+                        }}
+                        fontSize="small"
+                        letterSpacing="wider"
+                        fontWeight={400}
+                      >
+                        Next Works
+                      </Text>
+                      <ArrowRightSm />
+                    </Box>
+                  </Box>
+                </Box>
+              </SwiperSlide>
+            </Swiper>
+          </Box>
+        </Box>
+      ) : (
+        <Box display="flex" flexDirection="column">
+          {work.showcases.map((showcase: string, i: any) => {
+            return (
               <Box
-                h="full"
-                w="full"
+                key={i}
                 position="relative"
+                w="100vw"
+                h="100vw"
+                display="inline-block"
+              >
+                <Image
+                  src={getImage({
+                    collectionName: work.collectionName,
+                    recordId: work.id,
+                    filename: showcase,
+                  })}
+                  alt={showcase}
+                  fill
+                  placeholder="blur"
+                  blurDataURL={`/_next/image?url=${getImage({
+                    collectionName: work.collectionName,
+                    recordId: work.id,
+                    filename: showcase,
+                  })}&w=16&q=1`}
+                  style={{
+                    objectFit: "cover",
+                    objectPosition: "center center",
+                  }}
+                />
+              </Box>
+            );
+          })}
+          <Box
+            h="full"
+            w="full"
+            position="relative"
+            display="flex"
+            flexDirection="column"
+            justifyContent="center"
+            pl={16}
+          >
+            <Text mb={[2, 3, 4, 6]}>Other Works</Text>
+            <Box display="flex" flexDirection="column" gap={7}>
+              {others.map((other: any, i: any) => {
+                console.log(
+                  getImage({
+                    collectionName: other.collectionName,
+                    recordId: other.id,
+                    filename: other.showcase,
+                  })
+                );
+                return (
+                  <Box
+                    key={i}
+                    cursor="pointer"
+                    onClick={() => {
+                      push(`/works/${other.slug}`);
+                    }}
+                  >
+                    <Box position="relative" w="60%" h="25vmin" mb={2}>
+                      <Image
+                        src={getImage({
+                          collectionName: other.collectionName,
+                          recordId: other.id,
+                          filename: other.thumbnail,
+                        })}
+                        alt={other.name}
+                        fill
+                        placeholder="blur"
+                        blurDataURL={`/_next/image?url=${getImage({
+                          collectionName: other.collectionName,
+                          recordId: other.id,
+                          filename: other.thumbnail,
+                        })}&w=16&q=1`}
+                        style={{
+                          objectFit: "cover",
+                          objectPosition: "center center",
+                        }}
+                      />
+                    </Box>
+                    <Text opacity={0.7} fontSize="sm">
+                      {other.name}
+                    </Text>
+                  </Box>
+                );
+              })}
+            </Box>
+            <Box
+              position="absolute"
+              top="50%"
+              right={marginX}
+              transform="translate(-50%, -50%)"
+              zIndex={50}
+              color="light"
+            >
+              <Box
                 display="flex"
                 flexDirection="column"
-                justifyContent="center"
-                pl={16}
+                alignItems="center"
+                gap={2}
+                cursor="pointer"
+                color="inherit"
+                onClick={() => push(`/works/${others[0].slug}`)}
               >
-                <Text mb={6}>Other Works</Text>
-                <Box display="flex" flexDirection="column" gap={7}>
-                  {others.map((other: any, i: any) => {
-                    console.log(
-                      getImage({
-                        collectionName: other.collectionName,
-                        recordId: other.id,
-                        filename: other.showcase,
-                      })
-                    );
-                    return (
-                      <Box
-                        key={i}
-                        cursor="pointer"
-                        onClick={() => {
-                          push(`/works/${other.slug}`);
-                        }}
-                      >
-                        <Box position="relative" w="60%" h="25vmin" mb={2}>
-                          <Image
-                            src={getImage({
-                              collectionName: other.collectionName,
-                              recordId: other.id,
-                              filename: other.thumbnail,
-                            })}
-                            alt={other.name}
-                            fill
-                            placeholder="blur"
-                            blurDataURL={`/_next/image?url=${getImage({
-                              collectionName: other.collectionName,
-                              recordId: other.id,
-                              filename: other.thumbnail,
-                            })}&w=16&q=1`}
-                            style={{
-                              objectFit: "cover",
-                              objectPosition: "center center",
-                            }}
-                          />
-                        </Box>
-                        <Text opacity={0.7} fontSize="sm">
-                          {other.name}
-                        </Text>
-                      </Box>
-                    );
-                  })}
-                </Box>
-                <Box
-                  position="absolute"
-                  top="50%"
-                  right={marginX}
-                  transform="translate(-50%, -50%)"
-                  zIndex={50}
-                  color="light"
+                <Text
+                  color="inherit"
+                  as="span"
+                  style={{
+                    writingMode: "vertical-lr",
+                    transform: "rotate(0deg)",
+                  }}
+                  fontSize="small"
+                  letterSpacing="wider"
+                  fontWeight={400}
                 >
-                  <Box
-                    display="flex"
-                    flexDirection="column"
-                    alignItems="center"
-                    gap={2}
-                    cursor="pointer"
-                    color="inherit"
-                    onClick={() => push(`/works/${others[0].slug}`)}
-                  >
-                    <Text
-                      color="inherit"
-                      as="span"
-                      style={{
-                        writingMode: "vertical-lr",
-                        transform: "rotate(0deg)",
-                      }}
-                      fontSize="small"
-                      letterSpacing="wider"
-                      fontWeight={400}
-                    >
-                      Next Works
-                    </Text>
-                    <ArrowRightSm />
-                  </Box>
-                </Box>
+                  Next Works
+                </Text>
+                <ArrowRightSm />
               </Box>
-            </SwiperSlide>
-          </Swiper>
+            </Box>
+          </Box>
         </Box>
-      </Box>
+      )}
       <Footer />
     </Box>
   );

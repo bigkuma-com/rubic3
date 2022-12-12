@@ -12,14 +12,14 @@ export default function ArrowDownSm() {
         stroke="currentColor"
         strokeWidth="0.6"
         strokeMiterlimit="10"
-        stroke-Linecap="round"
+        strokeLinecap="round"
       />
       <path
         d="M0.519928 8.47998L5.59993 13.67L10.6699 8.47998"
         stroke="currentColor"
         strokeWidth="0.6"
         strokeMiterlimit="10"
-        stroke-Linecap="round"
+        strokeLinecap="round"
         strokeLinejoin="round"
       />
     </svg>

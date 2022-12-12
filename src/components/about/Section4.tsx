@@ -92,7 +92,7 @@ export default function Section4({
                   viewport={{ once: false }}
                   key={id}
                   position="relative"
-                  h={{ base: "80px", xl: "100" }}
+                  h={{ base: "80px", lg: "100" }}
                   w="full"
                 >
                   <Image
