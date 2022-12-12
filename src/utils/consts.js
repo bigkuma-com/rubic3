@@ -4,8 +4,8 @@ export const marginXSection = [5, 6, 10, "8%"];
 
 export const showOnLarge = { base: "none", lg: "unset" };
 
-export const sectionMarginLeft = [16];
-export const sectionMarginRight = [52];
+export const sectionMarginLeft = [5, 6, 10, 16];
+export const sectionMarginRight = [5, 6, 10, 52];
 
 export const themeColor = [
   "var(--chakra-colors-dark)",
@@ -86,6 +86,18 @@ export const animateRightLeft = {
     opacity: 0,
     transition: {
       duration: 0.5,
+      ease: "easeInOut",
+    },
+  },
+};
+
+export const animateLeftRight = {
+  initial: { x: -50, opacity: 0 },
+  animate: {
+    x: 0,
+    opacity: 1,
+    transition: {
+      duration: 1,
       ease: "easeInOut",
     },
   },
@@ -206,3 +218,19 @@ export const animateRightLeft100 = {
     },
   },
 };
+
+export const itemBotToTop = (delay = 0) => ({
+  offscreen: {
+    opacity: 0,
+    y: 20,
+  },
+  onscreen: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      duration: 0.5,
+      delay: delay,
+      ease: "easeInOut",
+    },
+  },
+});

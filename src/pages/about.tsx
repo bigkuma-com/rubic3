@@ -1,4 +1,4 @@
-import { Box, Text } from "@chakra-ui/react";
+import { Box, Text, useMediaQuery } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Mousewheel } from "swiper";
@@ -14,8 +14,23 @@ import BoxMotion from "../components/BoxMotion";
 import Footer from "../components/footer";
 import Header from "../components/header";
 import { getFullList } from "../utils/api";
-import { sidebarAbout, themeColor } from "../utils/consts";
-import { arrayChunk } from "../utils/functions";
+import { animateLeftRight, sidebarAbout, themeColor } from "../utils/consts";
+
+const itemBotToTop = (delay = 0) => ({
+  offscreen: {
+    opacity: 0,
+    y: 20,
+  },
+  onscreen: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      duration: 0.5,
+      delay: delay,
+      ease: "easeInOut",
+    },
+  },
+});
 
 export default function About({
   clients,
@@ -34,6 +49,11 @@ export default function About({
   const [section, setSection] = useState(0);
   const [swiper, setSwiper] = useState<any>(null);
   const [isEven, setIsEven] = useState(true);
+
+  const [isLarge] = useMediaQuery("(min-width: 991px)", {
+    ssr: true,
+    fallback: false,
+  });
 
   useEffect(() => {
     setIsEven(!!(section % 2));
@@ -72,30 +92,36 @@ export default function About({
         zIndex={50}
         color={themeColor[+!isEven]}
       >
-        <Box
-          display="flex"
-          flexDirection="column"
-          alignItems="center"
-          gap={2}
-          cursor="pointer"
-          color="inherit"
-          onClick={() => push("/")}
+        <BoxMotion
+          variants={animateLeftRight}
+          initial="initial"
+          animate="animate"
         >
-          <Text
+          <Box
+            display={{ base: "none", lg: "flex" }}
+            flexDirection="column"
+            alignItems="center"
+            gap={2}
+            cursor="pointer"
             color="inherit"
-            as="span"
-            style={{
-              writingMode: "vertical-lr",
-              transform: "rotate(-180deg)",
-            }}
-            fontSize="small"
-            letterSpacing="wider"
-            fontWeight={400}
+            onClick={() => push("/")}
           >
-            Back to Home
-          </Text>
-          <ArrowLeftSm />
-        </Box>
+            <Text
+              color="inherit"
+              as="span"
+              style={{
+                writingMode: "vertical-lr",
+                transform: "rotate(-180deg)",
+              }}
+              fontSize="small"
+              letterSpacing="wider"
+              fontWeight={400}
+            >
+              Back to Home
+            </Text>
+            <ArrowLeftSm />
+          </Box>
+        </BoxMotion>
       </Box>
       <Box
         position="relative"
@@ -103,7 +129,7 @@ export default function About({
         top={0}
         w="30%"
         h="100vh"
-        display="flex"
+        display={{ base: "none", lg: "flex" }}
         alignItems="center"
         pl="10%"
         color={themeColor[+!isEven]}
@@ -117,36 +143,46 @@ export default function About({
         >
           {sidebarAbout.map((item, i) => {
             return (
-              <Box
-                as="li"
+              <BoxMotion
                 key={i}
-                opacity={section == i ? 1 : 0.6}
-                _hover={{ opacity: 1 }}
-                cursor="pointer"
-                onClick={() => {
-                  slideTo(i);
-                  setSection(i);
-                  replace({
-                    query: { ...query, selected: sidebarAbout[i].query },
-                  });
-                }}
-                className="animate-fade"
+                variants={itemBotToTop(i * 0.2)}
+                initial="offscreen"
+                whileInView="onscreen"
               >
-                {item.name}
-              </Box>
+                <Box
+                  as="li"
+                  // key={i}
+                  opacity={section == i ? 1 : 0.6}
+                  _hover={{ opacity: 1 }}
+                  cursor="pointer"
+                  onClick={() => {
+                    slideTo(i);
+                    setSection(i);
+                    replace({
+                      query: { ...query, selected: sidebarAbout[i].query },
+                    });
+                  }}
+                  className="animate-fade"
+                >
+                  {item.name}
+                </Box>
+              </BoxMotion>
             );
           })}
         </Box>
         <BoxMotion
           w="2px"
-          h={`${(section + 1) * 20}%`}
           position="absolute"
           opacity={0.6}
           right={0}
           top={0}
           zIndex={5}
           layout
+          initial={{
+            height: "0%",
+          }}
           animate={{
+            height: `${(section + 1) * 20}%`,
             backgroundColor: themeColor[+!isEven],
             transition: {
               backgroundColor: {
@@ -162,21 +198,80 @@ export default function About({
         <BoxMotion
           opacity={0.1}
           w="2px"
-          h="100vh"
           position="absolute"
           right={0}
           top={0}
           zIndex={4}
+          initial={{
+            height: "0vh",
+          }}
           animate={{
+            height: "100vh",
             backgroundColor: themeColor[+!isEven],
             transition: {
               duration: 0.5,
               ease: "easeInOut",
+              height: {
+                duration: 1,
+                ease: "easeInOut",
+              },
             },
           }}
         />
       </Box>
-      <Box h="100vh" w="70%">
+
+      <Box h="100vh" display={{ base: "flex", lg: "none" }} alignItems="center">
+        <BoxMotion
+          w="3px"
+          position="absolute"
+          opacity={0.6}
+          right={0}
+          top={0}
+          zIndex={5}
+          layout
+          initial={{
+            height: "0%",
+          }}
+          animate={{
+            height: `${(section + 1) * 20}%`,
+            backgroundColor: themeColor[+!isEven],
+            transition: {
+              backgroundColor: {
+                duration: 0.5,
+                ease: "easeInOut",
+              },
+              height: {
+                duration: 2,
+              },
+            },
+          }}
+        />
+        <BoxMotion
+          opacity={0.1}
+          w="3px"
+          position="absolute"
+          right={0}
+          top={0}
+          zIndex={4}
+          initial={{
+            height: "0vh",
+          }}
+          animate={{
+            height: "100vh",
+            backgroundColor: themeColor[+!isEven],
+            transition: {
+              duration: 0.5,
+              ease: "easeInOut",
+              height: {
+                duration: 1,
+                ease: "easeInOut",
+              },
+            },
+          }}
+        />
+      </Box>
+
+      <Box h="100vh" w={{ base: "full", lg: "70%" }}>
         <Swiper
           direction={"vertical"}
           mousewheel={true}
@@ -184,22 +279,28 @@ export default function About({
           simulateTouch={false}
           onSlideChange={(swiper) => {
             setSection(swiper.realIndex);
+            replace({
+              query: {
+                ...query,
+                selected: sidebarAbout[swiper.realIndex].query,
+              },
+            });
           }}
           onSwiper={setSwiper}
         >
-          <SwiperSlide>
+          <SwiperSlide style={{ height: "100vh" }}>
             <Section1 />
           </SwiperSlide>
-          <SwiperSlide>
+          <SwiperSlide style={{ height: "100vh" }}>
             <Section2 clients={clients} />
           </SwiperSlide>
-          <SwiperSlide>
+          <SwiperSlide style={{ height: "100vh" }}>
             <Section3 leaders={leaders} />
           </SwiperSlide>
-          <SwiperSlide>
+          <SwiperSlide style={{ height: "100vh" }}>
             <Section4 associates={associates} partners={partners} />
           </SwiperSlide>
-          <SwiperSlide>
+          <SwiperSlide style={{ height: "100vh" }}>
             <Section5 careers={careers} />
           </SwiperSlide>
         </Swiper>
@@ -229,8 +330,8 @@ export async function getStaticProps() {
   );
   const clients = resultsClients.filter((client) => client.type === "client");
 
-  const leaders = arrayChunk(resultLeaders, 4);
-  const careers = arrayChunk(resultCareers, 3);
+  const leaders = resultLeaders;
+  const careers = resultCareers;
 
   return {
     props: {

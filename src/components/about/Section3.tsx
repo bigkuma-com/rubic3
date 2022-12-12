@@ -1,25 +1,42 @@
-import { Box, Heading, Text } from "@chakra-ui/react";
+import { Box, Heading, Text, useMediaQuery } from "@chakra-ui/react";
+import { motion } from "framer-motion";
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Navigation, Pagination } from "swiper";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import IconArrowLeft from "../../assets/js/IconArrowLeft";
 import IconArrowRight from "../../assets/js/IconArrowRight";
 import { getImage } from "../../utils/api";
-import { sectionMarginLeft, sectionMarginRight } from "../../utils/consts";
+import {
+  itemBotToTop,
+  sectionMarginLeft,
+  sectionMarginRight,
+} from "../../utils/consts";
+import { arrayChunk } from "../../utils/functions";
+import BoxMotion from "../BoxMotion";
 import HomePagination from "../landing/HomePagination";
 
 export default function Section3({ leaders }: { leaders: any }) {
   const prevRefSlides = useRef(null);
   const nextRefSlides = useRef(null);
 
+  const [isLarge] = useMediaQuery("(min-width: 991px)", {
+    ssr: true,
+    fallback: false,
+  });
+
   const [section, setSection] = useState(0);
+  const [leadersEnd, setLeadersEnd] = useState<any>([]);
+
+  useEffect(() => {
+    setLeadersEnd(arrayChunk(leaders, isLarge ? 4 : 2));
+  }, [isLarge, leaders]);
 
   return (
     <Box
       w="full"
-      h="full"
+      h="100vh"
       display="flex"
       alignItems="center"
       pl={sectionMarginLeft}
@@ -27,16 +44,34 @@ export default function Section3({ leaders }: { leaders: any }) {
       py="10%"
     >
       <Box display="flex" flexDirection="column" w="full">
-        <Heading w="70%" mb={6}>
+        <Heading
+          w="70%"
+          mb={[2, 3, 4, 6]}
+          as={motion.h2}
+          variants={itemBotToTop(0)}
+          initial="offscreen"
+          whileInView="onscreen"
+          viewport={{ once: false }}
+        >
           Nextgen Leaders
         </Heading>
-        <Text w="70%" opacity={0.6} fontSize="sm" mb={14}>
+        <Text
+          w="70%"
+          opacity={0.6}
+          fontSize="sm"
+          mb={[8, 10, 12, 14]}
+          as={motion.p}
+          variants={itemBotToTop(0.2)}
+          initial="offscreen"
+          whileInView="onscreen"
+          viewport={{ once: false }}
+        >
           We invest in our people’s future, create inclusive working
           environments, and build cultures based on the values of openness,
           optimism, and a commitment to extraordinary work.
         </Text>
         <Box w="full" className="section-leaders" position="relative">
-          <Box
+          <BoxMotion
             position="absolute"
             right={0}
             top={0}
@@ -46,8 +81,12 @@ export default function Section3({ leaders }: { leaders: any }) {
             display="flex"
             gap={3}
             alignItems="center"
+            variants={itemBotToTop(0.4)}
+            initial="offscreen"
+            whileInView="onscreen"
+            viewport={{ once: false }}
           >
-            <HomePagination section={section} maxSection={leaders.length} />
+            <HomePagination section={section} maxSection={leadersEnd.length} />
             <Box
               ref={prevRefSlides}
               opacity={section === 0 ? 0.6 : 1}
@@ -57,12 +96,12 @@ export default function Section3({ leaders }: { leaders: any }) {
             </Box>
             <Box
               ref={nextRefSlides}
-              opacity={section === leaders.length - 1 ? 0.6 : 1}
+              opacity={section === leadersEnd.length - 1 ? 0.6 : 1}
               cursor="pointer"
             >
               <IconArrowRight />
             </Box>
-          </Box>
+          </BoxMotion>
 
           <Swiper
             pagination={{
@@ -79,49 +118,62 @@ export default function Section3({ leaders }: { leaders: any }) {
               swiper.navigation.update();
             }}
           >
-            {leaders.map((leadersChunck: any, i: number) => {
-              return (
-                <SwiperSlide key={i}>
-                  <Box display="flex" w="full">
-                    {leadersChunck.map(
-                      (
-                        { collectionName, id, name, picture, title }: any,
-                        j: number
-                      ) => {
-                        return (
-                          <Box
-                            w="25%"
-                            key={id}
-                            mt={j % 2 === 0 ? 0 : "50px"}
-                            display="flex"
-                            flexDirection="column"
-                          >
-                            <Box position="relative" w="full" h={280} mb={2}>
-                              <Image
-                                src={getImage({
-                                  collectionName,
-                                  recordId: id,
-                                  filename: picture,
-                                })}
-                                alt={name}
-                                fill
-                                style={{ objectFit: "cover" }}
-                              />
+            {leadersEnd.length > 0 &&
+              leadersEnd.map((leadersChunck: any, i: number) => {
+                return (
+                  <SwiperSlide key={i}>
+                    <BoxMotion
+                      display="flex"
+                      w="full"
+                      variants={itemBotToTop(0.6)}
+                      initial="offscreen"
+                      whileInView="onscreen"
+                      viewport={{ once: false }}
+                    >
+                      {leadersChunck.map(
+                        (
+                          { collectionName, id, name, picture, title }: any,
+                          j: number
+                        ) => {
+                          return (
+                            <Box
+                              w={!isLarge ? "50%" : "25%"}
+                              key={id}
+                              mt={j % 2 === 0 ? 0 : "50px"}
+                              display="flex"
+                              flexDirection="column"
+                            >
+                              <Box
+                                position="relative"
+                                w="full"
+                                h={[140, null, null, 280]}
+                                mb={2}
+                              >
+                                <Image
+                                  src={getImage({
+                                    collectionName,
+                                    recordId: id,
+                                    filename: picture,
+                                  })}
+                                  alt={name}
+                                  fill
+                                  style={{ objectFit: "cover" }}
+                                />
+                              </Box>
+                              <Text pl={3} fontWeight={500}>
+                                {name}
+                              </Text>
+                              <Text pl={3} fontSize="small" opacity={0.5}>
+                                {title}
+                              </Text>
                             </Box>
-                            <Text pl={3} fontWeight={500}>
-                              {name}
-                            </Text>
-                            <Text pl={3} fontSize="small" opacity={0.5}>
-                              {title}
-                            </Text>
-                          </Box>
-                        );
-                      }
-                    )}
-                  </Box>
-                </SwiperSlide>
-              );
-            })}
+                          );
+                        }
+                      )}
+                    </BoxMotion>
+                  </SwiperSlide>
+                );
+              })}
           </Swiper>
         </Box>
       </Box>

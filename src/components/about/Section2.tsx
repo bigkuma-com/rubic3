@@ -1,16 +1,31 @@
-import { Box, Heading, SimpleGrid } from "@chakra-ui/react";
+import { Box, Heading, SimpleGrid, useMediaQuery } from "@chakra-ui/react";
+import { motion } from "framer-motion";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getImage } from "../../utils/api";
-import { sectionMarginLeft, sectionMarginRight } from "../../utils/consts";
+import {
+  itemBotToTop,
+  sectionMarginLeft,
+  sectionMarginRight,
+} from "../../utils/consts";
+import BoxMotion from "../BoxMotion";
 
 export default function Section2({ clients }: { clients: any }) {
-  const [maxItem, setMaxItem] = useState(24);
+  const [isLarge] = useMediaQuery("(min-width: 991px)", {
+    ssr: true,
+    fallback: false,
+  });
+
+  const [maxItem, setMaxItem] = useState(isLarge ? 24 : 15);
+
+  useEffect(() => {
+    setMaxItem(isLarge ? 24 : 15);
+  }, [isLarge]);
 
   return (
     <Box
       w="full"
-      h="full"
+      h="100vh"
       display="flex"
       alignItems="center"
       pl={sectionMarginLeft}
@@ -18,11 +33,19 @@ export default function Section2({ clients }: { clients: any }) {
       py="10%"
     >
       <Box display="flex" flexDirection="column" w="full">
-        <Heading mb={6} color="dark">
+        <Heading
+          mb={6}
+          color="dark"
+          as={motion.h2}
+          variants={itemBotToTop(0)}
+          initial="offscreen"
+          whileInView="onscreen"
+          viewport={{ once: false }}
+        >
           Our Major Clients
         </Heading>
 
-        <SimpleGrid columns={6} spacing={5}>
+        <SimpleGrid columns={[4, null, null, 6]} spacing={5}>
           {clients
             .filter(function ({}, i: any) {
               if (i > maxItem) {
@@ -30,9 +53,18 @@ export default function Section2({ clients }: { clients: any }) {
               }
               return true;
             })
-            .map(({ collectionName, id, logo, name, order }: any) => {
+            .map(({ collectionName, id, logo, name, order }: any, i: any) => {
               return (
-                <Box key={id} position="relative" h="100" w="full">
+                <BoxMotion
+                  key={id}
+                  position="relative"
+                  h="100"
+                  w="full"
+                  variants={itemBotToTop(i * 0.1)}
+                  initial="offscreen"
+                  whileInView="onscreen"
+                  viewport={{ once: false }}
+                >
                   <Image
                     src={getImage({
                       collectionName,
@@ -46,7 +78,7 @@ export default function Section2({ clients }: { clients: any }) {
                       objectPosition: "center center",
                     }}
                   />
-                </Box>
+                </BoxMotion>
               );
             })}
         </SimpleGrid>
