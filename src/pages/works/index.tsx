@@ -538,15 +538,22 @@ function ImageWrapper({
               },
             }}
           >
-            <Text
-              onClick={() => {
-                !isLarge && push(`/works/${data.slug}`);
-              }}
-              className="card-text"
-              dangerouslySetInnerHTML={{
-                __html: makeBold(data.description_short, [data.name]),
-              }}
-            />
+            {isLarge ? (
+              <Text
+                className="card-text"
+                dangerouslySetInnerHTML={{
+                  __html: makeBold(data.description_short, [data.name]),
+                }}
+              />
+            ) : (
+              <Text
+                onClick={() => {
+                  push(`/works/${data.slug}`);
+                }}
+              >
+                {data.name}
+              </Text>
+            )}
           </BoxMotion>
         )}
       </AnimatePresence>

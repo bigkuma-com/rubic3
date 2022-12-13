@@ -8,10 +8,10 @@ import ArrowLeftSm from "../../assets/js/ArrowLeftSm";
 import ArrowRightSm from "../../assets/js/ArrowRightSm";
 import Footer from "../../components/footer";
 import Header from "../../components/header";
-import { findOne, getFullList, getImage, getList } from "../../utils/api";
+import { findOne, getFullList, getImage } from "../../utils/api";
 import { marginX, showOnLarge } from "../../utils/consts";
 
-export default function Work({ work, others }: any) {
+export default function Work({ work }: any) {
   const { push } = useRouter();
 
   const [isLarge] = useMediaQuery("(min-width: 991px)", {
@@ -19,7 +19,8 @@ export default function Work({ work, others }: any) {
     fallback: false,
   });
 
-  const { name, description_long, services } = work;
+  const { name, description_long, services, expand } = work;
+  const { next_work, other_works } = expand;
 
   return (
     <Box bg="dark" w="full" h={{ base: "full", lg: "100vh" }}>
@@ -170,7 +171,7 @@ export default function Work({ work, others }: any) {
                 >
                   <Text mb={[2, 3, 4, 6]}>Other Works</Text>
                   <Box display="flex" flexDirection="column" gap={7}>
-                    {others.map((other: any, i: any) => {
+                    {other_works.map((other: any, i: any) => {
                       console.log(
                         getImage({
                           collectionName: other.collectionName,
@@ -229,7 +230,7 @@ export default function Work({ work, others }: any) {
                       gap={2}
                       cursor="pointer"
                       color="inherit"
-                      onClick={() => push(`/works/${others[0].slug}`)}
+                      onClick={() => push(`/works/${next_work.slug}`)}
                     >
                       <Text
                         color="inherit"
@@ -292,20 +293,33 @@ export default function Work({ work, others }: any) {
             display="flex"
             flexDirection="column"
             justifyContent="center"
-            pl={16}
+            pl={[5, 6, 10, 16]}
+            pr={[5, 6, 10, 0]}
+            mt={[6, 6, 6, 0]}
+            mb={[14, 14, 14, 0]}
           >
             <Text mb={[2, 3, 4, 6]}>Other Works</Text>
-            <Box display="flex" flexDirection="column" gap={7}>
-              {others.map((other: any, i: any) => {
+            <Box
+              display="flex"
+              flexDirection={{ base: "row", lg: "column" }}
+              gap={7}
+            >
+              {other_works.map((other: any, i: any) => {
                 return (
                   <Box
+                    w={{ base: "full", lg: "unset" }}
                     key={i}
                     cursor="pointer"
                     onClick={() => {
                       push(`/works/${other.slug}`);
                     }}
                   >
-                    <Box position="relative" w="60%" h="25vmin" mb={2}>
+                    <Box
+                      position="relative"
+                      w={{ base: "full", lg: "60%" }}
+                      h={{ base: "20vh", lg: "25vmin" }}
+                      mb={2}
+                    >
                       <Image
                         src={getImage({
                           collectionName: other.collectionName,
@@ -342,13 +356,13 @@ export default function Work({ work, others }: any) {
               color="light"
             >
               <Box
-                display="flex"
+                display={{ base: "none", lg: "flex" }}
                 flexDirection="column"
                 alignItems="center"
                 gap={2}
                 cursor="pointer"
                 color="inherit"
-                onClick={() => push(`/works/${others[0].slug}`)}
+                onClick={() => push(`/works/${next_work.slug}`)}
               >
                 <Text
                   color="inherit"
@@ -378,18 +392,12 @@ export async function getStaticProps({ params }: any) {
   const work = await findOne({
     collection: "works",
     keyword: `slug="${params.slug}"`,
-  });
-
-  const others = await getList({
-    collection: "works",
-    perPage: 2,
-    params: { filter: `(id != '${work.id}')` },
+    params: { expand: "other_works, next_work" },
   });
 
   return {
     props: {
       work: JSON.parse(JSON.stringify(work)),
-      others: JSON.parse(JSON.stringify(others)).items,
     },
     revalidate: 10,
   };
