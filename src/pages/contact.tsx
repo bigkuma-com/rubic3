@@ -8,7 +8,7 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 import { useFormik } from "formik";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import * as Yup from "yup";
@@ -21,6 +21,7 @@ import { postOne } from "../utils/api";
 import {
   animateOpacityHalf,
   animateScaling,
+  itemBotToTop,
   phoneRegExp,
 } from "../utils/consts";
 
@@ -123,14 +124,39 @@ export default function Contact() {
         )}
       </AnimatePresence>
 
-      <Box px="12%" py="12%" w="full" minH="100vh">
-        <Heading fontSize="3xl" mb={10}>
+      <Box
+        px={[5, 6, 10, "12%"]}
+        py={[28, null, null, "12%"]}
+        w="full"
+        minH="100vh"
+      >
+        <Heading
+          fontSize="3xl"
+          mb={[8, null, null, 10]}
+          as={motion.h1}
+          variants={itemBotToTop(0)}
+          initial="offscreen"
+          whileInView="onscreen"
+          viewport={{ once: false }}
+        >
           Hello! You can drop us a message.
         </Heading>
 
-        <Box display="flex">
-          <Box w="20%">
-            <Box display="flex" flexDirection="column" gap={3} w="fit-content">
+        <Box display="flex" flexDirection={{ base: "column", lg: "row" }}>
+          <BoxMotion
+            variants={itemBotToTop(0.2)}
+            initial="offscreen"
+            whileInView="onscreen"
+            viewport={{ once: false }}
+            w={{ base: "full", lg: "20%" }}
+            mb={[4, null, null, 0]}
+          >
+            <Box
+              display="flex"
+              flexDirection={{ base: "row", lg: "column" }}
+              gap={3}
+              w="fit-content"
+            >
               <Button
                 text="General inquiry"
                 withIcon={false}
@@ -152,9 +178,15 @@ export default function Contact() {
                 }}
               />
             </Box>
-          </Box>
+          </BoxMotion>
 
-          <Box w="70%">
+          <BoxMotion
+            variants={itemBotToTop(0.4)}
+            initial="offscreen"
+            whileInView="onscreen"
+            viewport={{ once: false }}
+            w={{ base: "full", lg: "70%" }}
+          >
             <form onSubmit={formik.handleSubmit}>
               <Text fontWeight={400} mb={3}>
                 {title[activeInquiry]}
@@ -163,7 +195,12 @@ export default function Contact() {
                 {subtitle[activeInquiry]}
               </Text>
 
-              <Box display="flex" gap={5} mb={8}>
+              <Box
+                display="flex"
+                flexDirection={{ base: "column", lg: "row" }}
+                gap={5}
+                mb={[5, null, null, 8]}
+              >
                 <Input
                   fontWeight={300}
                   variant="flushed"
@@ -210,7 +247,12 @@ export default function Contact() {
                 />
               </Box>
 
-              <Box display="flex" gap={5} mb={8}>
+              <Box
+                flexDirection={{ base: "column", lg: "row" }}
+                display="flex"
+                gap={5}
+                mb={[5, null, null, 8]}
+              >
                 <Input
                   fontWeight={300}
                   variant="flushed"
@@ -278,9 +320,15 @@ export default function Contact() {
                 {...formik.getFieldProps("message")}
               />
 
-              <Box display="flex" justifyContent="space-between" mb={24}>
+              <Box
+                display="flex"
+                justifyContent="space-between"
+                mb={24}
+                flexDirection={{ base: "column", lg: "row" }}
+              >
                 <Checkbox
-                  w="70%"
+                  w={{ base: "full", lg: "70%" }}
+                  mb={[6, null, null, 0]}
                   colorScheme="dark"
                   borderRadius="50%"
                   className="checkbox"
@@ -304,7 +352,7 @@ export default function Contact() {
             </form>
 
             <Contacts />
-          </Box>
+          </BoxMotion>
         </Box>
       </Box>
 
