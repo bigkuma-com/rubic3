@@ -24,6 +24,7 @@ const blockSpacing = {
 };
 
 export default function Works() {
+  const { query, replace } = useRouter();
   const wrapperRef = useRef<any>(null);
 
   const [isLarge] = useMediaQuery("(min-width: 991px)", {
@@ -50,6 +51,22 @@ export default function Works() {
       sort: "order",
     }
   );
+
+  useEffect(() => {
+    if (query.filter == undefined || query.filter === "all") {
+      setSelectedFilter("");
+    } else if (query.filter && filters) {
+      filters.map(({ name, id }) => {
+        if (
+          name.includes(query.filter) ||
+          name.toLowerCase() == query.filter?.toString().toLowerCase()
+        ) {
+          setSelectedFilter(id);
+          return;
+        }
+      });
+    }
+  }, [query, filters]);
 
   useEffect(() => {
     if (wrapperRef === null) return;
@@ -181,6 +198,9 @@ export default function Works() {
                 _hover={{ opacity: 0.6 }}
                 cursor="pointer"
                 onClick={() => {
+                  replace({
+                    query: { ...query, filter: "all" },
+                  });
                   setSelectedFilter("");
                   setIsFilterOpen(false);
                 }}
@@ -197,6 +217,9 @@ export default function Works() {
                     cursor="pointer"
                     onClick={() => {
                       setSelectedFilter(id);
+                      replace({
+                        query: { ...query, filter: name.toLowerCase() },
+                      });
                       setIsFilterOpen(false);
                     }}
                   >
