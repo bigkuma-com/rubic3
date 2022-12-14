@@ -38,6 +38,12 @@ export default function Work({ work }: any) {
     description: description_short,
   };
 
+  console.log(getImage({
+                collectionName: collectionName,
+                recordId: id,
+                filename: thumbnail,
+              }))
+
   return (
     <>
       <NextSeo
@@ -50,12 +56,23 @@ export default function Work({ work }: any) {
           description: seo.description,
           images: [
             {
+              url: `/_next/image?url=${getImage({
+                collectionName: collectionName,
+                recordId: id,
+                filename: thumbnail,
+              })}&w=400&q=1`,
+            },
+            {
               url: getImage({
                 collectionName: collectionName,
                 recordId: id,
                 filename: thumbnail,
               }),
               alt: "Project Image",
+            },
+            {
+              url: "/logo.png",
+              alt: "Logo Image",
               type: "image/jpeg",
             },
           ],
