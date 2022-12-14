@@ -38,3 +38,7 @@ next-env.d.ts
 # pocketbase
 pocketbase
 /pb_data
+
+/public/robots.txt
+/public/sitemap-0.xml
+/public/sitemap.xml

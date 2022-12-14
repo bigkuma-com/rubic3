@@ -1,5 +1,6 @@
 import { Box, Heading, Spinner, Text, useMediaQuery } from "@chakra-ui/react";
 import { AnimatePresence, motion } from "framer-motion";
+import { NextSeo } from "next-seo";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
@@ -21,6 +22,12 @@ const blockSpacing = {
   margin: 6.5,
   marginTop: 12,
   marginEven: 17,
+};
+
+const seo = {
+  url: "https://rubic3.com/works",
+  title: "Our Works - Rubicube Group",
+  description: "Excellent work done for great clients",
 };
 
 export default function Works() {
@@ -125,333 +132,374 @@ export default function Works() {
   } = blockSpacing;
 
   return (
-    <Box
-      h="100vh"
-      w="100vw"
-      overflow={isTouchDevice ? "visible" : "hidden"}
-      onMouseMove={(e) => {
-        const mouseX = e.clientX,
-          mouseY = e.clientY;
-
-        const xDecimal = mouseX / window.innerWidth,
-          yDecimal = mouseY / window.innerHeight;
-
-        const maxX = wrapperRef.current.offsetWidth - window.innerWidth,
-          maxY = wrapperRef.current.offsetHeight - window.innerHeight;
-
-        const panX = maxX * xDecimal * -1,
-          panY = maxY * yDecimal * -1;
-
-        setPan({ x: panX, y: panY });
-      }}
-    >
-      <Header />
-
-      <Box
-        position="fixed"
-        zIndex={1001}
-        {...(isLarge
-          ? {
-              top: 14,
-              right: 32,
-            }
-          : {
-              top: [24],
-              left: marginX,
-            })}
-        onMouseOver={() => {
-          setIsCenter(true);
+    <>
+      <NextSeo
+        title={seo.title}
+        description={seo.description}
+        canonical={seo.url}
+        openGraph={{
+          url: seo.url,
+          title: seo.title,
+          description: seo.description,
+          images: [
+            {
+              url: "/logo.png",
+              alt: "Logo Image",
+              type: "image/jpeg",
+            },
+            { url: "/logo.png" },
+          ],
+          site_name: "Rubic3",
         }}
-        onMouseLeave={() => {
-          setIsCenter(false);
+        twitter={{
+          handle: "@handle",
+          site: "@site",
+          cardType: "summary_large_image",
+        }}
+        additionalLinkTags={[
+          {
+            rel: "icon",
+            href: "/fav.svg",
+          },
+          {
+            rel: "apple-touch-icon",
+            href: "/fav.svg",
+            sizes: "76x76",
+          },
+        ]}
+      />
+      <Box
+        h="100vh"
+        w="100vw"
+        overflow={isTouchDevice ? "visible" : "hidden"}
+        onMouseMove={(e) => {
+          const mouseX = e.clientX,
+            mouseY = e.clientY;
+
+          const xDecimal = mouseX / window.innerWidth,
+            yDecimal = mouseY / window.innerHeight;
+
+          const maxX = wrapperRef.current.offsetWidth - window.innerWidth,
+            maxY = wrapperRef.current.offsetHeight - window.innerHeight;
+
+          const panX = maxX * xDecimal * -1,
+            panY = maxY * yDecimal * -1;
+
+          setPan({ x: panX, y: panY });
         }}
       >
-        <BoxMotion
-          variants={itemBotToTop(0.2)}
-          initial="offscreen"
-          whileInView="onscreen"
-          viewport={{ once: true }}
+        <Header />
+
+        <Box
+          position="fixed"
+          zIndex={1001}
+          {...(isLarge
+            ? {
+                top: 14,
+                right: 32,
+              }
+            : {
+                top: [24],
+                left: marginX,
+              })}
+          onMouseOver={() => {
+            setIsCenter(true);
+          }}
+          onMouseLeave={() => {
+            setIsCenter(false);
+          }}
         >
-          <Button
-            text={isLarge ? "Filter by Industry" : "Filter"}
-            arrowDown
-            onClick={() => {
-              setIsFilterOpen(!isFilterOpen);
-            }}
-          />
-        </BoxMotion>
+          <BoxMotion
+            variants={itemBotToTop(0.2)}
+            initial="offscreen"
+            whileInView="onscreen"
+            viewport={{ once: true }}
+          >
+            <Button
+              text={isLarge ? "Filter by Industry" : "Filter"}
+              arrowDown
+              onClick={() => {
+                setIsFilterOpen(!isFilterOpen);
+              }}
+            />
+          </BoxMotion>
+          <AnimatePresence>
+            {isFilterOpen && (
+              <BoxMotion
+                mt={6}
+                ml={5}
+                display="flex"
+                flexDirection="column"
+                gap={3}
+                variants={containerFilter}
+                initial="hidden"
+                animate="show"
+                exit="hidden"
+              >
+                <Box
+                  key="all"
+                  _hover={{ opacity: 0.6 }}
+                  cursor="pointer"
+                  onClick={() => {
+                    replace({
+                      query: { ...query, filter: "all" },
+                    });
+                    setSelectedFilter("");
+                    setIsFilterOpen(false);
+                  }}
+                >
+                  <Text as={motion.span} variants={itemFilter} fontSize="sm">
+                    All
+                  </Text>
+                </Box>
+                {filters?.map(({ name, id }) => {
+                  return (
+                    <Box
+                      key={id}
+                      _hover={{ opacity: 0.6 }}
+                      cursor="pointer"
+                      onClick={() => {
+                        setSelectedFilter(id);
+                        replace({
+                          query: { ...query, filter: name.toLowerCase() },
+                        });
+                        setIsFilterOpen(false);
+                      }}
+                    >
+                      <Text
+                        as={motion.span}
+                        variants={itemFilter}
+                        fontSize="sm"
+                      >
+                        {name}
+                      </Text>
+                    </Box>
+                  );
+                })}
+              </BoxMotion>
+            )}
+          </AnimatePresence>
+        </Box>
+
         <AnimatePresence>
           {isFilterOpen && (
             <BoxMotion
-              mt={6}
-              ml={5}
-              display="flex"
-              flexDirection="column"
-              gap={3}
-              variants={containerFilter}
-              initial="hidden"
-              animate="show"
-              exit="hidden"
-            >
-              <Box
-                key="all"
-                _hover={{ opacity: 0.6 }}
-                cursor="pointer"
-                onClick={() => {
-                  replace({
-                    query: { ...query, filter: "all" },
-                  });
-                  setSelectedFilter("");
-                  setIsFilterOpen(false);
-                }}
-              >
-                <Text as={motion.span} variants={itemFilter} fontSize="sm">
-                  All
-                </Text>
-              </Box>
-              {filters?.map(({ name, id }) => {
-                return (
-                  <Box
-                    key={id}
-                    _hover={{ opacity: 0.6 }}
-                    cursor="pointer"
-                    onClick={() => {
-                      setSelectedFilter(id);
-                      replace({
-                        query: { ...query, filter: name.toLowerCase() },
-                      });
-                      setIsFilterOpen(false);
-                    }}
-                  >
-                    <Text as={motion.span} variants={itemFilter} fontSize="sm">
-                      {name}
-                    </Text>
-                  </Box>
-                );
-              })}
-            </BoxMotion>
-          )}
-        </AnimatePresence>
-      </Box>
-
-      <AnimatePresence>
-        {isFilterOpen && (
-          <BoxMotion
-            w="100vw"
-            h="100vh"
-            position="fixed"
-            top={0}
-            left={0}
-            zIndex={1000}
-            bg="black"
-            initial={{ opacity: 0 }}
-            animate={{
-              opacity: 0.7,
-              transition: { ease: "easeInOut", duration: 0.5 },
-            }}
-            exit={{
-              opacity: 0,
-              transition: { ease: "easeInOut", duration: 0.5 },
-            }}
-          />
-        )}
-      </AnimatePresence>
-
-      <Box
-        bg="dark"
-        w="160vmax"
-        h="160vmax"
-        position="relative"
-        ref={wrapperRef}
-      >
-        {windowSize &&
-          containerSize &&
-          isTouchDevice !== null &&
-          (isLoading ? (
-            <Box
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
               w="100vw"
               h="100vh"
-            >
-              <Spinner color="light" size="xl" />
-            </Box>
-          ) : data ? (
-            <BoxMotion
-              w="full"
-              h="full"
-              initial={
-                isTouchDevice
-                  ? {}
-                  : {
-                      x: toCenterNoTouch(containerSize.x, windowSize.x),
-                      y: toCenterNoTouch(containerSize.y, windowSize.y),
-                      opacity: 0,
-                    }
-              }
-              animate={
-                isTouchDevice
-                  ? {}
-                  : {
-                      x:
-                        pan && !isCenter
-                          ? pan.x
-                          : toCenterNoTouch(containerSize.x, windowSize.x),
-                      y:
-                        pan && !isCenter
-                          ? pan.y
-                          : toCenterNoTouch(containerSize.y, windowSize.y),
-                      opacity: 1,
-                      scale: 1,
-                      transition: {
-                        ease: "easeOut",
-                        duration: 3,
-                      },
-                    }
-              }
-            >
-              <Box className="row-1">
-                {[7, 8, 9].map((x, i) => {
-                  const top = `${m + mt}%`;
-                  const left = `${m + w * (i + 1) + gx * (i + 1)}%`;
-                  return (
-                    <ImageWrapper
-                      key={i}
-                      top={top}
-                      left={left}
-                      className="block-8"
-                      data={data[x]}
-                      idx={x}
-                    />
-                  );
-                })}
+              position="fixed"
+              top={0}
+              left={0}
+              zIndex={1000}
+              bg="black"
+              initial={{ opacity: 0 }}
+              animate={{
+                opacity: 0.7,
+                transition: { ease: "easeInOut", duration: 0.5 },
+              }}
+              exit={{
+                opacity: 0,
+                transition: { ease: "easeInOut", duration: 0.5 },
+              }}
+            />
+          )}
+        </AnimatePresence>
+
+        <Box
+          bg="dark"
+          w="160vmax"
+          h="160vmax"
+          position="relative"
+          ref={wrapperRef}
+        >
+          {windowSize &&
+            containerSize &&
+            isTouchDevice !== null &&
+            (isLoading ? (
+              <Box
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                w="100vw"
+                h="100vh"
+              >
+                <Spinner color="light" size="xl" />
               </Box>
-
-              <Box className="row-2">
-                {[6, 0, 1, 10].map((x, i) => {
-                  const top = `${m + h + gy + mt}%`;
-                  const left = `${me + gx * i + w * i}%`;
-                  return (
-                    <ImageWrapper
-                      key={i}
-                      top={top}
-                      left={left}
-                      className="block-8"
-                      data={data[x]}
-                      idx={x}
-                    />
-                  );
-                })}
-              </Box>
-
-              <Box className="row-3">
-                {[17, 5, null, 2, 11].map((x, i) => {
-                  const top = `${m + h * 2 + gy * 2 + mt}%`;
-                  const left = `${m + w * i + gx * i}%`;
-
-                  if (x === null)
+            ) : data ? (
+              <BoxMotion
+                w="full"
+                h="full"
+                initial={
+                  isTouchDevice
+                    ? {}
+                    : {
+                        x: toCenterNoTouch(containerSize.x, windowSize.x),
+                        y: toCenterNoTouch(containerSize.y, windowSize.y),
+                        opacity: 0,
+                      }
+                }
+                animate={
+                  isTouchDevice
+                    ? {}
+                    : {
+                        x:
+                          pan && !isCenter
+                            ? pan.x
+                            : toCenterNoTouch(containerSize.x, windowSize.x),
+                        y:
+                          pan && !isCenter
+                            ? pan.y
+                            : toCenterNoTouch(containerSize.y, windowSize.y),
+                        opacity: 1,
+                        scale: 1,
+                        transition: {
+                          ease: "easeOut",
+                          duration: 3,
+                        },
+                      }
+                }
+              >
+                <Box className="row-1">
+                  {[7, 8, 9].map((x, i) => {
+                    const top = `${m + mt}%`;
+                    const left = `${m + w * (i + 1) + gx * (i + 1)}%`;
                     return (
-                      <Box
-                        key="main-block"
-                        w="15%"
-                        h="10%"
-                        position="absolute"
-                        top={`${m + h * 2 + gy * 2 + mt}%`}
-                        left={`${m + w * 2 + gx * 2}%`}
-                        display="flex"
-                        flexDirection="column"
-                        justifyContent="center"
-                        alignItems="center"
-                      >
-                        <Heading
-                          mb={[1, null, null, 2]}
-                          as={motion.h1}
-                          variants={itemBotToTop(0.2)}
-                          initial="offscreen"
-                          whileInView="onscreen"
-                          viewport={{ once: true }}
-                        >
-                          Our Works
-                        </Heading>
-                        <Text
-                          mb={[3, 3, 4, 6]}
-                          opacity={0.6}
-                          as={motion.h2}
-                          variants={itemBotToTop(0.4)}
-                          initial="offscreen"
-                          whileInView="onscreen"
-                          viewport={{ once: true }}
-                          textAlign="center"
-                          fontSize={{ sm: "small", lg: "unset" }}
-                        >
-                          Excellent work done for great clients
-                        </Text>
-                        <BoxMotion
-                          variants={itemBotToTop(0.6)}
-                          initial="offscreen"
-                          whileInView="onscreen"
-                          viewport={{ once: true }}
-                        >
-                          <Button text="Watch Our Reel" />
-                        </BoxMotion>
-                      </Box>
+                      <ImageWrapper
+                        key={i}
+                        top={top}
+                        left={left}
+                        className="block-8"
+                        data={data[x]}
+                        idx={x}
+                      />
                     );
+                  })}
+                </Box>
 
-                  return (
-                    <ImageWrapper
-                      key={i}
-                      top={top}
-                      left={left}
-                      className="block-8"
-                      data={data[x]}
-                      idx={x}
-                    />
-                  );
-                })}
-              </Box>
+                <Box className="row-2">
+                  {[6, 0, 1, 10].map((x, i) => {
+                    const top = `${m + h + gy + mt}%`;
+                    const left = `${me + gx * i + w * i}%`;
+                    return (
+                      <ImageWrapper
+                        key={i}
+                        top={top}
+                        left={left}
+                        className="block-8"
+                        data={data[x]}
+                        idx={x}
+                      />
+                    );
+                  })}
+                </Box>
 
-              <Box className="row-4">
-                {[16, 4, 3, 12].map((x, i) => {
-                  const top = `${m + h * 3 + gy * 3 + mt}%`;
-                  const left = `${me + gx * i + w * i}%`;
-                  return (
-                    <ImageWrapper
-                      key={i}
-                      top={top}
-                      left={left}
-                      className="block-8"
-                      data={data[x]}
-                      idx={x}
-                    />
-                  );
-                })}
-              </Box>
+                <Box className="row-3">
+                  {[17, 5, null, 2, 11].map((x, i) => {
+                    const top = `${m + h * 2 + gy * 2 + mt}%`;
+                    const left = `${m + w * i + gx * i}%`;
 
-              <Box className="row-5">
-                {[15, 14, 13].map((x, i) => {
-                  const top = `${m + h * 4 + gy * 4 + mt}%`;
-                  const left = `${m + w * (i + 1) + gx * (i + 1)}%`;
-                  return (
-                    <ImageWrapper
-                      key={i}
-                      top={top}
-                      left={left}
-                      className="block-8"
-                      data={data[x]}
-                      idx={x}
-                    />
-                  );
-                })}
-              </Box>
-            </BoxMotion>
-          ) : (
-            <></>
-          ))}
+                    if (x === null)
+                      return (
+                        <Box
+                          key="main-block"
+                          w="15%"
+                          h="10%"
+                          position="absolute"
+                          top={`${m + h * 2 + gy * 2 + mt}%`}
+                          left={`${m + w * 2 + gx * 2}%`}
+                          display="flex"
+                          flexDirection="column"
+                          justifyContent="center"
+                          alignItems="center"
+                        >
+                          <Heading
+                            mb={[1, null, null, 2]}
+                            as={motion.h1}
+                            variants={itemBotToTop(0.2)}
+                            initial="offscreen"
+                            whileInView="onscreen"
+                            viewport={{ once: true }}
+                          >
+                            Our Works
+                          </Heading>
+                          <Text
+                            mb={[3, 3, 4, 6]}
+                            opacity={0.6}
+                            as={motion.h2}
+                            variants={itemBotToTop(0.4)}
+                            initial="offscreen"
+                            whileInView="onscreen"
+                            viewport={{ once: true }}
+                            textAlign="center"
+                            fontSize={{ sm: "small", lg: "unset" }}
+                          >
+                            Excellent work done for great clients
+                          </Text>
+                          <BoxMotion
+                            variants={itemBotToTop(0.6)}
+                            initial="offscreen"
+                            whileInView="onscreen"
+                            viewport={{ once: true }}
+                          >
+                            <Button text="Watch Our Reel" />
+                          </BoxMotion>
+                        </Box>
+                      );
+
+                    return (
+                      <ImageWrapper
+                        key={i}
+                        top={top}
+                        left={left}
+                        className="block-8"
+                        data={data[x]}
+                        idx={x}
+                      />
+                    );
+                  })}
+                </Box>
+
+                <Box className="row-4">
+                  {[16, 4, 3, 12].map((x, i) => {
+                    const top = `${m + h * 3 + gy * 3 + mt}%`;
+                    const left = `${me + gx * i + w * i}%`;
+                    return (
+                      <ImageWrapper
+                        key={i}
+                        top={top}
+                        left={left}
+                        className="block-8"
+                        data={data[x]}
+                        idx={x}
+                      />
+                    );
+                  })}
+                </Box>
+
+                <Box className="row-5">
+                  {[15, 14, 13].map((x, i) => {
+                    const top = `${m + h * 4 + gy * 4 + mt}%`;
+                    const left = `${m + w * (i + 1) + gx * (i + 1)}%`;
+                    return (
+                      <ImageWrapper
+                        key={i}
+                        top={top}
+                        left={left}
+                        className="block-8"
+                        data={data[x]}
+                        idx={x}
+                      />
+                    );
+                  })}
+                </Box>
+              </BoxMotion>
+            ) : (
+              <></>
+            ))}
+        </Box>
+
+        <Footer />
       </Box>
-
-      <Footer />
-    </Box>
+    </>
   );
 }
 

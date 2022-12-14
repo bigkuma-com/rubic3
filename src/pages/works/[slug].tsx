@@ -1,4 +1,5 @@
 import { Box, Heading, Text, useMediaQuery } from "@chakra-ui/react";
+import { NextSeo } from "next-seo";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { Mousewheel, Pagination } from "swiper";
@@ -19,319 +20,196 @@ export default function Work({ work }: any) {
     fallback: false,
   });
 
-  const { name, description_long, services, expand } = work;
+  const {
+    name,
+    description_long,
+    description_short,
+    services,
+    expand,
+    id,
+    thumbnail,
+    collectionName,
+  } = work;
   const { next_work, other_works } = expand;
 
+  const seo = {
+    url: "https://rubic3.com/works",
+    title: `${name} | Our Works - Rubicube Group`,
+    description: description_short,
+  };
+
   return (
-    <Box bg="dark" w="full" h={{ base: "full", lg: "100vh" }}>
-      <Header />
-      <Box
-        display={showOnLarge}
-        position="fixed"
-        top="50%"
-        left="5%"
-        transform="translate(-50%, -50%)"
-        zIndex={50}
-        color="light"
-      >
+    <>
+      <NextSeo
+        title={seo.title}
+        description={seo.description}
+        canonical={seo.url}
+        openGraph={{
+          url: seo.url,
+          title: seo.title,
+          description: seo.description,
+          images: [
+            {
+              url: getImage({
+                collectionName: collectionName,
+                recordId: id,
+                filename: thumbnail,
+              }),
+              alt: "Project Image",
+              type: "image/jpeg",
+            },
+            {
+              url: "/logo.png",
+              alt: "Logo Image",
+              type: "image/jpeg",
+            },
+            { url: "/logo.png" },
+          ],
+          site_name: "Rubic3",
+        }}
+        twitter={{
+          handle: "@handle",
+          site: "@site",
+          cardType: "summary_large_image",
+        }}
+        additionalLinkTags={[
+          {
+            rel: "icon",
+            href: "/fav.svg",
+          },
+          {
+            rel: "apple-touch-icon",
+            href: "/fav.svg",
+            sizes: "76x76",
+          },
+        ]}
+      />
+      <Box bg="dark" w="full" h={{ base: "full", lg: "100vh" }}>
+        <Header />
         <Box
-          display="flex"
-          flexDirection="column"
-          alignItems="center"
-          gap={2}
-          cursor="pointer"
-          color="inherit"
-          onClick={() => push("/works")}
+          display={showOnLarge}
+          position="fixed"
+          top="50%"
+          left="5%"
+          transform="translate(-50%, -50%)"
+          zIndex={50}
+          color="light"
         >
-          <Text
-            color="inherit"
-            as="span"
-            style={{
-              writingMode: "vertical-lr",
-              transform: "rotate(-180deg)",
-            }}
-            fontSize="small"
-            letterSpacing="wider"
-            fontWeight={400}
-          >
-            Back to Works
-          </Text>
-          <ArrowLeftSm />
-        </Box>
-      </Box>
-
-      <Box
-        position={{ base: "relative", lg: "fixed" }}
-        left={0}
-        top={0}
-        w={{ base: "full", lg: "33%" }}
-        h={{ base: "full", lg: "100vh" }}
-        display="flex"
-        flexDirection="column"
-        justifyContent="center"
-        pl={[5, 6, 10, "10%"]}
-        pr={[5, 6, 10, "5%"]}
-        pt={{ base: 28, lg: 0 }}
-        color="light"
-      >
-        <Heading as="h1" mb={[2, 3, 4, 6]}>
-          {name}
-        </Heading>
-        <Box maxH={{ base: "full", lg: "40%" }} overflowY="scroll" mb={[6]}>
-          <Text fontSize="small" opacity={0.6} whiteSpace="pre-line">
-            {description_long}
-          </Text>
-        </Box>
-        <Text as="h5" fontSize="small" fontWeight={500}>
-          Services
-        </Text>
-        <Text fontSize="small" opacity={0.6} mb={{ base: 8, lg: 0 }}>
-          {services.join(", ")}
-        </Text>
-
-        <Box
-          display={{ base: "none", lg: "flex" }}
-          alignItems="center"
-          gap={2}
-          cursor="pointer"
-          color="inherit"
-          onClick={() => push("/works")}
-          position="absolute"
-          bottom={"15%"}
-        >
-          <Text
-            color="inherit"
-            as="span"
-            fontSize="small"
-            letterSpacing="wider"
-          >
-            Scroll to discover
-          </Text>
-          <ArrowRightSm />
-        </Box>
-      </Box>
-
-      {isLarge ? (
-        <Box display="flex">
-          <Box w="33%" display={showOnLarge} />
           <Box
-            w={{ base: "full", lg: "67%" }}
-            h={{ base: "full", lg: "100vh" }}
-            position="relative"
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            gap={2}
+            cursor="pointer"
+            color="inherit"
+            onClick={() => push("/works")}
           >
-            <Swiper
-              slidesPerView={"auto"}
-              mousewheel={true}
-              modules={[Mousewheel, Pagination]}
+            <Text
+              color="inherit"
+              as="span"
+              style={{
+                writingMode: "vertical-lr",
+                transform: "rotate(-180deg)",
+              }}
+              fontSize="small"
+              letterSpacing="wider"
+              fontWeight={400}
             >
-              {work.showcases.map((showcase: string, i: any) => {
-                return (
-                  <SwiperSlide
-                    key={i}
-                    style={{ width: isLarge ? "85%" : "100%" }}
-                  >
-                    <Box
-                      position="relative"
-                      w="100%"
-                      h="100vh"
-                      display="inline-block"
-                    >
-                      <Image
-                        src={getImage({
-                          collectionName: work.collectionName,
-                          recordId: work.id,
-                          filename: showcase,
-                        })}
-                        alt={showcase}
-                        fill
-                        placeholder="blur"
-                        blurDataURL={`/_next/image?url=${getImage({
-                          collectionName: work.collectionName,
-                          recordId: work.id,
-                          filename: showcase,
-                        })}&w=16&q=1`}
-                        style={{
-                          objectFit: "cover",
-                          objectPosition: "center center",
-                        }}
-                      />
-                    </Box>
-                  </SwiperSlide>
-                );
-              })}
-              <SwiperSlide style={{ width: "50%" }}>
-                <Box
-                  h="full"
-                  w="full"
-                  position="relative"
-                  display="flex"
-                  flexDirection="column"
-                  justifyContent="center"
-                  pl={16}
-                >
-                  <Text mb={[2, 3, 4, 6]}>Other Works</Text>
-                  <Box display="flex" flexDirection="column" gap={7}>
-                    {other_works?.map((other: any, i: any) => {
-                      return (
-                        <Box
-                          key={i}
-                          cursor="pointer"
-                          onClick={() => {
-                            push(`/works/${other.slug}`);
-                          }}
-                        >
-                          <Box position="relative" w="60%" h="25vmin" mb={2}>
-                            <Image
-                              src={getImage({
-                                collectionName: other.collectionName,
-                                recordId: other.id,
-                                filename: other.thumbnail,
-                              })}
-                              alt={other.name}
-                              fill
-                              placeholder="blur"
-                              blurDataURL={`/_next/image?url=${getImage({
-                                collectionName: other.collectionName,
-                                recordId: other.id,
-                                filename: other.thumbnail,
-                              })}&w=16&q=1`}
-                              style={{
-                                objectFit: "cover",
-                                objectPosition: "center center",
-                              }}
-                            />
-                          </Box>
-                          <Text opacity={0.7} fontSize="sm">
-                            {other.name}
-                          </Text>
-                        </Box>
-                      );
-                    })}
-                  </Box>
-
-                  {next_work && (
-                    <Box
-                      position="absolute"
-                      top="50%"
-                      right={marginX}
-                      transform="translate(-50%, -50%)"
-                      zIndex={50}
-                      color="light"
-                    >
-                      <Box
-                        display="flex"
-                        flexDirection="column"
-                        alignItems="center"
-                        gap={2}
-                        cursor="pointer"
-                        color="inherit"
-                        onClick={() => {
-                          push(`/works/${next_work.slug}`);
-                        }}
-                      >
-                        <Text
-                          color="inherit"
-                          as="span"
-                          style={{
-                            writingMode: "vertical-lr",
-                            transform: "rotate(0deg)",
-                          }}
-                          fontSize="small"
-                          letterSpacing="wider"
-                          fontWeight={400}
-                        >
-                          Next Works
-                        </Text>
-                        <ArrowRightSm />
-                      </Box>
-                    </Box>
-                  )}
-                </Box>
-              </SwiperSlide>
-            </Swiper>
+              Back to Works
+            </Text>
+            <ArrowLeftSm />
           </Box>
         </Box>
-      ) : (
-        <Box display="flex" flexDirection="column">
-          {work.showcases.map((showcase: string, i: any) => {
-            return (
-              <Box
-                key={i}
-                position="relative"
-                w="100vw"
-                h="100vw"
-                display="inline-block"
-              >
-                <Image
-                  src={getImage({
-                    collectionName: work.collectionName,
-                    recordId: work.id,
-                    filename: showcase,
-                  })}
-                  alt={showcase}
-                  fill
-                  placeholder="blur"
-                  blurDataURL={`/_next/image?url=${getImage({
-                    collectionName: work.collectionName,
-                    recordId: work.id,
-                    filename: showcase,
-                  })}&w=16&q=1`}
-                  style={{
-                    objectFit: "cover",
-                    objectPosition: "center center",
-                  }}
-                />
-              </Box>
-            );
-          })}
-          {other_works?.length > 0 && (
-            <Box
-              h="full"
-              w="full"
-              position="relative"
-              display="flex"
-              flexDirection="column"
-              justifyContent="center"
-              pl={[5, 6, 10, 16]}
-              pr={[5, 6, 10, 0]}
-              mt={[6, 6, 6, 0]}
-              mb={[14, 14, 14, 0]}
+
+        <Box
+          position={{ base: "relative", lg: "fixed" }}
+          left={0}
+          top={0}
+          w={{ base: "full", lg: "33%" }}
+          h={{ base: "full", lg: "100vh" }}
+          display="flex"
+          flexDirection="column"
+          justifyContent="center"
+          pl={[5, 6, 10, "10%"]}
+          pr={[5, 6, 10, "5%"]}
+          pt={{ base: 28, lg: 0 }}
+          color="light"
+        >
+          <Heading as="h1" mb={[2, 3, 4, 6]}>
+            {name}
+          </Heading>
+          <Box maxH={{ base: "full", lg: "40%" }} overflowY="scroll" mb={[6]}>
+            <Text fontSize="small" opacity={0.6} whiteSpace="pre-line">
+              {description_long}
+            </Text>
+          </Box>
+          <Text as="h5" fontSize="small" fontWeight={500}>
+            Services
+          </Text>
+          <Text fontSize="small" opacity={0.6} mb={{ base: 8, lg: 0 }}>
+            {services.join(", ")}
+          </Text>
+
+          <Box
+            display={{ base: "none", lg: "flex" }}
+            alignItems="center"
+            gap={2}
+            cursor="pointer"
+            color="inherit"
+            onClick={() => push("/works")}
+            position="absolute"
+            bottom={"15%"}
+          >
+            <Text
+              color="inherit"
+              as="span"
+              fontSize="small"
+              letterSpacing="wider"
             >
-              <Text mb={[2, 3, 4, 6]}>Other Works</Text>
-              <Box
-                display="flex"
-                flexDirection={{ base: "row", lg: "column" }}
-                gap={7}
+              Scroll to discover
+            </Text>
+            <ArrowRightSm />
+          </Box>
+        </Box>
+
+        {isLarge ? (
+          <Box display="flex">
+            <Box w="33%" display={showOnLarge} />
+            <Box
+              w={{ base: "full", lg: "67%" }}
+              h={{ base: "full", lg: "100vh" }}
+              position="relative"
+            >
+              <Swiper
+                slidesPerView={"auto"}
+                mousewheel={true}
+                modules={[Mousewheel, Pagination]}
               >
-                {other_works.map((other: any, i: any) => {
+                {work.showcases.map((showcase: string, i: any) => {
                   return (
-                    <Box
-                      w={{ base: "full", lg: "unset" }}
+                    <SwiperSlide
                       key={i}
-                      cursor="pointer"
-                      onClick={() => {
-                        push(`/works/${other.slug}`);
-                      }}
+                      style={{ width: isLarge ? "85%" : "100%" }}
                     >
                       <Box
                         position="relative"
-                        w={{ base: "full", lg: "60%" }}
-                        h={{ base: "20vh", lg: "25vmin" }}
-                        mb={2}
+                        w="100%"
+                        h="100vh"
+                        display="inline-block"
                       >
                         <Image
                           src={getImage({
-                            collectionName: other.collectionName,
-                            recordId: other.id,
-                            filename: other.thumbnail,
+                            collectionName: work.collectionName,
+                            recordId: work.id,
+                            filename: showcase,
                           })}
-                          alt={other.name}
+                          alt={showcase}
                           fill
                           placeholder="blur"
                           blurDataURL={`/_next/image?url=${getImage({
-                            collectionName: other.collectionName,
-                            recordId: other.id,
-                            filename: other.thumbnail,
+                            collectionName: work.collectionName,
+                            recordId: work.id,
+                            filename: showcase,
                           })}&w=16&q=1`}
                           style={{
                             objectFit: "cover",
@@ -339,19 +217,216 @@ export default function Work({ work }: any) {
                           }}
                         />
                       </Box>
-                      <Text opacity={0.7} fontSize="sm">
-                        {other.name}
-                      </Text>
-                    </Box>
+                    </SwiperSlide>
                   );
                 })}
-              </Box>
+                <SwiperSlide style={{ width: "50%" }}>
+                  <Box
+                    h="full"
+                    w="full"
+                    position="relative"
+                    display="flex"
+                    flexDirection="column"
+                    justifyContent="center"
+                    pl={16}
+                  >
+                    <Text mb={[2, 3, 4, 6]}>Other Works</Text>
+                    <Box display="flex" flexDirection="column" gap={7}>
+                      {other_works?.map((other: any, i: any) => {
+                        return (
+                          <Box key={i}>
+                            <Box
+                              position="relative"
+                              w="60%"
+                              h="25vmin"
+                              mb={2}
+                              cursor="pointer"
+                              onClick={() => {
+                                push(`/works/${other.slug}`);
+                              }}
+                              _hover={{
+                                opacity: 0.6,
+                              }}
+                            >
+                              <Image
+                                src={getImage({
+                                  collectionName: other.collectionName,
+                                  recordId: other.id,
+                                  filename: other.thumbnail,
+                                })}
+                                alt={other.name}
+                                fill
+                                placeholder="blur"
+                                blurDataURL={`/_next/image?url=${getImage({
+                                  collectionName: other.collectionName,
+                                  recordId: other.id,
+                                  filename: other.thumbnail,
+                                })}&w=16&q=1`}
+                                style={{
+                                  objectFit: "cover",
+                                  objectPosition: "center center",
+                                }}
+                              />
+                            </Box>
+                            <Text
+                              opacity={0.7}
+                              fontSize="sm"
+                              cursor="pointer"
+                              onClick={() => {
+                                push(`/works/${other.slug}`);
+                              }}
+                            >
+                              {other.name}
+                            </Text>
+                          </Box>
+                        );
+                      })}
+                    </Box>
+
+                    {next_work && (
+                      <Box
+                        position="absolute"
+                        top="50%"
+                        right={marginX}
+                        transform="translate(-50%, -50%)"
+                        zIndex={50}
+                        color="light"
+                      >
+                        <Box
+                          display="flex"
+                          flexDirection="column"
+                          alignItems="center"
+                          gap={2}
+                          cursor="pointer"
+                          color="inherit"
+                          onClick={() => {
+                            push(`/works/${next_work.slug}`);
+                          }}
+                        >
+                          <Text
+                            color="inherit"
+                            as="span"
+                            style={{
+                              writingMode: "vertical-lr",
+                              transform: "rotate(0deg)",
+                            }}
+                            fontSize="small"
+                            letterSpacing="wider"
+                            fontWeight={400}
+                          >
+                            Next Works
+                          </Text>
+                          <ArrowRightSm />
+                        </Box>
+                      </Box>
+                    )}
+                  </Box>
+                </SwiperSlide>
+              </Swiper>
             </Box>
-          )}
-        </Box>
-      )}
-      <Footer />
-    </Box>
+          </Box>
+        ) : (
+          <Box display="flex" flexDirection="column">
+            {work.showcases.map((showcase: string, i: any) => {
+              return (
+                <Box
+                  key={i}
+                  position="relative"
+                  w="100vw"
+                  h="100vw"
+                  display="inline-block"
+                >
+                  <Image
+                    src={getImage({
+                      collectionName: work.collectionName,
+                      recordId: work.id,
+                      filename: showcase,
+                    })}
+                    alt={showcase}
+                    fill
+                    placeholder="blur"
+                    blurDataURL={`/_next/image?url=${getImage({
+                      collectionName: work.collectionName,
+                      recordId: work.id,
+                      filename: showcase,
+                    })}&w=16&q=1`}
+                    style={{
+                      objectFit: "cover",
+                      objectPosition: "center center",
+                    }}
+                  />
+                </Box>
+              );
+            })}
+            {other_works?.length > 0 && (
+              <Box
+                h="full"
+                w="full"
+                position="relative"
+                display="flex"
+                flexDirection="column"
+                justifyContent="center"
+                pl={[5, 6, 10, 16]}
+                pr={[5, 6, 10, 0]}
+                mt={[6, 6, 6, 0]}
+                mb={[14, 14, 14, 0]}
+              >
+                <Text mb={[2, 3, 4, 6]}>Other Works</Text>
+                <Box
+                  display="flex"
+                  flexDirection={{ base: "row", lg: "column" }}
+                  gap={7}
+                >
+                  {other_works.map((other: any, i: any) => {
+                    return (
+                      <Box
+                        w={{ base: "full", lg: "unset" }}
+                        key={i}
+                        cursor="pointer"
+                        onClick={() => {
+                          push(`/works/${other.slug}`);
+                        }}
+                      >
+                        <Box
+                          position="relative"
+                          w={{ base: "full", lg: "60%" }}
+                          h={{ base: "20vh", lg: "25vmin" }}
+                          mb={2}
+                        >
+                          <Image
+                            src={getImage({
+                              collectionName: other.collectionName,
+                              recordId: other.id,
+                              filename: other.thumbnail,
+                            })}
+                            alt={other.name}
+                            fill
+                            placeholder="blur"
+                            blurDataURL={`/_next/image?url=${getImage({
+                              collectionName: other.collectionName,
+                              recordId: other.id,
+                              filename: other.thumbnail,
+                            })}&w=16&q=1`}
+                            style={{
+                              objectFit: "cover",
+                              objectPosition: "center center",
+                            }}
+                          />
+                        </Box>
+                        <Text opacity={0.7} fontSize="sm">
+                          {other.name}
+                        </Text>
+                      </Box>
+                    );
+                  })}
+                </Box>
+              </Box>
+            )}
+          </Box>
+        )}
+        <Footer />
+      </Box>
+    </>
   );
 }
 

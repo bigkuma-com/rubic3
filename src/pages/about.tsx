@@ -1,4 +1,5 @@
 import { Box, Text, useMediaQuery } from "@chakra-ui/react";
+import { NextSeo } from "next-seo";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Mousewheel } from "swiper";
@@ -31,6 +32,13 @@ const itemBotToTop = (delay = 0) => ({
     },
   },
 });
+
+const seo = {
+  url: "https://rubic3.com/about",
+  title: "About - Rubicube Group",
+  description:
+    "With a track record of 14 years, Our deep understanding of and research into the forces of digital disruption, coupled with the new thinking required to unlock growth provides excellence, long-lasting results.",
+};
 
 export default function About({
   clients,
@@ -71,242 +79,283 @@ export default function About({
   }, [query, swiper]);
 
   return (
-    <BoxMotion
-      position="relative"
-      display="flex"
-      initial={{ backgroundColor: themeColor[0] }}
-      animate={{
-        backgroundColor: themeColor[+isEven],
-        transition: {
-          duration: 0.5,
-          ease: "easeInOut",
-        },
-      }}
-    >
-      <Header isLight={!isEven} />
-      <Box
-        position="fixed"
-        top="50%"
-        left="5%"
-        transform="translate(-50%, -50%)"
-        zIndex={50}
-        color={themeColor[+!isEven]}
+    <>
+      <NextSeo
+        title={seo.title}
+        description={seo.description}
+        canonical={seo.url}
+        openGraph={{
+          url: seo.url,
+          title: seo.title,
+          description: seo.description,
+          images: [
+            {
+              url: "/logo.png",
+              alt: "Logo Image",
+              type: "image/jpeg",
+            },
+            { url: "/logo.png" },
+          ],
+          site_name: "Rubic3",
+        }}
+        twitter={{
+          handle: "@handle",
+          site: "@site",
+          cardType: "summary_large_image",
+        }}
+        additionalLinkTags={[
+          {
+            rel: "icon",
+            href: "/fav.svg",
+          },
+          {
+            rel: "apple-touch-icon",
+            href: "/fav.svg",
+            sizes: "76x76",
+          },
+        ]}
+      />
+      <BoxMotion
+        position="relative"
+        display="flex"
+        initial={{ backgroundColor: themeColor[0] }}
+        animate={{
+          backgroundColor: themeColor[+isEven],
+          transition: {
+            duration: 0.5,
+            ease: "easeInOut",
+          },
+        }}
       >
-        <BoxMotion
-          variants={animateLeftRight}
-          initial="initial"
-          animate="animate"
+        <Header isLight={!isEven} />
+        <Box
+          position="fixed"
+          top="50%"
+          left="5%"
+          transform="translate(-50%, -50%)"
+          zIndex={50}
+          color={themeColor[+!isEven]}
+        >
+          <BoxMotion
+            variants={animateLeftRight}
+            initial="initial"
+            animate="animate"
+          >
+            <Box
+              display={{ base: "none", lg: "flex" }}
+              flexDirection="column"
+              alignItems="center"
+              gap={2}
+              cursor="pointer"
+              color="inherit"
+              onClick={() => push("/")}
+            >
+              <Text
+                color="inherit"
+                as="span"
+                style={{
+                  writingMode: "vertical-lr",
+                  transform: "rotate(-180deg)",
+                }}
+                fontSize="small"
+                letterSpacing="wider"
+                fontWeight={400}
+              >
+                Back to Home
+              </Text>
+              <ArrowLeftSm />
+            </Box>
+          </BoxMotion>
+        </Box>
+        <Box
+          position="relative"
+          left={0}
+          top={0}
+          w="30%"
+          h="100vh"
+          display={{ base: "none", lg: "flex" }}
+          alignItems="center"
+          pl="10%"
+          color={themeColor[+!isEven]}
         >
           <Box
-            display={{ base: "none", lg: "flex" }}
+            as="ul"
+            display="flex"
             flexDirection="column"
-            alignItems="center"
-            gap={2}
-            cursor="pointer"
-            color="inherit"
-            onClick={() => push("/")}
+            gap={4}
+            listStyleType="none"
           >
-            <Text
-              color="inherit"
-              as="span"
-              style={{
-                writingMode: "vertical-lr",
-                transform: "rotate(-180deg)",
-              }}
-              fontSize="small"
-              letterSpacing="wider"
-              fontWeight={400}
-            >
-              Back to Home
-            </Text>
-            <ArrowLeftSm />
-          </Box>
-        </BoxMotion>
-      </Box>
-      <Box
-        position="relative"
-        left={0}
-        top={0}
-        w="30%"
-        h="100vh"
-        display={{ base: "none", lg: "flex" }}
-        alignItems="center"
-        pl="10%"
-        color={themeColor[+!isEven]}
-      >
-        <Box
-          as="ul"
-          display="flex"
-          flexDirection="column"
-          gap={4}
-          listStyleType="none"
-        >
-          {sidebarAbout.map((item, i) => {
-            return (
-              <BoxMotion
-                key={i}
-                variants={itemBotToTop(i * 0.2)}
-                initial="offscreen"
-                whileInView="onscreen"
-              >
-                <Box
-                  as="li"
-                  // key={i}
-                  opacity={section == i ? 1 : 0.6}
-                  _hover={{ opacity: 1 }}
-                  cursor="pointer"
-                  onClick={() => {
-                    slideTo(i);
-                    setSection(i);
-                    replace({
-                      query: { ...query, selected: sidebarAbout[i].query },
-                    });
-                  }}
-                  className="animate-fade"
+            {sidebarAbout.map((item, i) => {
+              return (
+                <BoxMotion
+                  key={i}
+                  variants={itemBotToTop(i * 0.2)}
+                  initial="offscreen"
+                  whileInView="onscreen"
                 >
-                  {item.name}
-                </Box>
-              </BoxMotion>
-            );
-          })}
+                  <Box
+                    as="li"
+                    // key={i}
+                    opacity={section == i ? 1 : 0.6}
+                    _hover={{ opacity: 1 }}
+                    cursor="pointer"
+                    onClick={() => {
+                      slideTo(i);
+                      setSection(i);
+                      replace({
+                        query: { ...query, selected: sidebarAbout[i].query },
+                      });
+                    }}
+                    className="animate-fade"
+                  >
+                    {item.name}
+                  </Box>
+                </BoxMotion>
+              );
+            })}
+          </Box>
+          <BoxMotion
+            w="2px"
+            position="absolute"
+            opacity={0.6}
+            right={0}
+            top={0}
+            zIndex={5}
+            layout
+            initial={{
+              height: "0%",
+            }}
+            animate={{
+              height: `${(section + 1) * 20}%`,
+              backgroundColor: themeColor[+!isEven],
+              transition: {
+                backgroundColor: {
+                  duration: 0.5,
+                  ease: "easeInOut",
+                },
+                height: {
+                  duration: 2,
+                },
+              },
+            }}
+          />
+          <BoxMotion
+            opacity={0.1}
+            w="2px"
+            position="absolute"
+            right={0}
+            top={0}
+            zIndex={4}
+            initial={{
+              height: "0vh",
+            }}
+            animate={{
+              height: "100vh",
+              backgroundColor: themeColor[+!isEven],
+              transition: {
+                duration: 0.5,
+                ease: "easeInOut",
+                height: {
+                  duration: 1,
+                  ease: "easeInOut",
+                },
+              },
+            }}
+          />
         </Box>
-        <BoxMotion
-          w="2px"
-          position="absolute"
-          opacity={0.6}
-          right={0}
-          top={0}
-          zIndex={5}
-          layout
-          initial={{
-            height: "0%",
-          }}
-          animate={{
-            height: `${(section + 1) * 20}%`,
-            backgroundColor: themeColor[+!isEven],
-            transition: {
-              backgroundColor: {
-                duration: 0.5,
-                ease: "easeInOut",
-              },
-              height: {
-                duration: 2,
-              },
-            },
-          }}
-        />
-        <BoxMotion
-          opacity={0.1}
-          w="2px"
-          position="absolute"
-          right={0}
-          top={0}
-          zIndex={4}
-          initial={{
-            height: "0vh",
-          }}
-          animate={{
-            height: "100vh",
-            backgroundColor: themeColor[+!isEven],
-            transition: {
-              duration: 0.5,
-              ease: "easeInOut",
-              height: {
-                duration: 1,
-                ease: "easeInOut",
-              },
-            },
-          }}
-        />
-      </Box>
 
-      <Box h="100vh" display={{ base: "flex", lg: "none" }} alignItems="center">
-        <BoxMotion
-          w="3px"
-          position="absolute"
-          opacity={0.6}
-          right={0}
-          top={0}
-          zIndex={5}
-          layout
-          initial={{
-            height: "0%",
-          }}
-          animate={{
-            height: `${(section + 1) * 20}%`,
-            backgroundColor: themeColor[+!isEven],
-            transition: {
-              backgroundColor: {
-                duration: 0.5,
-                ease: "easeInOut",
-              },
-              height: {
-                duration: 2,
-              },
-            },
-          }}
-        />
-        <BoxMotion
-          opacity={0.1}
-          w="3px"
-          position="absolute"
-          right={0}
-          top={0}
-          zIndex={4}
-          initial={{
-            height: "0vh",
-          }}
-          animate={{
-            height: "100vh",
-            backgroundColor: themeColor[+!isEven],
-            transition: {
-              duration: 0.5,
-              ease: "easeInOut",
-              height: {
-                duration: 1,
-                ease: "easeInOut",
-              },
-            },
-          }}
-        />
-      </Box>
-
-      <Box h="100vh" w={{ base: "full", lg: "70%" }}>
-        <Swiper
-          direction={"vertical"}
-          mousewheel={true}
-          modules={[Mousewheel]}
-          simulateTouch={false}
-          onSlideChange={(swiper) => {
-            setSection(swiper.realIndex);
-            replace({
-              query: {
-                ...query,
-                selected: sidebarAbout[swiper.realIndex].query,
-              },
-            });
-          }}
-          onSwiper={setSwiper}
+        <Box
+          h="100vh"
+          display={{ base: "flex", lg: "none" }}
+          alignItems="center"
         >
-          <SwiperSlide style={{ height: "100vh" }}>
-            <Section1 />
-          </SwiperSlide>
-          <SwiperSlide style={{ height: "100vh" }}>
-            <Section2 clients={clients} />
-          </SwiperSlide>
-          <SwiperSlide style={{ height: "100vh" }}>
-            <Section3 leaders={leaders} />
-          </SwiperSlide>
-          <SwiperSlide style={{ height: "100vh" }}>
-            <Section4 associates={associates} partners={partners} />
-          </SwiperSlide>
-          <SwiperSlide style={{ height: "100vh" }}>
-            <Section5 careers={careers} />
-          </SwiperSlide>
-        </Swiper>
-      </Box>
-      <Footer isLight={!isEven} />
-    </BoxMotion>
+          <BoxMotion
+            w="3px"
+            position="absolute"
+            opacity={0.6}
+            right={0}
+            top={0}
+            zIndex={5}
+            layout
+            initial={{
+              height: "0%",
+            }}
+            animate={{
+              height: `${(section + 1) * 20}%`,
+              backgroundColor: themeColor[+!isEven],
+              transition: {
+                backgroundColor: {
+                  duration: 0.5,
+                  ease: "easeInOut",
+                },
+                height: {
+                  duration: 2,
+                },
+              },
+            }}
+          />
+          <BoxMotion
+            opacity={0.1}
+            w="3px"
+            position="absolute"
+            right={0}
+            top={0}
+            zIndex={4}
+            initial={{
+              height: "0vh",
+            }}
+            animate={{
+              height: "100vh",
+              backgroundColor: themeColor[+!isEven],
+              transition: {
+                duration: 0.5,
+                ease: "easeInOut",
+                height: {
+                  duration: 1,
+                  ease: "easeInOut",
+                },
+              },
+            }}
+          />
+        </Box>
+
+        <Box h="100vh" w={{ base: "full", lg: "70%" }}>
+          <Swiper
+            direction={"vertical"}
+            mousewheel={true}
+            modules={[Mousewheel]}
+            simulateTouch={false}
+            onSlideChange={(swiper) => {
+              setSection(swiper.realIndex);
+              replace({
+                query: {
+                  ...query,
+                  selected: sidebarAbout[swiper.realIndex].query,
+                },
+              });
+            }}
+            onSwiper={setSwiper}
+          >
+            <SwiperSlide style={{ height: "100vh" }}>
+              <Section1 />
+            </SwiperSlide>
+            <SwiperSlide style={{ height: "100vh" }}>
+              <Section2 clients={clients} />
+            </SwiperSlide>
+            <SwiperSlide style={{ height: "100vh" }}>
+              <Section3 leaders={leaders} />
+            </SwiperSlide>
+            <SwiperSlide style={{ height: "100vh" }}>
+              <Section4 associates={associates} partners={partners} />
+            </SwiperSlide>
+            <SwiperSlide style={{ height: "100vh" }}>
+              <Section5 careers={careers} />
+            </SwiperSlide>
+          </Swiper>
+        </Box>
+        <Footer isLight={!isEven} />
+      </BoxMotion>
+    </>
   );
 }
 
