@@ -58,12 +58,6 @@ export default function Work({ work }: any) {
               alt: "Project Image",
               type: "image/jpeg",
             },
-            {
-              url: "/logo.png",
-              alt: "Logo Image",
-              type: "image/jpeg",
-            },
-            { url: "/logo.png" },
           ],
           site_name: "Rubic3",
         }}
