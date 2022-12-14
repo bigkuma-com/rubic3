@@ -1,7 +1,14 @@
 import { Box, Text } from "@chakra-ui/react";
+import { motion } from "framer-motion";
 import { useRouter } from "next/router";
 import LogoRubicubeHospitality from "../../assets/js/LogoRubicubeHospitality";
-import { sectionMarginLeft, sectionMarginRight } from "../../utils/consts";
+import {
+  itemBotToTop,
+  sectionMarginLeft,
+  sectionMarginRight,
+  showOnLarge,
+} from "../../utils/consts";
+import BoxMotion from "../BoxMotion";
 import HomePagination from "../landing/HomePagination";
 
 export default function Section1() {
@@ -25,31 +32,48 @@ export default function Section1() {
         alignItems="center"
         w="full"
       >
-        <LogoRubicubeHospitality />
+        <BoxMotion
+          variants={itemBotToTop(0)}
+          initial="offscreen"
+          whileInView="onscreen"
+          viewport={{ once: false }}
+        >
+          <LogoRubicubeHospitality />
+        </BoxMotion>
 
-        <HomePagination
-          section={1}
-          maxSection={4}
-          enableNavigation={true}
-          prevSlide={() => {
-            replace({
-              query: { ...query, selected: "creative" },
-            });
-          }}
-          nextSlide={() => {
-            replace({
-              query: { ...query, selected: "connoisseur" },
-            });
-          }}
-        />
+        <Box display={showOnLarge}>
+          <HomePagination
+            section={1}
+            maxSection={4}
+            enableNavigation={true}
+            prevSlide={() => {
+              replace({
+                query: { ...query, selected: "creative" },
+              });
+            }}
+            nextSlide={() => {
+              replace({
+                query: { ...query, selected: "connoisseur" },
+              });
+            }}
+          />
+        </Box>
       </Box>
 
-      <Text opacity={0.7} fontSize="sm" mb={12} w="75%">
-        Our team of hotel advisors have extensive international experience in
-        the hotel industry, covering a wide range of areas and services to help
-        you achieve sound financial results and returns with your hotel
-        investment.
-      </Text>
+      <BoxMotion
+        w={["full", null, null, "75%"]}
+        variants={itemBotToTop(0.2)}
+        initial="offscreen"
+        whileInView="onscreen"
+        viewport={{ once: false }}
+      >
+        <Text opacity={0.7} fontSize="sm" mb={12}>
+          Our team of hotel advisors have extensive international experience in
+          the hotel industry, covering a wide range of areas and services to
+          help you achieve sound financial results and returns with your hotel
+          investment.
+        </Text>
+      </BoxMotion>
 
       <Box display="flex" alignItems="center">
         <Box display="flex" flexDirection="column" h="100%" gap={10}>
@@ -60,12 +84,33 @@ export default function Section1() {
             ) => {
               return (
                 <Box key={i}>
-                  <Box display="flex" fontSize="small" gap="5%">
-                    <Text w="35%" as="h4" fontSize="2xl" wordBreak="break-word">
+                  <Box
+                    display="flex"
+                    fontSize="small"
+                    gap="5%"
+                    flexDirection={{ base: "column", lg: "row" }}
+                  >
+                    <Text
+                      w={["full", null, null, "35%"]}
+                      fontSize="2xl"
+                      wordBreak="break-word"
+                      mb={[6, null, null, 0]}
+                      as={motion.h4}
+                      variants={itemBotToTop(0.4)}
+                      initial="offscreen"
+                      whileInView="onscreen"
+                      viewport={{ once: false }}
+                    >
                       <span style={{ opacity: 0.6 }}>0{i + 1}.</span> {title}
                     </Text>
-                    <Box w="60%">
-                      <Text mb={10} opacity={0.6}>
+                    <BoxMotion
+                      variants={itemBotToTop(0.6)}
+                      initial="offscreen"
+                      whileInView="onscreen"
+                      viewport={{ once: false }}
+                      w={["full", null, null, "60%"]}
+                    >
+                      <Text mb={[6, null, null, 10]} opacity={0.6}>
                         {topDesc}
                       </Text>
 
@@ -82,7 +127,13 @@ export default function Section1() {
                         >
                           {bottomList?.map((item: any, i: any) => {
                             return (
-                              <Box key={i} as="li" opacity={0.6} color="light">
+                              <Box
+                                ml={{ base: 4, lg: 0 }}
+                                key={i}
+                                as="li"
+                                opacity={0.6}
+                                color="light"
+                              >
                                 {item}
                               </Box>
                             );
@@ -93,7 +144,7 @@ export default function Section1() {
                           {bottomDesc}
                         </Text>
                       )}
-                    </Box>
+                    </BoxMotion>
                   </Box>
                   {i < contents.length - 1 && (
                     <Box

@@ -1,4 +1,4 @@
-import { Box, Text } from "@chakra-ui/react";
+import { Box, Text, useMediaQuery } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import { Navigation, Pagination } from "swiper";
@@ -11,12 +11,18 @@ import LogoRubicubeHospitality from "../assets/js/LogoRubicubeHospitality";
 import BoxMotion from "../components/BoxMotion";
 import Footer from "../components/footer";
 import Header from "../components/header";
+import HomePagination from "../components/landing/HomePagination";
 import Section1 from "../components/services/Section1";
 import Section2 from "../components/services/Section2";
 import Section3 from "../components/services/Section3";
 import Section4 from "../components/services/Section4";
 import { getFullList } from "../utils/api";
-import { sidebarServices } from "../utils/consts";
+import {
+  marginX,
+  marginY,
+  showOnLarge,
+  sidebarServices,
+} from "../utils/consts";
 import { arrayChunk } from "../utils/functions";
 
 export default function About({
@@ -33,6 +39,11 @@ export default function About({
   careers: any;
 }) {
   const { push, query, replace } = useRouter();
+
+  const [isLarge] = useMediaQuery("(min-width: 991px)", {
+    ssr: true,
+    fallback: false,
+  });
 
   const prevRefSlides = useRef(null);
   const nextRefSlides = useRef(null);
@@ -57,6 +68,7 @@ export default function About({
     <BoxMotion position="relative" display="flex" bg="dark">
       <Header />
       <Box
+        display={showOnLarge}
         position="fixed"
         top="50%"
         left="5%"
@@ -95,7 +107,7 @@ export default function About({
         top={0}
         w="30%"
         h="100vh"
-        display="flex"
+        display={{ base: "none", lg: "flex" }}
         alignItems="center"
         pl="10%"
         color="light"
@@ -170,12 +182,41 @@ export default function About({
         />
       </Box>
 
-      <Box w="30%" />
-      <Box h="100vh" w="70%" className="page-services" position="relative">
+      <Box w="30%" display={showOnLarge} />
+
+      <Box
+        position={{ base: "fixed", lg: "unset" }}
+        bottom={marginY}
+        left={marginX}
+        transform="translateY(-50%)"
+        zIndex={99}
+        display={{ base: "unset", lg: "none" }}
+      >
+        <HomePagination
+          section={section}
+          maxSection={4}
+          bg="transparent"
+          enableNavigation={true}
+          nextSlide={() => {
+            slideTo(section + 1);
+          }}
+          prevSlide={() => {
+            slideTo(section - 1);
+          }}
+        />
+      </Box>
+
+      <Box
+        h="100vh"
+        w={{ base: "full", lg: "70%" }}
+        className="page-services"
+        position="relative"
+      >
         <Swiper
           direction={"horizontal"}
           modules={[Pagination, Navigation]}
           simulateTouch={true}
+          allowTouchMove={isLarge}
           onSlideChange={(swiper) => {
             setSection(swiper.realIndex);
             replace({

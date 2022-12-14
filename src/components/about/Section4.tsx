@@ -81,9 +81,9 @@ export default function Section4({
         >
           Associated with
         </Text>
-        <SimpleGrid columns={[4, null, null, 6]} spacing={[1, null, null, 5]}>
+        <SimpleGrid columns={[4, null, null, 6]} spacing={[1, null, null, 6]}>
           {associates.map(
-            ({ collectionName, id, logo, name, order }: any, i: any) => {
+            ({ collectionName, id, logo, name, url }: any, i: any) => {
               return (
                 <BoxMotion
                   variants={itemBotToTop(0.6 + i * 0.2)}
@@ -92,10 +92,14 @@ export default function Section4({
                   viewport={{ once: false }}
                   key={id}
                   position="relative"
-                  h={{ base: "80px", lg: "100" }}
+                  h={{ base: "70px", lg: "80px" }}
                   w="full"
+                  cursor={url ? "pointer" : "unset"}
                 >
                   <Image
+                    onClick={() => {
+                      url && window.open(url, `_blank`);
+                    }}
                     src={getImage({
                       collectionName,
                       recordId: id,
@@ -105,7 +109,7 @@ export default function Section4({
                     fill
                     style={{
                       objectFit: "contain",
-                      objectPosition: "center center",
+                      objectPosition: "left center",
                     }}
                   />
                 </BoxMotion>
@@ -139,9 +143,9 @@ export default function Section4({
         >
           Partnered with
         </Text>
-        <SimpleGrid columns={[4, null, null, 6]} spacing={[1, null, null, 5]}>
+        <SimpleGrid columns={[4, null, null, 6]} spacing={[1, null, null, 6]}>
           {partners.map(
-            ({ collectionName, id, logo, name, order }: any, i: any) => {
+            ({ collectionName, id, logo, name, url }: any, i: any) => {
               return (
                 <BoxMotion
                   variants={itemBotToTop(0.6 + i * 0.2)}
@@ -150,10 +154,14 @@ export default function Section4({
                   viewport={{ once: false }}
                   key={id}
                   position="relative"
-                  h="100"
+                  h={{ base: "70px", lg: "80px" }}
                   w="full"
+                  cursor={url ? "pointer" : "unset"}
                 >
                   <Image
+                    onClick={() => {
+                      url && window.open(url, `_blank`);
+                    }}
                     src={getImage({
                       collectionName,
                       recordId: id,
@@ -163,7 +171,7 @@ export default function Section4({
                     fill
                     style={{
                       objectFit: "contain",
-                      objectPosition: "center center",
+                      objectPosition: "left center",
                     }}
                   />
                 </BoxMotion>

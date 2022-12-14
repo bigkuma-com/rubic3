@@ -1,7 +1,13 @@
 import { Box, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import LogoRubicubeHospitality from "../../assets/js/LogoRubicubeHospitality";
-import { sectionMarginLeft, sectionMarginRight } from "../../utils/consts";
+import {
+  itemBotToTop,
+  sectionMarginLeft,
+  sectionMarginRight,
+  showOnLarge,
+} from "../../utils/consts";
+import BoxMotion from "../BoxMotion";
 import HomePagination from "../landing/HomePagination";
 
 export default function Section3() {
@@ -25,29 +31,46 @@ export default function Section3() {
         alignItems="center"
         w="full"
       >
-        <LogoRubicubeHospitality />
+        <BoxMotion
+          variants={itemBotToTop(0)}
+          initial="offscreen"
+          whileInView="onscreen"
+          viewport={{ once: false }}
+        >
+          <LogoRubicubeHospitality />
+        </BoxMotion>
 
-        <HomePagination
-          section={2}
-          maxSection={4}
-          enableNavigation={true}
-          prevSlide={() => {
-            replace({
-              query: { ...query, selected: "hospitality" },
-            });
-          }}
-          nextSlide={() => {
-            replace({
-              query: { ...query, selected: "360" },
-            });
-          }}
-        />
+        <Box display={showOnLarge}>
+          <HomePagination
+            section={2}
+            maxSection={4}
+            enableNavigation={true}
+            prevSlide={() => {
+              replace({
+                query: { ...query, selected: "hospitality" },
+              });
+            }}
+            nextSlide={() => {
+              replace({
+                query: { ...query, selected: "360" },
+              });
+            }}
+          />
+        </Box>
       </Box>
 
-      <Text opacity={0.7} fontSize="sm" mb={12} w="75%">
-        For now the content is in the stage of refinement. Will be released
-        soon.
-      </Text>
+      <BoxMotion
+        w="75%"
+        variants={itemBotToTop(0.2)}
+        initial="offscreen"
+        whileInView="onscreen"
+        viewport={{ once: false }}
+      >
+        <Text opacity={0.7} fontSize="sm" mb={12}>
+          For now the content is in the stage of refinement. Will be released
+          soon.
+        </Text>
+      </BoxMotion>
     </Box>
   );
 }

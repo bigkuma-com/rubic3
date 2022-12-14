@@ -1,12 +1,19 @@
 import { Box, Text } from "@chakra-ui/react";
+import { motion } from "framer-motion";
 import { useRouter } from "next/router";
 import LogoRubicubeHospitality from "../../assets/js/LogoRubicubeHospitality";
-import { sectionMarginLeft, sectionMarginRight } from "../../utils/consts";
+import {
+  itemBotToTop,
+  sectionMarginLeft,
+  sectionMarginRight,
+  showOnLarge,
+} from "../../utils/consts";
+import BoxMotion from "../BoxMotion";
 import HomePagination from "../landing/HomePagination";
 
 export default function Section1() {
   const { replace, query } = useRouter();
-  
+
   return (
     <Box
       w="full"
@@ -25,36 +32,70 @@ export default function Section1() {
         alignItems="center"
         w="full"
       >
-        <LogoRubicubeHospitality />
+        <BoxMotion
+          variants={itemBotToTop(0)}
+          initial="offscreen"
+          whileInView="onscreen"
+          viewport={{ once: false }}
+        >
+          <LogoRubicubeHospitality />
+        </BoxMotion>
 
-        <HomePagination
-          section={0}
-          maxSection={4}
-          enableNavigation={true}
-          nextSlide={() => {
-            replace({
-              query: { ...query, selected: "hospitality" },
-            });
-          }}
-        />
+        <Box display={showOnLarge}>
+          <HomePagination
+            section={0}
+            maxSection={4}
+            enableNavigation={true}
+            nextSlide={() => {
+              replace({
+                query: { ...query, selected: "hospitality" },
+              });
+            }}
+          />
+        </Box>
       </Box>
       <Box display="flex" alignItems="center">
         <Box display="flex" flexDirection="column" h="100%" gap={10}>
           {contents.map(({ bottomDesc, title, topList }, i: any) => {
             return (
               <Box key={i}>
-                <Box display="flex" fontSize="small">
-                  <Text w="40%" as="h4" fontSize="2xl">
+                <Box
+                  display="flex"
+                  fontSize="small"
+                  flexDirection={{ base: "column", lg: "row" }}
+                >
+                  <Text
+                    w={["full", null, null, "40%"]}
+                    fontSize="2xl"
+                    mb={[6, null, null, 0]}
+                    as={motion.h4}
+                    variants={itemBotToTop(0.2)}
+                    initial="offscreen"
+                    whileInView="onscreen"
+                    viewport={{ once: false }}
+                  >
                     <span style={{ opacity: 0.6 }}>0{i + 1}.</span> {title}
                   </Text>
-                  <Box w="60%">
-                    <Text as="h5" mb={1} fontWeight={500}>
+                  <BoxMotion
+                    variants={itemBotToTop(0.4)}
+                    initial="offscreen"
+                    whileInView="onscreen"
+                    viewport={{ once: false }}
+                    w={["full", null, null, "60%"]}
+                  >
+                    <Text mb={1} fontWeight={500}>
                       What we do
                     </Text>
                     <Box as="ul" display="flex" flexDirection="column" mb={5}>
                       {topList.map((item, i: any) => {
                         return (
-                          <Box key={i} as="li" opacity={0.6} color="light">
+                          <Box
+                            key={i}
+                            as="li"
+                            opacity={0.6}
+                            color="light"
+                            ml={{ base: 4, lg: 0 }}
+                          >
                             {item}
                           </Box>
                         );
@@ -66,7 +107,7 @@ export default function Section1() {
                     <Text mb={10} opacity={0.6}>
                       {bottomDesc}
                     </Text>
-                  </Box>
+                  </BoxMotion>
                 </Box>
                 {i < contents.length - 1 && (
                   <Box

@@ -10,12 +10,14 @@ export default function HomePagination({
   enableNavigation = false,
   nextSlide,
   prevSlide,
+  bg,
 }: {
   section: number;
   maxSection: number;
   enableNavigation?: boolean;
   nextSlide?: any;
   prevSlide?: any;
+  bg?: string | undefined;
 }) {
   return (
     <BoxMotion
@@ -25,7 +27,7 @@ export default function HomePagination({
       gap={3}
       justifyContent="flex-end"
       alignItems="center"
-      bg={enableNavigation ? "dark" : "transparent"}
+      bg={enableNavigation ? bg ?? "dark" : "transparent"}
       variants={animateRightLeft}
       initial="initial"
       animate="animate"

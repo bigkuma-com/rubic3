@@ -45,7 +45,7 @@ export default function Section2({ clients }: { clients: any }) {
           Our Major Clients
         </Heading>
 
-        <SimpleGrid columns={[4, null, null, 6]} spacing={5}>
+        <SimpleGrid columns={[4, null, null, 6]} spacing={6}>
           {clients
             .filter(function ({}, i: any) {
               if (i > maxItem) {
@@ -53,19 +53,23 @@ export default function Section2({ clients }: { clients: any }) {
               }
               return true;
             })
-            .map(({ collectionName, id, logo, name, order }: any, i: any) => {
+            .map(({ collectionName, id, logo, name, url }: any, i: any) => {
               return (
                 <BoxMotion
                   key={id}
                   position="relative"
-                  h="100"
+                  h={{ base: "70px", lg: "80px" }}
                   w="full"
                   variants={itemBotToTop(i * 0.1)}
                   initial="offscreen"
                   whileInView="onscreen"
                   viewport={{ once: false }}
+                  cursor={url ? "pointer" : "unset"}
                 >
                   <Image
+                    onClick={() => {
+                      url && window.open(url, `_blank`);
+                    }}
                     src={getImage({
                       collectionName,
                       recordId: id,
@@ -75,7 +79,7 @@ export default function Section2({ clients }: { clients: any }) {
                     fill
                     style={{
                       objectFit: "contain",
-                      objectPosition: "center center",
+                      objectPosition: "left center",
                     }}
                   />
                 </BoxMotion>

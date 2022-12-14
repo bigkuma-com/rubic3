@@ -44,7 +44,12 @@ export default function Works() {
     sort: `order`,
     filter: `filters ~ '${selectedFilter}'`,
   });
-  const { data: filters, isLoading: isLoadingFilters } = useFetchAll(`filters`);
+  const { data: filters, isLoading: isLoadingFilters } = useFetchAll(
+    `filters`,
+    {
+      sort: "order",
+    }
+  );
 
   useEffect(() => {
     if (wrapperRef === null) return;
@@ -337,7 +342,7 @@ export default function Works() {
                         alignItems="center"
                       >
                         <Heading
-                          mb={2}
+                          mb={[1, null, null, 2]}
                           as={motion.h1}
                           variants={itemBotToTop(0.2)}
                           initial="offscreen"
@@ -347,7 +352,7 @@ export default function Works() {
                           Our Works
                         </Heading>
                         <Text
-                          mb={6}
+                          mb={[3, 3, 4, 6]}
                           opacity={0.6}
                           as={motion.h2}
                           variants={itemBotToTop(0.4)}
@@ -355,6 +360,7 @@ export default function Works() {
                           whileInView="onscreen"
                           viewport={{ once: true }}
                           textAlign="center"
+                          fontSize={{ sm: "small", lg: "unset" }}
                         >
                           Excellent work done for great clients
                         </Text>
