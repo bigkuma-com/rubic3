@@ -12,7 +12,7 @@ import Header from "../../components/header";
 import { findOne, getFullList, getImage } from "../../utils/api";
 import { marginX, showOnLarge } from "../../utils/consts";
 
-export default function Work({ work }: any) {
+export default function Work({ work, next_work, other_works }: any) {
   const { push } = useRouter();
 
   const [isLarge] = useMediaQuery("(min-width: 991px)", {
@@ -25,12 +25,10 @@ export default function Work({ work }: any) {
     description_long,
     description_short,
     services,
-    expand,
     id,
     thumbnail,
     collectionName,
   } = work;
-  const { next_work, other_works } = expand;
 
   const seo = {
     url: "https://rubic3.com/works",
@@ -38,22 +36,31 @@ export default function Work({ work }: any) {
     description: description_short,
   };
 
-  console.log(getImage({
-                collectionName: collectionName,
-                recordId: id,
-                filename: thumbnail,
-              }))
-
   return (
     <>
       <NextSeo
         title={seo.title}
         description={seo.description}
         canonical={seo.url}
+        additionalMetaTags={[
+          {
+            name: "dc:creator",
+            content: "arridhow",
+          },
+          {
+            property: "og:image",
+            content: getImage({
+              collectionName: collectionName,
+              recordId: id,
+              filename: thumbnail,
+            }),
+          },
+        ]}
         openGraph={{
           url: seo.url,
           title: seo.title,
           description: seo.description,
+
           images: [
             {
               url: `/_next/image?url=${getImage({
@@ -165,9 +172,7 @@ export default function Work({ work }: any) {
             display={{ base: "none", lg: "flex" }}
             alignItems="center"
             gap={2}
-            cursor="pointer"
             color="inherit"
-            onClick={() => push("/works")}
             position="absolute"
             bottom={"15%"}
           >
@@ -216,6 +221,7 @@ export default function Work({ work }: any) {
                           })}
                           alt={showcase}
                           fill
+                          sizes="100%"
                           placeholder="blur"
                           blurDataURL={`/_next/image?url=${getImage({
                             collectionName: work.collectionName,
@@ -355,6 +361,7 @@ export default function Work({ work }: any) {
                     })}
                     alt={showcase}
                     fill
+                    sizes="100vw"
                     placeholder="blur"
                     blurDataURL={`/_next/image?url=${getImage({
                       collectionName: work.collectionName,
@@ -448,9 +455,35 @@ export async function getStaticProps({ params }: any) {
     params: { expand: "other_works, next_work" },
   });
 
+  const works = await getFullList({ collection: "works" });
+
+  const { next_work: next_work_temp, other_works: other_works_temp } =
+    work?.expand;
+
+  let next_work: any = {},
+    prev_work: any = {},
+    other_works: any = [];
+
+  if (next_work_temp) {
+    next_work = next_work_temp;
+  } else {
+    next_work = work.order == works.length ? works[0] : works[work.order];
+  }
+
+  if (other_works_temp) {
+    other_works = other_works_temp;
+  } else {
+    prev_work =
+      work.order == 0 ? works[works.length - 1] : works[work.order - 2];
+
+    other_works = [prev_work, next_work];
+  }
+
   return {
     props: {
       work: JSON.parse(JSON.stringify(work)),
+      next_work: JSON.parse(JSON.stringify(next_work)),
+      other_works: JSON.parse(JSON.stringify(other_works)),
     },
     revalidate: 10,
   };

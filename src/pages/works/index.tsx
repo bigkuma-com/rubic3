@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import { useIdleTimer } from "react-idle-timer";
+import ArrowRightSm from "../../assets/js/ArrowRightSm";
 import BoxMotion from "../../components/BoxMotion";
 import Button from "../../components/Button";
 import Footer from "../../components/footer";
@@ -137,6 +138,12 @@ export default function Works() {
         title={seo.title}
         description={seo.description}
         canonical={seo.url}
+        additionalMetaTags={[
+          {
+            name: "dc:creator",
+            content: "arridhow",
+          },
+        ]}
         openGraph={{
           url: seo.url,
           title: seo.title,
@@ -430,7 +437,7 @@ export default function Works() {
                             whileInView="onscreen"
                             viewport={{ once: true }}
                             textAlign="center"
-                            fontSize={{ sm: "small", lg: "unset" }}
+                            fontSize={{ base: "small", lg: "unset" }}
                           >
                             Excellent work done for great clients
                           </Text>
@@ -599,7 +606,7 @@ function ImageWrapper({
               opacity: 0,
             }}
             animate={{
-              x: "20%",
+              x: isLarge ? "20%" : 20,
               opacity: 1,
               transition: {
                 ease: "easeInOut",
@@ -624,11 +631,16 @@ function ImageWrapper({
               />
             ) : (
               <Text
+                as="a"
+                display="flex"
+                alignItems="center"
+                gap={2}
                 onClick={() => {
                   push(`/works/${data.slug}`);
                 }}
               >
                 {data.name}
+                <ArrowRightSm />
               </Text>
             )}
           </BoxMotion>

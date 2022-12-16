@@ -38,6 +38,12 @@ export default function Home({ sliders }: any) {
         title={seo.title}
         description={seo.description}
         canonical={seo.url}
+        additionalMetaTags={[
+          {
+            name: "dc:creator",
+            content: "arridhow",
+          },
+        ]}
         openGraph={{
           url: seo.url,
           title: seo.title,

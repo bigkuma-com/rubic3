@@ -51,3 +51,7 @@ export function makeBold(input, wordsToBold) {
     "$1<b>$2</b>$3"
   );
 }
+
+export function randomInteger(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
