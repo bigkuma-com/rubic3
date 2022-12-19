@@ -2,6 +2,7 @@ import { Box, Heading, Text, useMediaQuery } from "@chakra-ui/react";
 import { NextSeo } from "next-seo";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { Fragment } from "react";
 import { Mousewheel, Pagination } from "swiper";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -13,7 +14,7 @@ import { findOne, getFullList, getImage } from "../../utils/api";
 import { marginX, showOnLarge } from "../../utils/consts";
 
 export default function Work({ work, next_work, other_works }: any) {
-  const { push } = useRouter();
+  const { push, asPath } = useRouter();
 
   const [isLarge] = useMediaQuery("(min-width: 991px)", {
     ssr: true,
@@ -37,7 +38,7 @@ export default function Work({ work, next_work, other_works }: any) {
   };
 
   return (
-    <>
+    <Fragment key={asPath}>
       <NextSeo
         title={seo.title}
         description={seo.description}
@@ -444,7 +445,7 @@ export default function Work({ work, next_work, other_works }: any) {
         )}
         <Footer />
       </Box>
-    </>
+    </Fragment>
   );
 }
 

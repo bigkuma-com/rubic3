@@ -92,7 +92,7 @@ export default function Section4({
                   viewport={{ once: false }}
                   key={id}
                   position="relative"
-                  h={{ base: "70px", lg: "80px" }}
+                  h={{ base: "70px", lg: "95px" }}
                   w="full"
                   cursor={url ? "pointer" : "unset"}
                 >

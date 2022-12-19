@@ -35,8 +35,8 @@ export default function RunningText({ text }: { text: any }) {
               animate={{
                 y: i === 1 ? ["-200vh", "0vh"] : ["-100vh", "100vh"],
                 transition: {
-                  delay: i === 1 ? 2.1 : 0,
-                  duration: 4,
+                  delay: i === 1 ? 3 : 0,
+                  duration: 6,
                   ease: "linear",
                   repeat: Infinity,
                   repeatType: "loop",

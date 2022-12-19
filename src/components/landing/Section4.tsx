@@ -21,11 +21,7 @@ export default function Section4() {
       </Box>
 
       <RunningText
-        text={
-          <span>
-            Add<span style={{ color: "white" }}>r</span>ess
-          </span>
-        }
+        text="Address"
       />
     </Box>
   );

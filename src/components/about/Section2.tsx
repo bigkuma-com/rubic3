@@ -58,7 +58,7 @@ export default function Section2({ clients }: { clients: any }) {
                 <BoxMotion
                   key={id}
                   position="relative"
-                  h={{ base: "70px", lg: "80px" }}
+                  h={{ base: "70px", lg: "95px" }}
                   w="full"
                   variants={itemBotToTop(i * 0.1)}
                   initial="offscreen"

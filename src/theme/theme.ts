@@ -16,26 +16,32 @@ const theme = extendTheme({
   },
   styles: {
     global: {
-      // Create a CSS variable with the focus ring color desired.
-      // rgba function does not work here so use the hex value.
-      // Either :host,:root or html work. body does not work for
-      // button, checkbox, radio, switch.
-      // html: {
       ":host,:root": {
         "--chakra-ui-focus-ring-color": "transparent",
       },
     },
   },
   shadows: {
-    // This is also possible. Not sure I like inject this into
-    // an existing theme section.
-    // It creates a CSS variable named --chakra-shadows-focus-ring-color
-    // 'focus-ring-color': 'rgba(255, 0, 125, 0.6)',
     outline: "0 0 0 3px var(--chakra-ui-focus-ring-color)",
   },
   fonts: {
     heading: `'DM Serif Display', sans-serif`,
     body: `Roboto`,
+  },
+  fontSizes: {
+    xs: "0.7rem",
+    sm: "0.9rem",
+    md: "1rem",
+    lg: "1.2rem",
+    xl: "1.35rem",
+    "2xl": "1.6rem",
+    "3xl": "2rem",
+    "4xl": "2.4rem",
+    "5xl": "3rem",
+    "6xl": "3.8rem",
+    "7xl": "4.5rem",
+    "8xl": "6rem",
+    "9xl": "8rem",
   },
   colors: {
     dark: "#141314",

@@ -147,6 +147,8 @@ export default function Section1() {
           })}
         </Box>
       </Box>
+
+      <Box className="div-kosong" h="50px" w="full" bg="pink.100"></Box>
     </Box>
   );
 }

@@ -106,13 +106,7 @@ export default function Section2() {
         </BoxMotion>
       </Box>
 
-      <RunningText
-        text={
-          <span>
-            Adviso<span style={{ color: "white" }}>r</span>
-          </span>
-        }
-      />
+      <RunningText text="Advisor" />
     </BoxMotion>
   );
 }

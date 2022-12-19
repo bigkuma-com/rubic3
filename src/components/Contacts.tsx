@@ -36,7 +36,7 @@ export default function Contacts({
     <Box
       display="flex"
       flexDir="column"
-      gap={8}
+      gap={7}
       w="full"
       color={"white"}
       zIndex={5}
@@ -50,26 +50,26 @@ export default function Contacts({
               whileInView="onscreen"
               viewport={{ once: false }}
               key={i}
-              w={{ base: "45%", lg: "30%" }}
+              w={{ base: "45%", lg: "33%" }}
               lineHeight="1"
             >
-              <Heading fontSize="md" mb={2} as="h4">
+              <Heading fontSize="lg" mb={3} as="h4">
                 {name}
               </Heading>
 
-              <Link fontSize="small" opacity={0.6}>
+              <Link fontSize="sm" opacity={0.6} lineHeight="1.3">
                 {description}
               </Link>
             </BoxMotion>
           );
         })}
-        <Box display={showOnLarge} w="40%" />
+        <Box display={showOnLarge} w="33%" />
       </Box>
 
       <Divider />
 
       <Text
-        fontSize="x-small"
+        fontSize="small"
         letterSpacing="widest"
         as={motion.h3}
         variants={itemBotToTop(0)}
@@ -90,28 +90,28 @@ export default function Contacts({
                 whileInView="onscreen"
                 viewport={{ once: false }}
                 key={i}
-                w={{ base: "45%", lg: "30%" }}
+                w={{ base: "45%", lg: "33%" }}
                 mb={{ base: i === 2 ? 0 : "10%", lg: 0 }}
               >
-                <Heading fontSize="md" mb={2}>
+                <Heading fontSize="lg" mb={3}>
                   {location}
                 </Heading>
-                <Box fontSize="small">
+                <Box fontSize="sm">
                   <span>: : {name}</span>
                   <Box opacity={0.6}>
-                    <Link display="flex" gap={2} alignItems="center">
+                    <Link display="flex" gap={3} alignItems="center">
                       <IconWhatsappSm />
                       {whatsapp}
                     </Link>
-                    <Link display="flex" gap={2} alignItems="center">
+                    <Link display="flex" gap={3} alignItems="center">
                       <IconEmailSm />
                       {email}
                     </Link>
-                    <Link display="flex" gap={2} alignItems="center">
+                    <Link display="flex" gap={3} alignItems="center">
                       <IconInstagramSm />
                       {instagram}
                     </Link>
-                    <Link display="flex" gap={2} alignItems="center">
+                    <Link display="flex" gap={3} alignItems="center">
                       <IconFacebookSm />
                       {facebook}
                     </Link>
@@ -121,7 +121,7 @@ export default function Contacts({
             );
           }
         )}
-        <Box display={showOnLarge} w="10%" />
+        <Box display={showOnLarge} w="1%" />
       </Box>
 
       {hasContactButton && (

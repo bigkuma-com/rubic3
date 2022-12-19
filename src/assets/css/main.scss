@@ -83,19 +83,19 @@ select:-webkit-autofill:focus {
 }
 
 .box-shadow {
-  box-shadow: 4px 4px 8px 0px rgba(20, 19, 20, 0.5);
-  -webkit-box-shadow: 4px 4px 8px 0px rgba(20, 19, 20, 0.5);
-  -moz-box-shadow: 4px 4px 8px 0px rgba(20, 19, 20, 0.5);
+  // box-shadow: 4px 4px 8px 0px rgba(20, 19, 20, 0.5);
+  // -webkit-box-shadow: 4px 4px 8px 0px rgba(20, 19, 20, 0.5);
+  // -moz-box-shadow: 4px 4px 8px 0px rgba(20, 19, 20, 0.5);
 }
 
 .drop-shadow {
   svg {
-    filter: drop-shadow(4px 4px 10px rgba(20, 19, 20, 0.5));
+    // filter: drop-shadow(4px 4px 10px rgba(20, 19, 20, 0.5));
   }
 }
 
 .text-shadow {
-  text-shadow: 4px 4px 10px rgba(20, 19, 20, 0.5);
+  // text-shadow: 4px 4px 10px rgba(20, 19, 20, 0.5);
 }
 
 .checkbox {

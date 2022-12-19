@@ -107,14 +107,14 @@ export default function Section3() {
                         animate={{
                           opacity: 1,
                           transition: {
-                            duration: 0.5,
+                            duration: 0.8,
                             ease: "easeInOut",
                           },
                         }}
                         exit={{
                           opacity: 0,
                           transition: {
-                            duration: 0.5,
+                            duration: 0.6,
                             ease: "easeInOut",
                           },
                         }}
@@ -160,11 +160,7 @@ export default function Section3() {
       </LayoutGroup>
 
       <RunningText
-        text={
-          <span>
-            Se<span style={{ color: "white" }}>r</span>vice
-          </span>
-        }
+        text="Service"
       />
     </BoxMotion>
   );
