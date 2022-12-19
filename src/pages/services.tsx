@@ -292,7 +292,7 @@ export default function About({
                 if (
                   !(
                     e.currentTarget.scrollTop + e.currentTarget.offsetHeight <
-                    e.currentTarget.scrollHeight
+                    e.currentTarget.scrollHeight - 1
                   )
                 ) {
                   slideTo(1);
