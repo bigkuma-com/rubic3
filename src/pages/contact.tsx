@@ -237,10 +237,10 @@ export default function Contact() {
               w={{ base: "full", lg: "70%" }}
             >
               <form onSubmit={formik.handleSubmit}>
-                <Text fontWeight={400} mb={3}>
+                <Text fontWeight={400} mb={4} fontSize="2xl">
                   {title[activeInquiry]}
                 </Text>
-                <Text fontSize="xs" mb={6}>
+                <Text mb={8}>
                   {subtitle[activeInquiry]}
                 </Text>
 

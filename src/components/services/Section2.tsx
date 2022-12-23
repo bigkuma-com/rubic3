@@ -161,6 +161,24 @@ export default function Section1() {
           )}
         </Box>
       </Box>
+
+      <Box display={showOnLarge} mt={5}>
+        <HomePagination
+          section={1}
+          maxSection={4}
+          enableNavigation={true}
+          prevSlide={() => {
+            replace({
+              query: { ...query, selected: "creative" },
+            });
+          }}
+          nextSlide={() => {
+            replace({
+              query: { ...query, selected: "connoisseur" },
+            });
+          }}
+        />
+      </Box>
     </Box>
   );
 }

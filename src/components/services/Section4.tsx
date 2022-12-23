@@ -196,6 +196,19 @@ export default function Section4() {
             })}
           </BoxMotion>
         </BoxMotion>
+
+        <BoxMotion layout display={showOnLarge} mt={10}>
+          <HomePagination
+            section={3}
+            maxSection={4}
+            enableNavigation={true}
+            prevSlide={() => {
+              replace({
+                query: { ...query, selected: "connoisseur" },
+              });
+            }}
+          />
+        </BoxMotion>
       </Box>
     </LayoutGroup>
   );

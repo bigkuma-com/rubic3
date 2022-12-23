@@ -148,7 +148,18 @@ export default function Section1() {
         </Box>
       </Box>
 
-      <Box className="div-kosong" h="50px" w="full" bg="pink.100"></Box>
+      <Box display={showOnLarge} mt={5}>
+        <HomePagination
+          section={0}
+          maxSection={4}
+          enableNavigation={true}
+          nextSlide={() => {
+            replace({
+              query: { ...query, selected: "hospitality" },
+            });
+          }}
+        />
+      </Box>
     </Box>
   );
 }

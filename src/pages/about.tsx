@@ -1,4 +1,5 @@
-import { Box, Text, useMediaQuery } from "@chakra-ui/react";
+import { Box, Heading, Link, Text, useMediaQuery } from "@chakra-ui/react";
+import { AnimatePresence } from "framer-motion";
 import { NextSeo } from "next-seo";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -6,6 +7,7 @@ import { Mousewheel } from "swiper";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import ArrowLeftSm from "../assets/js/ArrowLeftSm";
+import IconClose from "../assets/js/IconClose";
 import Section1 from "../components/about/Section1";
 import Section2 from "../components/about/Section2";
 import Section3 from "../components/about/Section3";
@@ -15,7 +17,13 @@ import BoxMotion from "../components/BoxMotion";
 import Footer from "../components/footer";
 import Header from "../components/header";
 import { getFullList } from "../utils/api";
-import { animateLeftRight, sidebarAbout, themeColor } from "../utils/consts";
+import {
+  animateLeftRight,
+  animateOpacity,
+  animateScaling,
+  sidebarAbout,
+  themeColor,
+} from "../utils/consts";
 
 const itemBotToTop = (delay = 0) => ({
   offscreen: {
@@ -57,6 +65,7 @@ export default function About({
   const [section, setSection] = useState(0);
   const [swiper, setSwiper] = useState<any>(null);
   const [isEven, setIsEven] = useState(true);
+  const [selectedCareer, setSelectedCareer] = useState(-1);
 
   const [isLarge] = useMediaQuery("(min-width: 991px)", {
     ssr: true,
@@ -65,6 +74,7 @@ export default function About({
 
   useEffect(() => {
     setIsEven(!!(section % 2));
+    section !== 4 && setSelectedCareer(-1);
   }, [section]);
 
   const slideTo = (index: any) => swiper.slideTo(index);
@@ -355,10 +365,107 @@ export default function About({
               <Section4 associates={associates} partners={partners} />
             </SwiperSlide>
             <SwiperSlide style={{ height: "100vh" }}>
-              <Section5 careers={careers} />
+              <Section5
+                careers={careers}
+                setSelectedCareer={(selectedCareer: number) =>
+                  setSelectedCareer(selectedCareer)
+                }
+              />
             </SwiperSlide>
           </Swiper>
         </Box>
+        <AnimatePresence>
+          {selectedCareer > -1 && (
+            <BoxMotion
+              variants={animateOpacity}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              position="fixed"
+              top={0}
+              left={0}
+              w="100vw"
+              h="100vh"
+              bg="blackAlpha.900"
+              zIndex={1500}
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <BoxMotion
+                variants={animateScaling}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                w="80%"
+                h="80%"
+                bg="light"
+                position="relative"
+                p={[8, null, null, 12]}
+              >
+                <Box
+                  position="absolute"
+                  top={6}
+                  right={6}
+                  cursor="pointer"
+                  onClick={() => {
+                    setSelectedCareer(-1);
+                  }}
+                >
+                  <IconClose />
+                </Box>
+
+                <Box
+                  display="flex"
+                  flexDirection="column"
+                  w="full"
+                  h="full"
+                  overflowY="scroll"
+                >
+                  <Heading w="70%" mb={[2, 4, 6]} as="h2" color="dark">
+                    Careers
+                  </Heading>
+                  <Text w={{ base: "full", lg: "70%" }} fontSize="sm">
+                    <Text as="span" color="dark">
+                      We work best with like-minded partners who are creatively
+                      and culturally ambitious— open to pushing the limits and
+                      possibilities of design. Let’s make something great
+                      together. Send your resume and portfolio (not bigger than
+                      5 MB) to{" "}
+                    </Text>
+                    <Link
+                      as="span"
+                      className="opacity-100"
+                      cursor="pointer"
+                      color="dark"
+                      onClick={() =>
+                        window.open("mailto:info@rubic3.com", "_blank")
+                      }
+                    >
+                      info@rubic3.com
+                    </Link>
+                  </Text>
+
+                  <Box>
+                    <Box my={8} opacity={0.2} bg="dark" w="full" h="1px" />
+                  </Box>
+
+                  <Heading mb={[2, 4, 6]} as="h3" color="dark">
+                    {careers[selectedCareer].title}
+                  </Heading>
+                  <Text color="dark" whiteSpace="pre-line">
+                    {careers[selectedCareer].description}
+                  </Text>
+
+                  <Box>
+                    <Box my={8} opacity={0.2} bg="dark" w="full" h="1px" />
+                  </Box>
+                </Box>
+              </BoxMotion>
+            </BoxMotion>
+          )}
+        </AnimatePresence>
+
         <Footer isLight={!isEven} />
       </BoxMotion>
     </>

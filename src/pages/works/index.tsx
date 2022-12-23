@@ -1,4 +1,11 @@
-import { Box, Heading, Spinner, Text, useMediaQuery } from "@chakra-ui/react";
+import {
+  AspectRatio,
+  Box,
+  Heading,
+  Spinner,
+  Text,
+  useMediaQuery,
+} from "@chakra-ui/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { NextSeo } from "next-seo";
 import Image from "next/image";
@@ -6,6 +13,7 @@ import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import { useIdleTimer } from "react-idle-timer";
 import ArrowRightSm from "../../assets/js/ArrowRightSm";
+import IconClose from "../../assets/js/IconClose";
 import BoxMotion from "../../components/BoxMotion";
 import Button from "../../components/Button";
 import Footer from "../../components/footer";
@@ -48,6 +56,8 @@ export default function Works() {
 
   const [isFilterOpen, setIsFilterOpen] = useState<boolean>(false);
   const [selectedFilter, setSelectedFilter] = useState<string>("");
+
+  const [showVideo, setShowVideo] = useState<boolean>(false);
 
   const { data, isError, isLoading } = useFetchAll(`works`, {
     sort: `order`,
@@ -311,6 +321,60 @@ export default function Works() {
           )}
         </AnimatePresence>
 
+        <AnimatePresence>
+          {showVideo && (
+            <BoxMotion
+              position="fixed"
+              top={0}
+              left={0}
+              zIndex={1500}
+              h="100vh"
+              w="100vw"
+              bg="blackAlpha.900"
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              initial={{ opacity: 0 }}
+              animate={{
+                opacity: 1,
+                transition: { ease: "easeInOut", duration: 0.5 },
+              }}
+              exit={{
+                opacity: 0,
+                transition: { ease: "easeInOut", duration: 0.5 },
+              }}
+            >
+              <Box
+                position="absolute"
+                top={12}
+                right={["5vw", null, null, "15vw"]}
+                color="light"
+                cursor="pointer"
+                onClick={() => {
+                  setShowVideo(false);
+                  setIsCenter(true);
+                  setTimeout(() => {
+                    setIsCenter(false);
+                  }, 1500);
+                }}
+              >
+                <IconClose />
+              </Box>
+              <AspectRatio
+                ratio={16 / 9}
+                maxW={{ base: "90vw", lg: "70vw" }}
+                w="full"
+              >
+                <iframe
+                  height="100%"
+                  width="100%"
+                  src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                ></iframe>
+              </AspectRatio>
+            </BoxMotion>
+          )}
+        </AnimatePresence>
+
         <Box
           bg="dark"
           w="160vmax"
@@ -349,11 +413,11 @@ export default function Works() {
                     ? {}
                     : {
                         x:
-                          pan && !isCenter
+                          pan && !isCenter && !showVideo
                             ? pan.x
                             : toCenterNoTouch(containerSize.x, windowSize.x),
                         y:
-                          pan && !isCenter
+                          pan && !isCenter && !showVideo
                             ? pan.y
                             : toCenterNoTouch(containerSize.y, windowSize.y),
                         opacity: 1,
@@ -447,7 +511,13 @@ export default function Works() {
                             whileInView="onscreen"
                             viewport={{ once: true }}
                           >
-                            <Button text="Watch Our Reel" />
+                            <Button
+                              onClick={() => {
+                                setShowVideo(true);
+                                setIsCenter(true);
+                              }}
+                              text="Watch Our Reel"
+                            />
                           </BoxMotion>
                         </Box>
                       );

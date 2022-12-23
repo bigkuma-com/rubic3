@@ -283,22 +283,7 @@ export default function About({
             }}
             onSwiper={setSwiper}
           >
-            <SwiperSlide
-              onScroll={(e) => {
-                console.log(
-                  e.currentTarget.scrollTop + e.currentTarget.offsetHeight,
-                  e.currentTarget.scrollHeight
-                );
-                if (
-                  !(
-                    e.currentTarget.scrollTop + e.currentTarget.offsetHeight <
-                    e.currentTarget.scrollHeight - 1
-                  )
-                ) {
-                  slideTo(1);
-                }
-              }}
-            >
+            <SwiperSlide>
               <Section1 />
             </SwiperSlide>
             <SwiperSlide>

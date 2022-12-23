@@ -16,7 +16,13 @@ import { arrayChunk } from "../../utils/functions";
 import BoxMotion from "../BoxMotion";
 import HomePagination from "../landing/HomePagination";
 
-export default function Section5({ careers }: { careers: any }) {
+export default function Section5({
+  careers,
+  setSelectedCareer,
+}: {
+  careers: any;
+  setSelectedCareer: any;
+}) {
   const prevRefSlides = useRef(null);
   const nextRefSlides = useRef(null);
 
@@ -42,6 +48,7 @@ export default function Section5({ careers }: { careers: any }) {
       pl={sectionMarginLeft}
       pr={sectionMarginRight}
       py="10%"
+      position="relative"
     >
       <Box display="flex" flexDirection="column" w="full">
         <Heading
@@ -163,15 +170,20 @@ export default function Section5({ careers }: { careers: any }) {
                                   opacity={0.6}
                                   cursor="pointer"
                                   _hover={{ opacity: 1 }}
-                                  onClick={() => window.open(url, "_blank")}
+                                  onClick={() => {
+                                    setSelectedCareer(
+                                      i * (isLarge ? 3 : 2) + j
+                                    );
+                                  }}
                                 >
                                   {title}
                                 </Heading>
                                 <Text
                                   opacity={0.6}
                                   fontSize="small"
-                                  noOfLines={{ base: 5, lg: 4 }}
+                                  noOfLines={4}
                                   overflow="hidden"
+                                  whiteSpace="pre-line"
                                 >
                                   {description}
                                 </Text>
@@ -184,7 +196,9 @@ export default function Section5({ careers }: { careers: any }) {
                                 alignItems="center"
                                 gap={1}
                                 cursor="pointer"
-                                onClick={() => window.open(url, "_blank")}
+                                onClick={() => {
+                                  setSelectedCareer(i * (isLarge ? 3 : 2) + j);
+                                }}
                               >
                                 Read more <IconPlus />
                               </Text>
