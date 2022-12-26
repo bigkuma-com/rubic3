@@ -101,7 +101,7 @@ export default function Section2() {
             alt="Rubicube Office"
             src={Section2Image}
             fill
-            style={{ objectFit: "cover" }}
+            style={{ objectFit: "contain" }}
           />
         </BoxMotion>
       </Box>
