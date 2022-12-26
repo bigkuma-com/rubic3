@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useContext } from "react";
-import Section2Image from "../../assets/images/Rubicube Office.webp";
+import Section2Image from "../../assets/images/Landing page image.webp";
 import { marginXSection } from "../../utils/consts";
 import { HomeContext } from "../../utils/hooks";
 import BoxMotion from "../BoxMotion";
