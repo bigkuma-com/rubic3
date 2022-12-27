@@ -19,7 +19,7 @@ export default function Section2({ clients }: { clients: any }) {
   const [maxItem, setMaxItem] = useState(isLarge ? 24 : 20);
 
   useEffect(() => {
-    setMaxItem(isLarge ? 24 : 15);
+    setMaxItem(isLarge ? 24 : 20);
   }, [isLarge]);
 
   return (
@@ -58,7 +58,7 @@ export default function Section2({ clients }: { clients: any }) {
                 <BoxMotion
                   key={id}
                   position="relative"
-                  h={{ base: "70px", lg: "105px" }}
+                  h={{ base: "70px", lg: "125px" }}
                   w="full"
                   variants={itemBotToTop(i * 0.1)}
                   initial="offscreen"

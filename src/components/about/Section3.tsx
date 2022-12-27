@@ -55,21 +55,19 @@ export default function Section3({ leaders }: { leaders: any }) {
         >
           Nextgen Leaders
         </Heading>
-        <Text
-          w="70%"
-          opacity={0.6}
-          fontSize="sm"
+        <BoxMotion
+          w="80%"
           mb={[8, 10, 12, 14]}
-          as={motion.p}
           variants={itemBotToTop(0.2)}
           initial="offscreen"
           whileInView="onscreen"
           viewport={{ once: false }}
         >
-          We invest in our people’s future, create inclusive working
-          environments, and build cultures based on the values of openness,
-          optimism, and a commitment to extraordinary work.
-        </Text>
+          <Text opacity={0.6} fontSize="sm" whiteSpace="pre-line">
+            {`We invest in our people’s future, create inclusive working environments, and build cultures based on the values of openness, optimism, and a commitment to extraordinary work.
+          An unbeatable force of change to be reckoned with, challenging the status quo.`}
+          </Text>
+        </BoxMotion>
         <Box w="full" className="section-leaders" position="relative">
           <BoxMotion
             position="absolute"

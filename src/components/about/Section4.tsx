@@ -51,9 +51,10 @@ export default function Section4({
           whileInView="onscreen"
           viewport={{ once: false }}
         >
-          Aperibus, volorib eaquas quamus. Pa volorpor aperund aeperum simus pro
-          exerroratem earciis cimustrum sum qui consendi re, quatiur recullandus
-          aut volupti onsecea.
+          We believe in unity by bringing together unrivaled talent, resources,
+          and skills to provide an integrated network offer of design
+          innovation, communication, experience, commerce, management, and
+          technology for businesses.
         </Text>
 
         <BoxMotion
@@ -92,7 +93,7 @@ export default function Section4({
                   viewport={{ once: false }}
                   key={id}
                   position="relative"
-                  h={{ base: "70px", lg: "105px" }}
+                  h={{ base: "70px", lg: "125px" }}
                   w="full"
                   cursor={url ? "pointer" : "unset"}
                 >
@@ -154,7 +155,7 @@ export default function Section4({
                   viewport={{ once: false }}
                   key={id}
                   position="relative"
-                  h={{ base: "70px", lg: "105px" }}
+                  h={{ base: "70px", lg: "125px" }}
                   w="full"
                   cursor={url ? "pointer" : "unset"}
                 >

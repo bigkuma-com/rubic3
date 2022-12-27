@@ -35,8 +35,8 @@ export default function RunningText({ text }: { text: any }) {
               animate={{
                 y: i === 1 ? ["-200vh", "0vh"] : ["-100vh", "100vh"],
                 transition: {
-                  delay: i === 1 ? 3 : 0,
-                  duration: 6,
+                  delay: i * 3.35,
+                  duration: 6.5,
                   ease: "linear",
                   repeat: Infinity,
                   repeatType: "loop",
@@ -49,7 +49,7 @@ export default function RunningText({ text }: { text: any }) {
                   writingMode: "vertical-lr",
                   transform: "rotate(-180deg)",
                 }}
-                fontSize="180"
+                fontSize="200px"
                 textShadow="-1px -1px 0 #ffffff15, 1px -1px 0 #ffffff15, -1px 1px 0 #ffffff15, 1px 1px 0 #ffffff15"
                 color="dark"
                 whiteSpace="nowrap"

@@ -63,7 +63,7 @@ export default function Section5({
           Careers
         </Heading>
         <Text
-          w={{ base: "full", lg: "70%" }}
+          w={{ base: "full", lg: "80%" }}
           fontSize="sm"
           mb={[4, 4, 6, 8]}
           as={motion.p}
@@ -74,7 +74,7 @@ export default function Section5({
         >
           <Text as="span" opacity={0.6}>
             We work best with like-minded partners who are creatively and
-            culturally ambitious— open to pushing the limits and possibilities
+            culturally ambitious—open to pushing the limits and possibilities
             of design. Let’s make something great together. Send your resume and
             portfolio (not bigger than 5 MB) to{" "}
           </Text>

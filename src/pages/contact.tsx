@@ -1,12 +1,4 @@
-import {
-  Box,
-  Checkbox,
-  Heading,
-  Input,
-  Spinner,
-  Text,
-  Textarea,
-} from "@chakra-ui/react";
+import { Box, Heading, Input, Spinner, Text, Textarea } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import { AnimatePresence, motion } from "framer-motion";
 import { NextSeo } from "next-seo";
@@ -240,9 +232,7 @@ export default function Contact() {
                 <Text fontWeight={400} mb={4} fontSize="2xl">
                   {title[activeInquiry]}
                 </Text>
-                <Text mb={8}>
-                  {subtitle[activeInquiry]}
-                </Text>
+                <Text mb={8}>{subtitle[activeInquiry]}</Text>
 
                 <Box
                   display="flex"
@@ -371,11 +361,12 @@ export default function Contact() {
 
                 <Box
                   display="flex"
-                  justifyContent="space-between"
+                  // justifyContent="space-between"
+                  justifyContent="flex-end"
                   mb={24}
                   flexDirection={{ base: "column", lg: "row" }}
                 >
-                  <Checkbox
+                  {/* <Checkbox
                     w={{ base: "full", lg: "70%" }}
                     mb={[6, null, null, 0]}
                     colorScheme="dark"
@@ -388,7 +379,7 @@ export default function Contact() {
                     I want to stay up-to-date with the latest Rubicube news and
                     consent to providing my email to subscribe to email
                     marketing updates.
-                  </Checkbox>
+                  </Checkbox> */}
                   <Button
                     type="submit"
                     text="Submit"
