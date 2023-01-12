@@ -14,6 +14,7 @@ export default function Button({
   isActive = false,
   style,
   type = "button",
+  disable = false,
 }: {
   text: string;
   onClick?: any;
@@ -25,6 +26,7 @@ export default function Button({
   isActive?: boolean;
   style?: any;
   type?: any;
+  disable?: boolean;
 }) {
   return (
     <Box
@@ -38,11 +40,15 @@ export default function Button({
       border="1px"
       bg={isActive ? "light" : "transparent"}
       borderColor="var(--chakra-colors-light)"
-      _active={{
-        bg: "var(--chakra-colors-light)",
-        transform: "scale(0.98)",
-        borderColor: "var(--chakra-colors-light)",
-      }}
+      _active={
+        disable
+          ? {}
+          : {
+              bg: "var(--chakra-colors-light)",
+              transform: "scale(0.98)",
+              borderColor: "var(--chakra-colors-light)",
+            }
+      }
       _focus={{}}
       fontWeight={300}
       letterSpacing="wider"
@@ -56,12 +62,18 @@ export default function Button({
       color={
         isActive ? "var(--chakra-colors-dark)" : "var(--chakra-colors-light)"
       }
-      _hover={{
-        color: "var(--chakra-colors-dark)",
-        backgroundColor: "var(--chakra-colors-light)",
-        opacity: isActive ? 0.8 : 1,
-      }}
+      _hover={
+        disable
+          ? {}
+          : {
+              color: "var(--chakra-colors-dark)",
+              backgroundColor: "var(--chakra-colors-light)",
+              opacity: isActive ? 0.8 : 1,
+            }
+      }
       style={style}
+      opacity={disable ? 0.5 : 1}
+      cursor={disable ? "unset" : "pointer"}
     >
       {text}
       {withIcon &&

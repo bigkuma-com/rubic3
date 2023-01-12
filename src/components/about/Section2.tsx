@@ -16,10 +16,10 @@ export default function Section2({ clients }: { clients: any }) {
     fallback: false,
   });
 
-  const [maxItem, setMaxItem] = useState(isLarge ? 24 : 20);
+  const [maxItem, setMaxItem] = useState(isLarge ? 25 : 20);
 
   useEffect(() => {
-    setMaxItem(isLarge ? 24 : 20);
+    setMaxItem(isLarge ? 25 : 20);
   }, [isLarge]);
 
   return (
@@ -48,7 +48,7 @@ export default function Section2({ clients }: { clients: any }) {
         <SimpleGrid columns={[4, null, null, 6]} spacing={6}>
           {clients
             .filter(function ({}, i: any) {
-              if (i > maxItem) {
+              if (i >= maxItem) {
                 return false;
               }
               return true;

@@ -244,24 +244,28 @@ export default function Works() {
             <Button
               text=""
               arrowLeft
+              disable={navIdx <= 0}
               onClick={() => {
-                navIdx > 0 && setNavIdx(navIdx - 1);
-                setDataLoading(true);
-                setTimeout(() => {
-                  setDataLoading(false);
-                }, 100);
+                if (navIdx > 0) {
+                  setNavIdx(navIdx - 1);
+                  setDataLoading(true);
+                  setTimeout(() => {
+                    setDataLoading(false);
+                  }, 100);
+                }
               }}
             />
             <Button
               text=""
+              disable={data && navIdx >= Math.floor(data.length / 18)}
               onClick={() => {
-                data &&
-                  navIdx < Math.floor(data.length / 18) &&
+                if (data && navIdx < Math.floor(data.length / 18)) {
                   setNavIdx(navIdx + 1);
-                setDataLoading(true);
-                setTimeout(() => {
-                  setDataLoading(false);
-                }, 100);
+                  setDataLoading(true);
+                  setTimeout(() => {
+                    setDataLoading(false);
+                  }, 100);
+                }
               }}
             />
             <Box>
