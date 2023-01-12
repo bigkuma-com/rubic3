@@ -2,7 +2,7 @@ import { Box, Heading, Text, useMediaQuery } from "@chakra-ui/react";
 import { NextSeo } from "next-seo";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { Mousewheel, Pagination } from "swiper";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -36,6 +36,11 @@ export default function Work({ work, next_work, other_works }: any) {
     title: `${name} | Our Works - Rubicube Group`,
     description: description_short,
   };
+
+  const [section, setSection] = useState(0);
+  const [swiper, setSwiper] = useState<any>(null);
+
+  const slideTo = (index: any) => swiper.slideTo(index);
 
   return (
     <Fragment key={asPath}>
@@ -154,7 +159,12 @@ export default function Work({ work, next_work, other_works }: any) {
           pt={{ base: 28, lg: 0 }}
           color="light"
         >
-          <Heading as="h1" mb={[2, 3, 4, 6]}>
+          <Heading
+            as="h1"
+            mb={[2, 3, 4, 6]}
+            maxH={{ base: "full", lg: "4rem", xl: "6rem" }}
+            overflowY="scroll"
+          >
             {name}
           </Heading>
           <Box maxH={{ base: "full", lg: "40%" }} overflowY="scroll" mb={[6]}>
@@ -176,6 +186,10 @@ export default function Work({ work, next_work, other_works }: any) {
             color="inherit"
             position="absolute"
             bottom={"15%"}
+            cursor="pointer"
+            onClick={() => {
+              slideTo(section + 1);
+            }}
           >
             <Text
               color="inherit"
@@ -201,6 +215,10 @@ export default function Work({ work, next_work, other_works }: any) {
                 slidesPerView={"auto"}
                 mousewheel={true}
                 modules={[Mousewheel, Pagination]}
+                onSlideChange={(swiper) => {
+                  setSection(swiper.realIndex);
+                }}
+                onSwiper={setSwiper}
               >
                 {work.showcases.map((showcase: string, i: any) => {
                   return (
