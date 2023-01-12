@@ -2,7 +2,7 @@ import { Box, Heading, Text, useMediaQuery } from "@chakra-ui/react";
 import { NextSeo } from "next-seo";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Mousewheel, Pagination } from "swiper";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -41,6 +41,10 @@ export default function Work({ work, next_work, other_works }: any) {
   const [swiper, setSwiper] = useState<any>(null);
 
   const slideTo = (index: any) => swiper.slideTo(index);
+
+  useEffect(() => {
+    setSection(0);
+  }, [asPath]);
 
   return (
     <Fragment key={asPath}>
