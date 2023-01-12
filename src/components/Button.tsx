@@ -1,5 +1,6 @@
 import { Box } from "@chakra-ui/react";
 import ArrowDownSm from "../assets/js/ArrowDownSm";
+import ArrowLeftSm from "../assets/js/ArrowLeftSm";
 import ArrowRightSm from "../assets/js/ArrowRightSm";
 
 export default function Button({
@@ -7,6 +8,7 @@ export default function Button({
   onClick,
   withIcon = true,
   arrowDown = false,
+  arrowLeft = false,
   py,
   px,
   isActive = false,
@@ -17,6 +19,7 @@ export default function Button({
   onClick?: any;
   withIcon?: boolean;
   arrowDown?: boolean;
+  arrowLeft?: boolean;
   py?: any;
   px?: any;
   isActive?: boolean;
@@ -61,7 +64,14 @@ export default function Button({
       style={style}
     >
       {text}
-      {withIcon && (arrowDown ? <ArrowDownSm /> : <ArrowRightSm />)}
+      {withIcon &&
+        (arrowDown ? (
+          <ArrowDownSm />
+        ) : arrowLeft ? (
+          <ArrowLeftSm />
+        ) : (
+          <ArrowRightSm />
+        ))}
     </Box>
   );
 }

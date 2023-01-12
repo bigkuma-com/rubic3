@@ -119,7 +119,7 @@ export default function Section3() {
                           },
                         }}
                       >
-                        <BoxMotion layout>
+                        <BoxMotion layout w="75%">
                           <Text
                             fontWeight={200}
                             letterSpacing="wider"
@@ -159,9 +159,7 @@ export default function Section3() {
         </Box>
       </LayoutGroup>
 
-      <RunningText
-        text="Service"
-      />
+      <RunningText text="Service" />
     </BoxMotion>
   );
 }
@@ -169,18 +167,21 @@ export default function Section3() {
 const contents = [
   {
     title: "Creative",
-    subtitle: "Brand Research & analysis, Strategy, Design, and Production",
+    subtitle: "Brand Research & analysis, Strategy, Design, and Production.",
   },
   {
     title: "Hospitality",
-    subtitle: "Brand Research & analysis, Strategy, Design, and Production",
+    subtitle:
+      "Specializes in providing hotel management and advisory for hotels and resorts.",
   },
   {
     title: "Connoisseur",
-    subtitle: "Brand Research & analysis, Strategy, Design, and Production",
+    subtitle:
+      "Specializes in the F&B consultancy service for mid to large-scale businesses.",
   },
   {
     title: "360 Digital",
-    subtitle: "Brand Research & analysis, Strategy, Design, and Production",
+    subtitle:
+      "We are providing 360 digital services, from Creative content, Digital & Social Media Marketing to Hosting & Security.",
   },
 ];

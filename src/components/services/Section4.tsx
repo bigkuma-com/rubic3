@@ -99,7 +99,7 @@ export default function Section4() {
             zIndex={5}
             h="full"
           >
-            {contents.map(({ title, subtitle, list }, i) => {
+            {contents.map(({ title, subtitle, list, listContent }, i) => {
               return (
                 <BoxMotion layout key={i} opacity={1} className="animate-fade">
                   <Box display="flex" flexDir="column" gap={2}>
@@ -172,13 +172,18 @@ export default function Section4() {
                               listStyleType="none"
                               display="flex"
                               flexDirection="column"
-                              gap={2}
+                              gap={4}
                             >
-                              {list.map((v) => {
+                              {list.map((v, i) => {
                                 return (
-                                  <Text key={v} as="li">
-                                    {v}
-                                  </Text>
+                                  <Box key={v}>
+                                    <Text key={v} as="li">
+                                      {v}
+                                    </Text>
+                                    <Text mt={1} opacity={0.6} fontSize="xs">
+                                      {listContent[i]}
+                                    </Text>
+                                  </Box>
                                 );
                               })}
                             </Box>
@@ -220,23 +225,57 @@ const contents = [
     subtitle:
       "Content marketing is the key to reach your target audience and the foundation of a successful digital marketing strategy.",
     list: ["Copywriting", "Photography", "Video Production", "Motion Graphic"],
+    listContent: [
+      "We plan and produce written content for your website with consistent style and message.",
+      "We provide professional photography for various purposes from commercial, corporate, industrial, lifestyle, and many more.",
+      "We offer one-stop video production services, starting from concept to post-production, for various purposes from advertising, company profile, digital campaign, etc.",
+      "We animate your story to live through infographic, 2D/3D animation, video bumper, special effects, etc.",
+    ],
   },
   {
     title: "Digital Marketing",
     subtitle:
-      "Content marketing is the key to reach your target audience and the foundation of a successful digital marketing strategy.",
-    list: ["Copywriting", "Photography", "Video Production", "Motion Graphic"],
+      "Our one-stop digital marketing service is tailored to establish your online presence and drive maximum results.",
+    list: [
+      "Digital Marketing Strategy",
+      "Media Planning",
+      "SEM Media Buying",
+      "SEO Search Engine Optimization",
+    ],
+    listContent: [
+      "We utilize various channels and platforms based on the formulated digital marketing strategy to achieve your marketing goals.",
+      "We develop media planning based on your marketing strategy to deliver the right content on the right channel to create an efficient campaign.",
+      "Based on identification, we make ad placements on PPC Google Ads, Social Media Paid ADs for Facebook, Instagram, and Youtube.",
+      "We strategize to increase your website visibility on Google search to create a stronger digital presence.",
+    ],
   },
   {
     title: "Social Media Marketing",
     subtitle:
-      "Content marketing is the key to reach your target audience and the foundation of a successful digital marketing strategy.",
-    list: ["Copywriting", "Photography", "Video Production", "Motion Graphic"],
+      "In this social media driven society, we utilize popular social media platforms as a creative channel to boost your brand image and engage with your target market.",
+    list: [
+      "Social Media Strategy",
+      "Digital Campaign Activation",
+      "Social Media Management",
+      "KOL & Influencer",
+    ],
+    listContent: [
+      "We streamline various social media platforms to strategize and execute your digital campaign through marketing funnels.",
+      "In order to drive consumer action and sales, we create brand interaction and experience to engage deeper with your customers.",
+      "We manage your social media channels and produce engaging content based on the specified target market to increase brand awareness. Traffic Distribution: Facebook, Instagram, LinkedIn, and YouTube",
+      "We connect you to KOL or influencers that best represent your brand to increase customer trust and drive sales.",
+    ],
   },
   {
     title: "Hosting & Security",
     subtitle:
-      "Content marketing is the key to reach your target audience and the foundation of a successful digital marketing strategy.",
-    list: ["Copywriting", "Photography", "Video Production", "Motion Graphic"],
+      "With our cloud-based servers and full maintenance services, you can rest assured that your business’ hosting needs are covered.",
+    list: ["Hosting", "Web Security", "Maintenance", "Email Hosting"],
+    listContent: [
+      "Our cloud-based servers guarantee security, faster performance and better accessibility.",
+      "Our web security service offers double security measures through secure servers and secure coding, and SSL certificate.",
+      "Our regular maintenance services include server maintenance, routine backups, bug patch, and system updates, with the support of our web admin.",
+      "Our email hosting service allows you to manage your email professionally.",
+    ],
   },
 ];

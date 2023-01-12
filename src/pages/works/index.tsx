@@ -57,6 +57,9 @@ export default function Works() {
   const [isFilterOpen, setIsFilterOpen] = useState<boolean>(false);
   const [selectedFilter, setSelectedFilter] = useState<string>("");
 
+  const [navIdx, setNavIdx] = useState(0);
+  const [dataLoading, setDataLoading] = useState(true);
+
   const [showVideo, setShowVideo] = useState<boolean>(false);
 
   const { data, isError, isLoading } = useFetchAll(`works`, {
@@ -103,6 +106,7 @@ export default function Works() {
 
     setTimeout(() => {
       setIsCenter(false);
+      setDataLoading(false);
     }, 2500);
   }, []);
 
@@ -210,6 +214,9 @@ export default function Works() {
         <Box
           position="fixed"
           zIndex={1001}
+          p={4}
+          mt={-4}
+          ml={-4}
           {...(isLarge
             ? {
                 top: 14,
@@ -231,55 +238,62 @@ export default function Works() {
             initial="offscreen"
             whileInView="onscreen"
             viewport={{ once: true }}
+            display="flex"
+            gap={4}
           >
             <Button
-              text={isLarge ? "Filter by Industry" : "Filter"}
-              arrowDown
+              text=""
+              arrowLeft
               onClick={() => {
-                setIsFilterOpen(!isFilterOpen);
+                navIdx > 0 && setNavIdx(navIdx - 1);
+                setDataLoading(true);
+                setTimeout(() => {
+                  setDataLoading(false);
+                }, 100);
               }}
             />
-          </BoxMotion>
-          <AnimatePresence>
-            {isFilterOpen && (
-              <BoxMotion
-                mt={6}
-                ml={5}
-                display="flex"
-                flexDirection="column"
-                gap={3}
-                variants={containerFilter}
-                initial="hidden"
-                animate="show"
-                exit="hidden"
-              >
-                <Box
-                  key="all"
-                  _hover={{ opacity: 0.6 }}
-                  cursor="pointer"
-                  onClick={() => {
-                    replace({
-                      query: { ...query, filter: "all" },
-                    });
-                    setSelectedFilter("");
-                    setIsFilterOpen(false);
-                  }}
-                >
-                  <Text as={motion.span} variants={itemFilter} fontSize="sm">
-                    All
-                  </Text>
-                </Box>
-                {filters?.map(({ name, id }) => {
-                  return (
+            <Button
+              text=""
+              onClick={() => {
+                data &&
+                  navIdx < Math.floor(data.length / 18) &&
+                  setNavIdx(navIdx + 1);
+                setDataLoading(true);
+                setTimeout(() => {
+                  setDataLoading(false);
+                }, 100);
+              }}
+            />
+            <Box>
+              <Button
+                text={isLarge ? "Filter by Industry" : "Filter"}
+                arrowDown
+                onClick={() => {
+                  setIsFilterOpen(!isFilterOpen);
+                }}
+              />
+              <AnimatePresence>
+                {isFilterOpen && (
+                  <BoxMotion
+                    mt={6}
+                    ml={5}
+                    display="flex"
+                    flexDirection="column"
+                    gap={3}
+                    variants={containerFilter}
+                    initial="hidden"
+                    animate="show"
+                    exit="hidden"
+                  >
                     <Box
-                      key={id}
+                      key="all"
                       _hover={{ opacity: 0.6 }}
                       cursor="pointer"
                       onClick={() => {
-                        setSelectedFilter(id);
                         replace({
-                          query: { ...query, filter: name.toLowerCase() },
+                          query: { ...query, filter: "all" },
                         });
+                        setSelectedFilter("");
                         setIsFilterOpen(false);
                       }}
                     >
@@ -288,14 +302,41 @@ export default function Works() {
                         variants={itemFilter}
                         fontSize="sm"
                       >
-                        {name}
+                        All
                       </Text>
                     </Box>
-                  );
-                })}
-              </BoxMotion>
-            )}
-          </AnimatePresence>
+                    {filters?.map(({ name, id }) => {
+                      return (
+                        <Box
+                          key={id}
+                          _hover={{ opacity: 0.6 }}
+                          cursor="pointer"
+                          onClick={() => {
+                            setSelectedFilter(id);
+                            replace({
+                              query: { ...query, filter: name.toLowerCase() },
+                            });
+                            setIsFilterOpen(false);
+                            setTimeout(() => {
+                              setIsCenter(false);
+                            }, 2000);
+                          }}
+                        >
+                          <Text
+                            as={motion.span}
+                            variants={itemFilter}
+                            fontSize="sm"
+                          >
+                            {name}
+                          </Text>
+                        </Box>
+                      );
+                    })}
+                  </BoxMotion>
+                )}
+              </AnimatePresence>
+            </Box>
+          </BoxMotion>
         </Box>
 
         <AnimatePresence>
@@ -385,7 +426,7 @@ export default function Works() {
           {windowSize &&
             containerSize &&
             isTouchDevice !== null &&
-            (isLoading ? (
+            (isLoading || dataLoading ? (
               <Box
                 display="flex"
                 alignItems="center"
@@ -439,7 +480,7 @@ export default function Works() {
                         top={top}
                         left={left}
                         className="block-8"
-                        data={data[x]}
+                        data={data[x + navIdx * 18]}
                         idx={x}
                       />
                     );
@@ -456,7 +497,7 @@ export default function Works() {
                         top={top}
                         left={left}
                         className="block-8"
-                        data={data[x]}
+                        data={data[x + navIdx * 18]}
                         idx={x}
                       />
                     );
@@ -528,7 +569,7 @@ export default function Works() {
                         top={top}
                         left={left}
                         className="block-8"
-                        data={data[x]}
+                        data={data[x + navIdx * 18]}
                         idx={x}
                       />
                     );
@@ -545,7 +586,7 @@ export default function Works() {
                         top={top}
                         left={left}
                         className="block-8"
-                        data={data[x]}
+                        data={data[x + navIdx * 18]}
                         idx={x}
                       />
                     );
@@ -562,7 +603,7 @@ export default function Works() {
                         top={top}
                         left={left}
                         className="block-8"
-                        data={data[x]}
+                        data={data[x + navIdx * 18]}
                         idx={x}
                       />
                     );
