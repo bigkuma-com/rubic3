@@ -41,7 +41,7 @@ export default function Contacts({
       color={"white"}
       zIndex={5}
     >
-      <Box display="flex" gap={{ base: "10%", lg: 0 }}>
+      <Box display="none" gap={{ base: "10%", lg: 0 }}>
         {contents.address.map(({ name, description }, i) => {
           return (
             <BoxMotion
@@ -66,9 +66,10 @@ export default function Contacts({
         <Box display={showOnLarge} w="33%" />
       </Box>
 
-      <Divider />
+      <Divider display="none" />
 
       <Text
+        display="none"
         fontSize="small"
         letterSpacing="widest"
         as={motion.h3}
@@ -80,9 +81,16 @@ export default function Contacts({
         Marketing Representative
       </Text>
 
-      <Box display="flex" flexWrap="wrap" gap={{ base: "10%", lg: 0 }}>
+      <Box
+        display="flex"
+        flexWrap="wrap"
+        gap={{ base: "10%", lg: "min(15%, 2rem)" }}
+      >
         {contents.contacts.map(
-          ({ email, facebook, instagram, location, name, whatsapp }, i) => {
+          (
+            { email, facebook, instagram, location, name, whatsapp, address },
+            i
+          ) => {
             return (
               <BoxMotion
                 variants={itemBotToTop(i * 0.2)}
@@ -96,9 +104,20 @@ export default function Contacts({
                 <Heading fontSize="lg" mb={3}>
                   {location}
                 </Heading>
-                <Box fontSize="sm">
-                  <span>: : {name}</span>
-                  <Box opacity={0.6}>
+                <Box fontSize="sm" fontWeight="light" opacity={0.6}>
+                  {/* <span>: : {name}</span> */}
+                  <Link>{address}</Link>
+
+                  <Box
+                    bg="light"
+                    h={0.1}
+                    w={10}
+                    opacity={0.5}
+                    mt={8}
+                    mb={5}
+                  ></Box>
+
+                  <Box>
                     <Link display="flex" gap={3} alignItems="center">
                       <IconWhatsappSm />
                       {whatsapp}
@@ -121,7 +140,7 @@ export default function Contacts({
             );
           }
         )}
-        <Box display={showOnLarge} w="1%" />
+        {/* <Box display={showOnLarge} w="1%" /> */}
       </Box>
 
       {hasContactButton && (
@@ -176,12 +195,21 @@ const contents = {
   ],
   contacts: [
     {
-      location: "Singapore",
+      location: "Singapore/Malaysia",
       name: "Head Quarter",
       whatsapp: "+65.8498.1278",
       email: "info.sg@rubic3.com",
       instagram: "rubicubecreative.sg",
       facebook: "rubicube creative singapore",
+      address: (
+        <>
+          160 Robinson Road #14-04
+          <br />
+          Singapore Business Federation Centre
+          <br />
+          Singapore 068914
+        </>
+      ),
     },
     {
       location: "Indonesia",
@@ -190,14 +218,23 @@ const contents = {
       email: "info@rubic3.com",
       instagram: "rubicubecreative.id",
       facebook: "rubicube creative indonesia",
+      address: (
+        <>
+          Mall of Indonesia
+          <br />
+          Frenchwalk Blok G/03, Kelapa Gading
+          <br />
+          Jakarta Utara 14240
+        </>
+      ),
     },
-    {
-      location: "Malaysia",
-      name: "Office",
-      whatsapp: "+60.12.653.7424",
-      email: "info.my@rubic3.com",
-      instagram: "rubicubecreative.my",
-      facebook: "rubicube creative malaysia",
-    },
+    // {
+    //   location: "Malaysia",
+    //   name: "Office",
+    //   whatsapp: "+60.12.653.7424",
+    //   email: "info.my@rubic3.com",
+    //   instagram: "rubicubecreative.my",
+    //   facebook: "rubicube creative malaysia",
+    // },
   ],
 };

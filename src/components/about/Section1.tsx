@@ -52,6 +52,7 @@ export default function Section1() {
           position="relative"
           w={{ base: "full", lg: "90%" }}
           h={{ base: "180px", xl: "300px" }}
+          display="none"
         >
           <Image
             src={ImagePoint}

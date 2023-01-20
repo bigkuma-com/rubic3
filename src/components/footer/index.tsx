@@ -1,6 +1,5 @@
-import { AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
-import Copyright from "./Copyright";
+import AdhyaGroup from "./AdhyaGroup";
 import SocialButtons from "./SocialButtons";
 
 export default function Footer({
@@ -31,11 +30,13 @@ export default function Footer({
 
   return (
     <>
-      <AnimatePresence>
+      {/* <AnimatePresence>
         {(scrollPosition > 400 || !isHomepage || isShowing) && (
           <Copyright key="copyright" isLight={isLight} position={position} />
         )}
-      </AnimatePresence>
+      </AnimatePresence> */}
+      <AdhyaGroup key="adhya-group" isLight={isLight} position={position} />
+
       <SocialButtons isLight={isLight} position={position} />
     </>
   );

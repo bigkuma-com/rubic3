@@ -57,9 +57,9 @@ export default function Section1({ sliders }: { sliders: any }) {
                   initial="initial"
                   animate="animate"
                   exit="exit"
+                  display="none"
                 >
                   <Text
-                    // display={{ base: "none", lg: "block" }}
                     fontSize={{ base: "xs", lg: "unset" }}
                     textDecoration="underline"
                     className="swiper-no-swiping text-shadow"
