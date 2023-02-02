@@ -26,7 +26,7 @@ export default function Section5({
   const prevRefSlides = useRef(null);
   const nextRefSlides = useRef(null);
 
-  const [isLarge] = useMediaQuery("(min-width: 1500px)", {
+  const [isLarge] = useMediaQuery("(min-width: 1600px)", {
     ssr: true,
     fallback: false,
   });
@@ -181,7 +181,7 @@ export default function Section5({
                                 <Text
                                   opacity={0.6}
                                   fontSize="small"
-                                  noOfLines={[3, null, null, null, 4, 5]}
+                                  noOfLines={[3, null, null, null, 4, 4, 5]}
                                   overflow="hidden"
                                   whiteSpace="pre-line"
                                 >
