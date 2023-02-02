@@ -118,21 +118,45 @@ export default function Contacts({
                   ></Box>
 
                   <Box>
-                    <Link display="flex" gap={3} alignItems="center">
+                    <Link
+                      display="flex"
+                      gap={3}
+                      alignItems="center"
+                      href={whatsapp.url}
+                      isExternal
+                    >
                       <IconWhatsappSm />
-                      {whatsapp}
+                      {whatsapp.name}
                     </Link>
-                    <Link display="flex" gap={3} alignItems="center">
+                    <Link
+                      display="flex"
+                      gap={3}
+                      alignItems="center"
+                      href={`mailto:${email}`}
+                      isExternal
+                    >
                       <IconEmailSm />
                       {email}
                     </Link>
-                    <Link display="flex" gap={3} alignItems="center">
+                    <Link
+                      display="flex"
+                      gap={3}
+                      alignItems="center"
+                      href={instagram.url}
+                      isExternal
+                    >
                       <IconInstagramSm />
-                      {instagram}
+                      {instagram.name}
                     </Link>
-                    <Link display="flex" gap={3} alignItems="center">
+                    <Link
+                      display="flex"
+                      gap={3}
+                      alignItems="center"
+                      href={facebook.url}
+                      isExternal
+                    >
                       <IconFacebookSm />
-                      {facebook}
+                      {facebook.name}
                     </Link>
                   </Box>
                 </Box>
@@ -197,10 +221,16 @@ const contents = {
     {
       location: "Singapore/Malaysia",
       name: "Head Quarter",
-      whatsapp: "+65.8498.1278",
+      whatsapp: { name: "+65.8498.1278", url: "https://wa.me/6584981278" },
       email: "info.sg@rubic3.com",
-      instagram: "rubicubecreative.sg",
-      facebook: "rubicube creative singapore",
+      instagram: {
+        name: "rubicubecreative.sg",
+        url: "https://www.instagram.com/rubicubecreative.sg/",
+      },
+      facebook: {
+        name: "rubicube creative singapore",
+        url: "https://facebook.com/rubicubecreative/",
+      },
       address: (
         <>
           160 Robinson Road #14-04
@@ -214,10 +244,19 @@ const contents = {
     {
       location: "Indonesia",
       name: "Office & Studio",
-      whatsapp: "+62.812.9292.6551",
+      whatsapp: {
+        name: "+62.812.9292.6551",
+        url: "https://wa.me/6281292926551",
+      },
       email: "info@rubic3.com",
-      instagram: "rubicubecreative.id",
-      facebook: "rubicube creative indonesia",
+      instagram: {
+        name: "rubicubecreative.id",
+        url: "https://www.instagram.com/rubicubecreative.id/",
+      },
+      facebook: {
+        name: "rubicube creative indonesia",
+        url: "https://facebook.com/rubicubecreative/",
+      },
       address: (
         <>
           Mall of Indonesia

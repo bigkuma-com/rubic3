@@ -7,6 +7,7 @@ import {
   animateBottomToTop,
   marginX,
   marginY,
+  showOnLarge,
   themeColor,
 } from "../../utils/consts";
 import { toHTTPS } from "../../utils/functions.js";
@@ -41,6 +42,7 @@ export default function SocialButtons({
     >
       <Box display="flex" alignItems="flex-end">
         <BoxMotion
+          display={showOnLarge}
           mb={-1}
           alignSelf="flex-end"
           animate={{
@@ -107,11 +109,14 @@ export default function SocialButtons({
 const socials = [
   {
     icon: <IconInstagram />,
-    url: "instagram.com",
+    url: "https://www.instagram.com/rubicubecreative.id/",
   },
   {
     icon: <IconFacebook />,
-    url: "fb.com",
+    url: "https://facebook.com/rubicubecreative/",
   },
-  { icon: <IconYoutube />, url: "youtube.com" },
+  {
+    icon: <IconYoutube />,
+    url: "https://www.youtube.com/@rubicubecreative5484/",
+  },
 ];

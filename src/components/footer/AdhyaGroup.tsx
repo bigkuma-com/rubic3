@@ -1,6 +1,6 @@
 import Image from "next/image";
 import IconAdhyaLight from "../../assets/svg/icon-member-of-adhya-light.svg";
-// import IconAdhya from "../../assets/svg/icon-member-of-adhya.svg";
+import IconAdhya from "../../assets/svg/icon-member-of-adhya.svg";
 import {
   animateBottomToTop,
   marginX,
@@ -51,7 +51,7 @@ export default function AdhyaGroup({
           />
         ) : (
           <Image
-            src={IconAdhyaLight}
+            src={IconAdhya}
             height={35}
             width={160}
             alt="Adhya"

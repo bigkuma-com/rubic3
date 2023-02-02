@@ -439,10 +439,10 @@ export default function About({
                       cursor="pointer"
                       color="dark"
                       onClick={() =>
-                        window.open("mailto:info@rubic3.com", "_blank")
+                        window.open("mailto:career@rubic3.com", "_blank")
                       }
                     >
-                      info@rubic3.com
+                      career@rubic3.com
                     </Link>
                   </Text>
 

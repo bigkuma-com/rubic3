@@ -26,7 +26,7 @@ export default function Section5({
   const prevRefSlides = useRef(null);
   const nextRefSlides = useRef(null);
 
-  const [isLarge] = useMediaQuery("(min-width: 991px)", {
+  const [isLarge] = useMediaQuery("(min-width: 1500px)", {
     ssr: true,
     fallback: false,
   });
@@ -74,8 +74,8 @@ export default function Section5({
         >
           <Text as="span" opacity={0.6}>
             We work best with like-minded partners who are creatively and
-            culturally ambitious—open to pushing the limits and possibilities
-            of design. Let’s make something great together. Send your resume and
+            culturally ambitious—open to pushing the limits and possibilities of
+            design. Let’s make something great together. Send your resume and
             portfolio (not bigger than 5 MB) to{" "}
           </Text>
           <Link
@@ -181,7 +181,7 @@ export default function Section5({
                                 <Text
                                   opacity={0.6}
                                   fontSize="small"
-                                  noOfLines={4}
+                                  noOfLines={[3, null, null, null, 4, 5]}
                                   overflow="hidden"
                                   whiteSpace="pre-line"
                                 >

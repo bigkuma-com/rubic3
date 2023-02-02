@@ -41,6 +41,7 @@ export default function Section3() {
       bg="dark"
       display="flex"
       alignItems="center"
+      justifyContent="center"
       px={marginXSection}
       py={{ base: "15%", lg: 0 }}
       position="relative"
@@ -50,7 +51,11 @@ export default function Section3() {
           display="flex"
           flexDir="column"
           gap={3}
+          h="full"
           w="full"
+          position="relative"
+          top="50%"
+          transform="translateY(-20%)"
           mr={{ base: 0, lg: "25%" }}
           color={"white"}
           onMouseLeave={() => {

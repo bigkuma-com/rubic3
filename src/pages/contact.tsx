@@ -396,7 +396,7 @@ export default function Contact() {
           </Box>
         </Box>
 
-        <Footer />
+        <Footer position="relative" />
       </Box>
     </>
   );
