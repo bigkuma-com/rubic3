@@ -57,7 +57,7 @@ export default function Contacts({
                 {name}
               </Heading>
 
-              <Link fontSize="sm" opacity={0.6} lineHeight="1.3">
+              <Link fontSize="sm" opacity={0.6} lineHeight="1.3" href="#">
                 {description}
               </Link>
             </BoxMotion>
@@ -106,7 +106,7 @@ export default function Contacts({
                 </Heading>
                 <Box fontSize="sm" fontWeight="light" opacity={0.6}>
                   {/* <span>: : {name}</span> */}
-                  <Link>{address}</Link>
+                  <Link href="#">{address}</Link>
 
                   <Box
                     bg="light"
