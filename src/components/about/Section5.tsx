@@ -82,9 +82,9 @@ export default function Section5({
             as="span"
             className="opacity-100"
             cursor="pointer"
-            onClick={() => window.open("mailto:info@rubic3.com", "_blank")}
+            onClick={() => window.open("mailto:career@rubic3.com", "_blank")}
           >
-            info@rubic3.com
+            career@rubic3.com
           </Link>
         </Text>
 
