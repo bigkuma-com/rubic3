@@ -8,7 +8,7 @@ import {
   marginX,
   marginY,
   showOnLarge,
-  themeColor,
+  themeColor
 } from "../../utils/consts";
 import { toHTTPS } from "../../utils/functions.js";
 import BoxMotion from "../BoxMotion";
@@ -31,14 +31,15 @@ export default function SocialButtons({
     <BoxMotion
       position={position}
       bottom={marginY}
-      right={marginX}
+      right={!isLarge ? 0 : marginX}
+      left={!isLarge ? marginX : "unset"}
       zIndex={500}
       variants={animateBottomToTop}
       initial="initial"
       animate="animate"
       exit="exit"
-      p={2}
-      mr={-2}
+      p={!isLarge ? 0 : 2}
+      mr={!isLarge ? 0 : -2}
     >
       <Box display="flex" alignItems="flex-end">
         <BoxMotion
