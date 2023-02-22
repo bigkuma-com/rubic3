@@ -1,6 +1,8 @@
 import { Box, Text } from "@chakra-ui/react";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { useState } from "react";
 import { Autoplay, EffectFade, Lazy } from "swiper";
 import "swiper/css";
 import "swiper/css/effect-fade";
@@ -17,6 +19,10 @@ import BoxMotion from "../BoxMotion";
 export default function Section1({ sliders }: { sliders: any }) {
   const { push } = useRouter();
 
+  const [swiper, setSwiper] = useState<any>(null);
+  const [section, setSection] = useState(0);
+
+  const slideTo = (index: any) => swiper.slideTo(index);
   return (
     <BoxMotion
       bg="dark"
@@ -29,6 +35,39 @@ export default function Section1({ sliders }: { sliders: any }) {
       animate="animate"
       exit="exit"
     >
+      <Box
+        as="ul"
+        position="absolute"
+        left="50%"
+        bottom={marginY}
+        transform="translateX(-50%)"
+        zIndex={500}
+        display="flex"
+        gap={3}
+        listStyleType="none"
+      >
+        {sliders.map(({}, i: any) => {
+          return (
+            <Box
+              as="li"
+              cursor="pointer"
+              key={i}
+              py={2}
+              _hover={{
+                opacity: 1,
+              }}
+              opacity={i == section ? 1 : 0.3}
+              transition="opacity 0.2s ease-in-out"
+              onClick={() => {
+                slideTo(i + 1);
+              }}
+            >
+              <Box h="2px" w="30px" bg="light" borderRadius="md" />
+            </Box>
+          );
+        })}
+      </Box>
+
       <Swiper
         speed={1000}
         autoplay={{
@@ -39,6 +78,10 @@ export default function Section1({ sliders }: { sliders: any }) {
         loop={true}
         lazy={true}
         modules={[Autoplay, EffectFade, Lazy]}
+        onSlideChange={(swiper) => {
+          setSection(swiper.realIndex);
+        }}
+        onSwiper={setSwiper}
       >
         {sliders.map(
           (

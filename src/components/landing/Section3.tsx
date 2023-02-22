@@ -1,12 +1,10 @@
 import { Box, Divider, Heading, Text, useMediaQuery } from "@chakra-ui/react";
 import { AnimatePresence, LayoutGroup } from "framer-motion";
 import { useRouter } from "next/router";
-import { useContext, useState } from "react";
-import IconPlus from "../../assets/js/IconPlus";
+import { useState } from "react";
 import { marginXSection, sidebarServices } from "../../utils/consts";
-import { HomeContext } from "../../utils/hooks";
 import BoxMotion from "../BoxMotion";
-import RunningText from "./Runningtext";
+import Button from "../Button";
 
 const itemBotToTop = (delay = 0) => ({
   offscreen: {
@@ -26,7 +24,6 @@ const itemBotToTop = (delay = 0) => ({
 
 export default function Section3() {
   const { push } = useRouter();
-  const { section } = useContext(HomeContext);
   const [menuHover, setMenuHover] = useState(-1);
 
   const [isLarge] = useMediaQuery("(min-width: 991px)", {
@@ -35,27 +32,26 @@ export default function Section3() {
   });
 
   return (
-    <BoxMotion
-      h={{ base: "60vh", lg: "100vh" }}
-      w="full"
-      bg="dark"
-      display="flex"
-      alignItems="center"
-      justifyContent="center"
-      px={marginXSection}
-      py={{ base: "15%", lg: 0 }}
-      position="relative"
-    >
+    <Box py="5vh" px={marginXSection} h="65vh" bg="dark">
+      <Box
+        display="flex"
+        alignItems="flex-end"
+        justifyContent="space-between"
+        mb={14}
+      >
+        <Heading as="h3" fontSize="lg" mr={5}>
+          Our Division
+        </Heading>
+        <Box h="1px" bg="light" flexGrow={1} opacity={0.5} mb={1} />
+      </Box>
+
       <LayoutGroup>
         <Box
           display="flex"
           flexDir="column"
-          gap={3}
+          gap={5}
           h="full"
           w="full"
-          position="relative"
-          top="50%"
-          transform="translateY(-20%)"
           mr={{ base: 0, lg: "25%" }}
           color={"white"}
           onMouseLeave={() => {
@@ -71,16 +67,15 @@ export default function Section3() {
                   isLarge && setMenuHover(i);
                 }}
                 _hover={{
-                  opacity: menuHover === i ? 1 : 0.6,
+                  opacity: menuHover === i ? 1 : 0.5,
                 }}
-                opacity={menuHover === -1 ? 1 : 0.6}
+                opacity={menuHover === -1 ? 1 : 0.5}
                 className="animate-fade"
               >
                 <BoxMotion
                   layout
                   display="flex"
                   flexDir="column"
-                  gap={2}
                   variants={itemBotToTop(i * 0.2)}
                   initial="offscreen"
                   whileInView="onscreen"
@@ -90,6 +85,7 @@ export default function Section3() {
                     <Heading
                       fontWeight="thin"
                       cursor="pointer"
+                      fontSize="5xl"
                       onClick={() =>
                         isLarge
                           ? push(
@@ -135,26 +131,19 @@ export default function Section3() {
                         </BoxMotion>
 
                         <BoxMotion layout>
-                          <Text
-                            fontSize="x-small"
-                            display="flex"
-                            alignItems="center"
-                            gap={1}
-                            cursor="pointer"
-                            mt={{ base: 5, lg: 0 }}
+                          <Button
+                            text="View more"
                             onClick={() =>
                               push(
                                 `/services?selected=${sidebarServices[i].query}`
                               )
                             }
-                          >
-                            View more <IconPlus />
-                          </Text>
+                          />
                         </BoxMotion>
                       </BoxMotion>
                     )}
                   </AnimatePresence>
-                  <BoxMotion layout>
+                  <BoxMotion layout mt={5}>
                     <Divider />
                   </BoxMotion>
                 </BoxMotion>
@@ -163,9 +152,7 @@ export default function Section3() {
           })}
         </Box>
       </LayoutGroup>
-
-      <RunningText text="Service" />
-    </BoxMotion>
+    </Box>
   );
 }
 
@@ -178,11 +165,6 @@ const contents = [
     title: "Hospitality",
     subtitle:
       "Specializes in providing hotel management and advisory for hotels and resorts.",
-  },
-  {
-    title: "Connoisseur",
-    subtitle:
-      "Specializes in the F&B consultancy service for mid to large-scale businesses.",
   },
   {
     title: "360 Digital",
