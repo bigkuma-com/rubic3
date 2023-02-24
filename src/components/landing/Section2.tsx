@@ -51,7 +51,7 @@ export default function Section2() {
       <Box
         w={{ base: "full", lg: "50%" }}
         color="white"
-        mt="20%"
+        mt="12%"
         pr={{ base: 0, lg: "7%" }}
         display="flex"
         flexDir={"column"}

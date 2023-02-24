@@ -3,22 +3,20 @@ import { AnimatePresence } from "framer-motion";
 import { NextSeo } from "next-seo";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { Mousewheel } from "swiper";
 import "swiper/css";
-import { Swiper, SwiperSlide } from "swiper/react";
-import ArrowLeftSm from "../assets/js/ArrowLeftSm";
 import IconClose from "../assets/js/IconClose";
 import Section1 from "../components/about/Section1";
 import Section2 from "../components/about/Section2";
 import Section3 from "../components/about/Section3";
 import Section4 from "../components/about/Section4";
 import Section5 from "../components/about/Section5";
+import BackToHome from "../components/BackToHome";
 import BoxMotion from "../components/BoxMotion";
 import Footer from "../components/footer";
 import Header from "../components/header";
+import NavLef from "../components/NavLeft";
 import { getFullList } from "../utils/api";
 import {
-  animateLeftRight,
   animateOpacity,
   animateScaling,
   sidebarAbout,
@@ -73,7 +71,7 @@ export default function About({
   });
 
   useEffect(() => {
-    setIsEven(!!(section % 2));
+    setIsEven(!!(section % 2)); 
     section !== 4 && setSelectedCareer(-1);
   }, [section]);
 
@@ -83,7 +81,6 @@ export default function About({
     const i = sidebarAbout.findIndex((item) => item.query === query?.selected);
 
     if (i > -1 && swiper?.enabled) {
-      slideTo(i);
       setSection(i);
     }
   }, [query, swiper]);
@@ -134,6 +131,7 @@ export default function About({
       <BoxMotion
         position="relative"
         display="flex"
+        h="full"
         initial={{ backgroundColor: themeColor[0] }}
         animate={{
           backgroundColor: themeColor[+isEven],
@@ -144,52 +142,23 @@ export default function About({
         }}
       >
         <Header isLight={!isEven} />
-        <Box
-          position="fixed"
-          top="50%"
-          left="5%"
-          transform="translate(-50%, -50%)"
-          zIndex={50}
+
+        <BackToHome color={themeColor[+!isEven]} />
+
+        <NavLef
           color={themeColor[+!isEven]}
-        >
-          <BoxMotion
-            variants={animateLeftRight}
-            initial="initial"
-            animate="animate"
-          >
-            <Box
-              display={{ base: "none", lg: "flex" }}
-              flexDirection="column"
-              alignItems="center"
-              gap={2}
-              cursor="pointer"
-              color="inherit"
-              onClick={() => push("/")}
-            >
-              <Text
-                color="inherit"
-                as="span"
-                style={{
-                  writingMode: "vertical-lr",
-                  transform: "rotate(-180deg)",
-                }}
-                fontSize="small"
-                letterSpacing="wider"
-                fontWeight={400}
-              >
-                Back to Home
-              </Text>
-              <ArrowLeftSm />
-            </Box>
-          </BoxMotion>
-        </Box>
+          contents={sidebarAbout}
+          section={section}
+          setSection={(section: number) => setSection(section)}
+        />
+
         <Box
-          position="relative"
+          display="none"
+          position="fixed"
           left={0}
           top={0}
           w="30%"
           h="100vh"
-          display={{ base: "none", lg: "flex" }}
           alignItems="center"
           pl="10%"
           color={themeColor[+!isEven]}
@@ -211,12 +180,10 @@ export default function About({
                 >
                   <Box
                     as="li"
-                    // key={i}
                     opacity={section == i ? 1 : 0.6}
                     _hover={{ opacity: 1 }}
                     cursor="pointer"
                     onClick={() => {
-                      slideTo(i);
                       setSection(i);
                       replace({
                         query: { ...query, selected: sidebarAbout[i].query },
@@ -280,100 +247,27 @@ export default function About({
           />
         </Box>
 
-        <Box
-          h="100vh"
-          display={{ base: "flex", lg: "none" }}
-          alignItems="center"
-        >
-          <BoxMotion
-            w="3px"
-            position="absolute"
-            opacity={0.6}
-            right={0}
-            top={0}
-            zIndex={5}
-            layout
-            initial={{
-              height: "0%",
-            }}
-            animate={{
-              height: `${(section + 1) * 20}%`,
-              backgroundColor: themeColor[+!isEven],
-              transition: {
-                backgroundColor: {
-                  duration: 0.5,
-                  ease: "easeInOut",
-                },
-                height: {
-                  duration: 2,
-                },
-              },
-            }}
-          />
-          <BoxMotion
-            opacity={0.1}
-            w="3px"
-            position="absolute"
-            right={0}
-            top={0}
-            zIndex={4}
-            initial={{
-              height: "0vh",
-            }}
-            animate={{
-              height: "100vh",
-              backgroundColor: themeColor[+!isEven],
-              transition: {
-                duration: 0.5,
-                ease: "easeInOut",
-                height: {
-                  duration: 1,
-                  ease: "easeInOut",
-                },
-              },
-            }}
-          />
-        </Box>
 
-        <Box h="100vh" w={{ base: "full", lg: "70%" }}>
-          <Swiper
-            direction={"vertical"}
-            mousewheel={true}
-            modules={[Mousewheel]}
-            simulateTouch={false}
-            onSlideChange={(swiper) => {
-              setSection(swiper.realIndex);
-              replace({
-                query: {
-                  ...query,
-                  selected: sidebarAbout[swiper.realIndex].query,
-                },
-              });
-            }}
-            onSwiper={setSwiper}
-          >
-            <SwiperSlide style={{ height: "100vh" }}>
-              <Section1 />
-            </SwiperSlide>
-            <SwiperSlide style={{ height: "100vh" }}>
-              <Section2 clients={clients} />
-            </SwiperSlide>
-            <SwiperSlide style={{ height: "100vh" }}>
-              <Section3 leaders={leaders} />
-            </SwiperSlide>
-            <SwiperSlide style={{ height: "100vh" }}>
-              <Section4 associates={associates} partners={partners} />
-            </SwiperSlide>
-            <SwiperSlide style={{ height: "100vh" }}>
-              <Section5
-                careers={careers}
-                setSelectedCareer={(selectedCareer: number) =>
-                  setSelectedCareer(selectedCareer)
-                }
-              />
-            </SwiperSlide>
-          </Swiper>
-        </Box>
+
+        {section == 0 && <Section1 />}
+
+        {section == 1 && <Section2 clients={clients} />}
+
+        {section == 2 && <Section3 leaders={leaders} />}
+
+        {section == 3 && (
+          <Section4 associates={associates} partners={partners} />
+        )}
+
+        {section == 4 && (
+          <Section5
+            careers={careers}
+            setSelectedCareer={(selectedCareer: number) =>
+              setSelectedCareer(selectedCareer)
+            }
+          />
+        )}
+
         <AnimatePresence>
           {selectedCareer > -1 && (
             <BoxMotion

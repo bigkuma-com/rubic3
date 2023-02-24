@@ -1,7 +1,10 @@
 import { Box, Heading, Text } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import ImagePoint from "../../assets/images/Point.webp";
+import { Fragment } from "react";
+import Rubic360 from "../../assets/images/FA Rubicube 360 Digital logo2.png";
+import RubicCreative from "../../assets/images/FA Rubicube Creativity Logo2.png";
+import RubicHospitality from "../../assets/images/FA Rubicube Hospitality Logo2.png";
 import {
   itemBotToTop,
   sectionMarginLeft,
@@ -13,7 +16,8 @@ export default function Section1() {
   return (
     <Box
       w="full"
-      h="100vh"
+      h="full"
+      minH="100vh"
       display="flex"
       alignItems="center"
       pl={sectionMarginLeft}
@@ -22,7 +26,8 @@ export default function Section1() {
     >
       <Box display="flex" flexDirection="column">
         <Heading
-          w={{ base: "full", lg: "95%" }}
+          w={{ base: "full", lg: "70%" }}
+          fontSize={{ base: "xl", lg: "3xl" }}
           mb={[4, 4, 4, 6]}
           as={motion.h2}
           variants={itemBotToTop(0)}
@@ -33,44 +38,61 @@ export default function Section1() {
           HeArt-Work beats talent when talent doesn’t work with a heart
         </Heading>
         <BoxMotion
-          w={{ base: "full", lg: "95%" }}
-          mb={[6, 8, 10, 14]}
+          w={{ base: "full", lg: "80%" }}
+          mb={[6, 8]}
           variants={itemBotToTop(0.2)}
           initial="offscreen"
           whileInView="onscreen"
           viewport={{ once: false }}
         >
-          <Text as="p" opacity={0.6} fontSize="sm" whiteSpace="pre-line">
-            {content.text}
+          <Text as="p" fontSize="sm">
+            <Text as="span" opacity={0.6}>
+              Rubicube Group is a holistic branding and management advisory that
+              excels in brand strategy, identity development, hotel management,
+              F&B management, digital marketing, and communication. Rubicube
+              Group operates in Singapore, Indonesia, and Malaysia, working with
+              clients ranging from independent and international brands since
+              2008.
+            </Text>
+            <br />
+            <br />
+            <b>
+              Today, we are proud to announce that we have joined the Adhya
+              Group and have extended our company divisions and services.
+            </b>
           </Text>
         </BoxMotion>
-        <BoxMotion
-          variants={itemBotToTop(0.4)}
-          initial="offscreen"
-          whileInView="onscreen"
-          viewport={{ once: false }}
-          position="relative"
-          w={{ base: "full", lg: "90%" }}
-          h={{ base: "180px", xl: "300px" }}
-          display="none"
-        >
-          <Image
-            src={ImagePoint}
-            fill
-            alt="point"
-            style={{
-              objectFit: "contain",
-              objectPosition: "left center",
-            }}
-          />
-        </BoxMotion>
+        <Box display="flex" gap={10} alignItems="center">
+          {[RubicCreative, Rubic360, RubicHospitality].map((item, i) => {
+            return (
+              <Fragment key={i}>
+                <BoxMotion
+                  // bg="yellow.100"
+                  variants={itemBotToTop(0.4)}
+                  initial="offscreen"
+                  whileInView="onscreen"
+                  viewport={{ once: false }}
+                  position="relative"
+                  w={{ base: "full", xl: "180px" }}
+                  h={{ base: "180px", xl: "120px" }}
+                >
+                  <Image
+                    src={item}
+                    fill
+                    alt="point"
+                    style={{
+                      objectFit: "contain",
+                      objectPosition: "center",
+                    }}
+                  />
+                </BoxMotion>
+
+                {i < 2 && <Box h="80px" w="1px" bg="light" />}
+              </Fragment>
+            );
+          })}
+        </Box>
       </Box>
     </Box>
   );
 }
-
-const content = {
-  text: `Rubicube Group is a holistic branding and management advisory that excels in brand strategy, identity development, hotel management, F&B management, digital marketing, and communication. Rubicube Group operates in Singapore, Indonesia, and Malaysia, working with clients ranging from independent and international brands since 2008.
-  
-  With a track record of 14 years, Our deep understanding of and research into the forces of digital disruption, coupled with the new thinking required to unlock growth provides excellence, long-lasting results.`,
-};

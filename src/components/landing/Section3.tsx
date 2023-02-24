@@ -32,7 +32,7 @@ export default function Section3() {
   });
 
   return (
-    <Box py="5vh" px={marginXSection} h="65vh" bg="dark">
+    <Box my="5vh" px={marginXSection} h="65vh" bg="dark">
       <Box
         display="flex"
         alignItems="flex-end"

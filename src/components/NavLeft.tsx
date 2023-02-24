@@ -1,0 +1,170 @@
+import { Box } from "@chakra-ui/react";
+import { useRouter } from "next/router";
+import { itemBotToTop, sidebarAbout } from "../utils/consts";
+import BoxMotion from "./BoxMotion";
+
+export default function NavLef({
+  color = "light",
+  contents,
+  section,
+  setSection,
+}: {
+  color?: string;
+  contents: any;
+  section: number;
+  setSection: any;
+}) {
+  const { query, replace } = useRouter();
+  return (
+    <>
+      <Box w="30%" ml="10%" />
+
+      <Box
+        position="fixed"
+        left={0}
+        top={0}
+        w="30%"
+        pl="10%"
+        h="100vh"
+        display={{ base: "none", lg: "flex" }}
+        alignItems="center"
+        color={color}
+        zIndex={49}
+      >
+        <Box
+          as="ul"
+          display="flex"
+          flexDirection="column"
+          gap={4}
+          listStyleType="none"
+        >
+          {contents.map((item: any, i: number) => {
+            return (
+              <BoxMotion
+                key={i}
+                variants={itemBotToTop(i * 0.2)}
+                initial="offscreen"
+                whileInView="onscreen"
+              >
+                <Box
+                  as="li"
+                  opacity={section == i ? 1 : 0.6}
+                  _hover={{ opacity: 1 }}
+                  cursor="pointer"
+                  onClick={() => {
+                    setSection(i);
+                    replace({
+                      query: { ...query, selected: sidebarAbout[i].query },
+                    });
+                  }}
+                  className="animate-fade"
+                >
+                  {item.name}
+                </Box>
+              </BoxMotion>
+            );
+          })}
+        </Box>
+        <BoxMotion
+          w="2px"
+          position="absolute"
+          opacity={0.6}
+          right={0}
+          top={0}
+          zIndex={5}
+          layout
+          initial={{
+            height: "0%",
+          }}
+          animate={{
+            height: `${(section + 1) * 20}%`,
+            backgroundColor: color,
+            transition: {
+              backgroundColor: {
+                duration: 0.5,
+                ease: "easeInOut",
+              },
+              height: {
+                duration: 2,
+              },
+            },
+          }}
+        />
+        <BoxMotion
+          opacity={0.1}
+          w="2px"
+          position="absolute"
+          right={0}
+          top={0}
+          zIndex={4}
+          initial={{
+            height: "0vh",
+          }}
+          animate={{
+            height: "100vh",
+            backgroundColor: color,
+            transition: {
+              duration: 0.5,
+              ease: "easeInOut",
+              height: {
+                duration: 1,
+                ease: "easeInOut",
+              },
+            },
+          }}
+        />
+      </Box>
+
+      <Box h="full" display={{ base: "flex", lg: "none" }} alignItems="center">
+        <BoxMotion
+          w="3px"
+          position="absolute"
+          opacity={0.6}
+          right={0}
+          top={0}
+          zIndex={5}
+          layout
+          initial={{
+            height: "0%",
+          }}
+          animate={{
+            height: `${(section + 1) * 20}%`,
+            backgroundColor: color,
+            transition: {
+              backgroundColor: {
+                duration: 0.5,
+                ease: "easeInOut",
+              },
+              height: {
+                duration: 2,
+              },
+            },
+          }}
+        />
+        <BoxMotion
+          opacity={0.1}
+          w="3px"
+          position="absolute"
+          right={0}
+          top={0}
+          zIndex={4}
+          initial={{
+            height: "0vh",
+          }}
+          animate={{
+            height: "100vh",
+            backgroundColor: color,
+            transition: {
+              duration: 0.5,
+              ease: "easeInOut",
+              height: {
+                duration: 1,
+                ease: "easeInOut",
+              },
+            },
+          }}
+        />
+      </Box>
+    </>
+  );
+}
