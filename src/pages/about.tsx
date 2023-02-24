@@ -71,7 +71,7 @@ export default function About({
   });
 
   useEffect(() => {
-    setIsEven(!!(section % 2)); 
+    setIsEven(!!(section % 2));
     section !== 4 && setSelectedCareer(-1);
   }, [section]);
 
@@ -151,103 +151,6 @@ export default function About({
           section={section}
           setSection={(section: number) => setSection(section)}
         />
-
-        <Box
-          display="none"
-          position="fixed"
-          left={0}
-          top={0}
-          w="30%"
-          h="100vh"
-          alignItems="center"
-          pl="10%"
-          color={themeColor[+!isEven]}
-        >
-          <Box
-            as="ul"
-            display="flex"
-            flexDirection="column"
-            gap={4}
-            listStyleType="none"
-          >
-            {sidebarAbout.map((item, i) => {
-              return (
-                <BoxMotion
-                  key={i}
-                  variants={itemBotToTop(i * 0.2)}
-                  initial="offscreen"
-                  whileInView="onscreen"
-                >
-                  <Box
-                    as="li"
-                    opacity={section == i ? 1 : 0.6}
-                    _hover={{ opacity: 1 }}
-                    cursor="pointer"
-                    onClick={() => {
-                      setSection(i);
-                      replace({
-                        query: { ...query, selected: sidebarAbout[i].query },
-                      });
-                    }}
-                    className="animate-fade"
-                  >
-                    {item.name}
-                  </Box>
-                </BoxMotion>
-              );
-            })}
-          </Box>
-          <BoxMotion
-            w="2px"
-            position="absolute"
-            opacity={0.6}
-            right={0}
-            top={0}
-            zIndex={5}
-            layout
-            initial={{
-              height: "0%",
-            }}
-            animate={{
-              height: `${(section + 1) * 20}%`,
-              backgroundColor: themeColor[+!isEven],
-              transition: {
-                backgroundColor: {
-                  duration: 0.5,
-                  ease: "easeInOut",
-                },
-                height: {
-                  duration: 2,
-                },
-              },
-            }}
-          />
-          <BoxMotion
-            opacity={0.1}
-            w="2px"
-            position="absolute"
-            right={0}
-            top={0}
-            zIndex={4}
-            initial={{
-              height: "0vh",
-            }}
-            animate={{
-              height: "100vh",
-              backgroundColor: themeColor[+!isEven],
-              transition: {
-                duration: 0.5,
-                ease: "easeInOut",
-                height: {
-                  duration: 1,
-                  ease: "easeInOut",
-                },
-              },
-            }}
-          />
-        </Box>
-
-
 
         {section == 0 && <Section1 />}
 
