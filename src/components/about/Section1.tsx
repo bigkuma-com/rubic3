@@ -1,6 +1,7 @@
 import { Box, Heading, Text } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { Fragment } from "react";
 import Rubic360 from "../../assets/images/FA Rubicube 360 Digital logo2.png";
 import RubicCreative from "../../assets/images/FA Rubicube Creativity Logo2.png";
@@ -13,6 +14,7 @@ import {
 import BoxMotion from "../BoxMotion";
 
 export default function Section1() {
+  const { push } = useRouter();
   return (
     <Box
       w="full"
@@ -62,37 +64,66 @@ export default function Section1() {
             </b>
           </Text>
         </BoxMotion>
-        <Box display="flex" gap={10} alignItems="center">
-          {[RubicCreative, Rubic360, RubicHospitality].map((item, i) => {
+        <BoxMotion
+          variants={itemBotToTop(0.4)}
+          initial="offscreen"
+          whileInView="onscreen"
+          viewport={{ once: false }}
+          display="flex"
+          gap={10}
+          alignItems="center"
+        >
+          {rubicServices.map(({ image, link, title }, i) => {
             return (
               <Fragment key={i}>
-                <BoxMotion
-                  // bg="yellow.100"
-                  variants={itemBotToTop(0.4)}
-                  initial="offscreen"
-                  whileInView="onscreen"
-                  viewport={{ once: false }}
-                  position="relative"
-                  w={{ base: "full", xl: "180px" }}
-                  h={{ base: "180px", xl: "120px" }}
+                <Box
+                  onClick={() => {
+                    push(link);
+                  }}
                 >
-                  <Image
-                    src={item}
-                    fill
-                    alt="point"
-                    style={{
-                      objectFit: "contain",
-                      objectPosition: "center",
-                    }}
-                  />
-                </BoxMotion>
+                  <BoxMotion
+                    position="relative"
+                    w={{ base: "full", xl: "180px" }}
+                    h={{ base: "180px", xl: "120px" }}
+                    cursor="pointer"
+                    whileHover={{ scale: 1.05 }}
+                  >
+                    <Image
+                      src={image}
+                      fill
+                      alt={title}
+                      style={{
+                        objectFit: "contain",
+                        objectPosition: "center",
+                      }}
+                    />
+                  </BoxMotion>
+                </Box>
 
                 {i < 2 && <Box h="80px" w="1px" bg="light" />}
               </Fragment>
             );
           })}
-        </Box>
+        </BoxMotion>
       </Box>
     </Box>
   );
 }
+
+const rubicServices = [
+  {
+    image: RubicCreative,
+    title: "Rubicube Creativity",
+    link: "/services?selected=creative",
+  },
+  {
+    image: Rubic360,
+    title: "Rubicube 360 Digital",
+    link: "/services?selected=360",
+  },
+  {
+    image: RubicHospitality,
+    title: "Rubicube Hospitality",
+    link: "/services?selected=hospitality",
+  },
+];

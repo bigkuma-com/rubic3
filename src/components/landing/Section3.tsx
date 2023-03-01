@@ -1,10 +1,11 @@
-import { Box, Divider, Heading, Text, useMediaQuery } from "@chakra-ui/react";
+import { Box, Heading, Text, useMediaQuery } from "@chakra-ui/react";
 import { AnimatePresence, LayoutGroup } from "framer-motion";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { marginXSection, sidebarServices } from "../../utils/consts";
 import BoxMotion from "../BoxMotion";
 import Button from "../Button";
+import Divider from "../Divider";
 
 const itemBotToTop = (delay = 0) => ({
   offscreen: {
@@ -33,24 +34,14 @@ export default function Section3() {
 
   return (
     <Box my="5vh" px={marginXSection} h="65vh" bg="dark">
-      <Box
-        display="flex"
-        alignItems="flex-end"
-        justifyContent="space-between"
-        mb={14}
-      >
-        <Heading as="h3" fontSize="lg" mr={5}>
-          Our Division
-        </Heading>
-        <Box h="1px" bg="light" flexGrow={1} opacity={0.5} mb={1} />
-      </Box>
+      <Divider text="Our Division" />
 
       <LayoutGroup>
         <Box
           display="flex"
           flexDir="column"
           gap={5}
-          h="full"
+          // h="full"
           w="full"
           mr={{ base: 0, lg: "25%" }}
           color={"white"}
@@ -144,7 +135,7 @@ export default function Section3() {
                     )}
                   </AnimatePresence>
                   <BoxMotion layout mt={5}>
-                    <Divider />
+                    <Divider mb={0} lineOpacity={0.3} />
                   </BoxMotion>
                 </BoxMotion>
               </Box>

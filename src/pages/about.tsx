@@ -52,16 +52,17 @@ export default function About({
   associates,
   leaders,
   careers,
+  partnersAssociations,
 }: {
   clients: any;
   partners: any;
   associates: any;
   leaders: any;
   careers: any;
+  partnersAssociations: any;
 }) {
   const { push, query, replace } = useRouter();
   const [section, setSection] = useState(0);
-  const [swiper, setSwiper] = useState<any>(null);
   const [isEven, setIsEven] = useState(true);
   const [selectedCareer, setSelectedCareer] = useState(-1);
 
@@ -75,15 +76,15 @@ export default function About({
     section !== 4 && setSelectedCareer(-1);
   }, [section]);
 
-  const slideTo = (index: any) => swiper.slideTo(index);
-
   useEffect(() => {
-    const i = sidebarAbout.findIndex((item) => item.query === query?.selected);
+    const i = sidebarAbout.findIndex((item) => item.query == query?.selected);
 
-    if (i > -1 && swiper?.enabled) {
+    if (i > -1) {
       setSection(i);
     }
-  }, [query, swiper]);
+  }, [query]);
+
+  console.log(section, query);
 
   return (
     <>
@@ -154,7 +155,9 @@ export default function About({
 
         {section == 0 && <Section1 />}
 
-        {section == 1 && <Section2 clients={clients} />}
+        {section == 1 && (
+          <Section2 partnersAssociations={partnersAssociations} />
+        )}
 
         {section == 2 && <Section3 leaders={leaders} />}
 
@@ -282,6 +285,10 @@ export async function getStaticProps() {
     collection: "careers",
     params: { sort: "-created" },
   });
+  const resultsPartnersAssociations = await getFullList({
+    collection: "partners_associations",
+    params: { sort: "order" },
+  });
 
   const partners = resultsClients.filter((client) => client.type === "partner");
   const associates = resultsClients.filter(
@@ -291,6 +298,17 @@ export async function getStaticProps() {
 
   const leaders = resultLeaders;
   const careers = resultCareers;
+  const partnersAssociations = resultsPartnersAssociations.reduce(
+    (acc: any, curr: any) => {
+      const { tag, ...rest } = curr;
+      if (!acc[tag]) {
+        acc[tag] = [];
+      }
+      acc[tag].push(rest);
+      return acc;
+    },
+    {}
+  );
 
   return {
     props: {
@@ -299,7 +317,37 @@ export async function getStaticProps() {
       associates: JSON.parse(JSON.stringify(associates)),
       leaders: JSON.parse(JSON.stringify(leaders)),
       careers: JSON.parse(JSON.stringify(careers)),
+      partnersAssociations: JSON.parse(JSON.stringify(partnersAssociations)),
     },
     revalidate: 2,
   };
 }
+
+const dataResult = [
+  { tag: "", data: {} },
+  { tag: "", data: {} },
+  //...
+];
+
+const data = [
+  {
+    id: "eqgzov05pb6iorb",
+    name: "Adhya Group",
+    tag: "Our Partners",
+  },
+  {
+    id: "o3lo42k5sacnva8",
+    name: "Ria",
+    tag: "Food & Beverage",
+  },
+  {
+    id: "wh4xoed6p0zpptd",
+    name: "Dextonindo Persada",
+    tag: "Products & Services",
+  },
+  {
+    id: "zr8q4ehza7x1blf",
+    name: "Adhya Indo Jaya",
+    tag: "Products & Services",
+  },
+];

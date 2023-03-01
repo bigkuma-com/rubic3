@@ -2,6 +2,7 @@ import { Box } from "@chakra-ui/react";
 import ArrowDownSm from "../assets/js/ArrowDownSm";
 import ArrowLeftSm from "../assets/js/ArrowLeftSm";
 import ArrowRightSm from "../assets/js/ArrowRightSm";
+import { themeColor } from "../utils/consts";
 
 export default function Button({
   text,
@@ -15,6 +16,7 @@ export default function Button({
   style,
   type = "button",
   disable = false,
+  isLight = true,
 }: {
   text: string;
   onClick?: any;
@@ -27,6 +29,7 @@ export default function Button({
   style?: any;
   type?: any;
   disable?: boolean;
+  isLight?: boolean;
 }) {
   return (
     <Box
@@ -38,15 +41,15 @@ export default function Button({
       lineHeight="1.2"
       transition="all 0.2s cubic-bezier(.08,.52,.52,1)"
       border="1px"
-      bg={isActive ? "light" : "transparent"}
-      borderColor="var(--chakra-colors-light)"
+      bg={isActive ? themeColor[+isLight] : "transparent"}
+      borderColor={themeColor[+isLight]}
       _active={
         disable
           ? {}
           : {
-              bg: "var(--chakra-colors-light)",
+              bg: themeColor[+isLight],
               transform: "scale(0.98)",
-              borderColor: "var(--chakra-colors-light)",
+              borderColor: themeColor[+isLight],
             }
       }
       _focus={{}}
@@ -60,14 +63,14 @@ export default function Button({
       alignItems="center"
       gap={3}
       color={
-        isActive ? "var(--chakra-colors-dark)" : "var(--chakra-colors-light)"
+        isActive ? themeColor[+!isLight] : themeColor[+isLight]
       }
       _hover={
         disable
           ? {}
           : {
-              color: "var(--chakra-colors-dark)",
-              backgroundColor: "var(--chakra-colors-light)",
+              color: themeColor[+!isLight],
+              backgroundColor: themeColor[+isLight],
               opacity: isActive ? 0.8 : 1,
             }
       }

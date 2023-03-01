@@ -98,6 +98,7 @@ export default function Header({
         <Box display="flex" alignItems="center" gap={10}>
           <BoxMotion layout>
             <Button
+            isLight={isLight}
               text="Contact Us"
               withIcon={false}
               onClick={() => {

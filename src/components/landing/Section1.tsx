@@ -1,5 +1,4 @@
 import { Box, Text } from "@chakra-ui/react";
-import { motion } from "framer-motion";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -23,6 +22,7 @@ export default function Section1({ sliders }: { sliders: any }) {
   const [section, setSection] = useState(0);
 
   const slideTo = (index: any) => swiper.slideTo(index);
+
   return (
     <BoxMotion
       bg="dark"
@@ -85,11 +85,23 @@ export default function Section1({ sliders }: { sliders: any }) {
       >
         {sliders.map(
           (
-            { image, title, description, expand, collectionName, id }: any,
+            {
+              title,
+              description,
+              expand,
+              collectionName,
+              id,
+              is_video,
+              file,
+              duration,
+            }: any,
             i: any
           ) => {
             return (
-              <SwiperSlide key={i}>
+              <SwiperSlide
+                key={i}
+                data-swiper-autoplay={duration <= 0 ? 5000 : duration}
+              >
                 <BoxMotion
                   position="fixed"
                   bottom={marginY}
@@ -128,20 +140,41 @@ export default function Section1({ sliders }: { sliders: any }) {
                   position="relative"
                   bg="dark"
                 >
-                  <Image
-                    src={getImage({
-                      collectionName: collectionName,
-                      recordId: id,
-                      filename: image,
-                    })}
-                    alt={image}
-                    fill
-                    style={{
-                      objectFit: "cover",
-                      objectPosition: "center center",
-                      backgroundColor: "var(--chakra-colors-dark)",
-                    }}
-                  />
+                  {is_video ? (
+                    <video
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        backgroundColor: "var(--chakra-colors-dark)",
+                      }}
+                      autoPlay={i == section}
+                      loop
+                      muted={i != section}
+                    >
+                      <source
+                        src={getImage({
+                          collectionName: collectionName,
+                          recordId: id,
+                          filename: file,
+                        })}
+                      />
+                    </video>
+                  ) : (
+                    <Image
+                      src={getImage({
+                        collectionName: collectionName,
+                        recordId: id,
+                        filename: file,
+                      })}
+                      alt={file}
+                      fill
+                      style={{
+                        objectFit: "cover",
+                        objectPosition: "center center",
+                        backgroundColor: "var(--chakra-colors-dark)",
+                      }}
+                    />
+                  )}
                 </Box>
               </SwiperSlide>
             );

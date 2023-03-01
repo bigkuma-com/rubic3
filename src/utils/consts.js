@@ -17,7 +17,7 @@ export const phoneRegExp =
 
 export const sidebarAbout = [
   { name: "Company Overview", query: "overview" },
-  { name: "Clients", query: "clients" },
+  { name: "Partners & Associations", query: "partners-associations" },
   { name: "Leadership", query: "leadership" },
   { name: "Partners", query: "partners" },
   { name: "Careers", query: "careers" },

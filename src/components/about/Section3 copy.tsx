@@ -41,10 +41,7 @@ export default function Section3({ leaders }: { leaders: any }) {
       alignItems="center"
       pl={sectionMarginLeft}
       pr={sectionMarginRight}
-      pt={{ base: 12, lg: 0 }}
-      // pl={sectionMarginLeft}
-      // pr={sectionMarginRight}
-      // py="10%"
+      py="10%"
     >
       <Box display="flex" flexDirection="column" w="full">
         <Heading
@@ -105,7 +102,6 @@ export default function Section3({ leaders }: { leaders: any }) {
           </BoxMotion>
 
           <Swiper
-            style={{ width: "100%" }}
             pagination={{
               clickable: true,
             }}
