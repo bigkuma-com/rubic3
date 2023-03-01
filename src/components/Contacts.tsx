@@ -219,7 +219,7 @@ const contents = {
   ],
   contacts: [
     {
-      location: "Singapore/Malaysia",
+      location: "Singapore",
       name: "Head Quarter",
       whatsapp: { name: "+65.8498.1278", url: "https://wa.me/6584981278" },
       email: "info.sg@rubic3.com",
