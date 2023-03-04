@@ -1,6 +1,7 @@
-import { Box, Heading, SimpleGrid, Text } from "@chakra-ui/react";
+import { Box, Heading, SimpleGrid, useMediaQuery } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import { getImage } from "../../utils/api";
 import {
   itemBotToTop,
@@ -8,93 +9,67 @@ import {
   sectionMarginRight,
 } from "../../utils/consts";
 import BoxMotion from "../BoxMotion";
+import Button from "../Button";
 
-export default function Section4({
-  partners,
-  associates,
-}: {
-  partners: any;
-  associates: any;
-}) {
+export default function Section2({ clients }: { clients: any }) {
+  const [isLarge] = useMediaQuery("(min-width: 991px)", {
+    ssr: true,
+    fallback: false,
+  });
+
+  const [maxItem, setMaxItem] = useState(isLarge ? 24 : 20);
+
+  useEffect(() => {
+    setMaxItem(isLarge ? 24 : 20);
+  }, [isLarge]);
+
   return (
     <Box
-      w="full"
-      h="100vh"
+      w="70%"
+      h="full"
+      minH="100vh"
       display="flex"
       alignItems="center"
       pl={sectionMarginLeft}
       pr={sectionMarginRight}
-      py="10%"
-      color="dark"
+      pt={{ base: 12, lg: 0 }}
     >
       <Box display="flex" flexDirection="column" w="full">
-        <Heading
-          mb={[2, 3, 4, 6]}
-          color="inherit"
-          as={motion.h2}
-          variants={itemBotToTop(0)}
-          initial="offscreen"
-          whileInView="onscreen"
-          viewport={{ once: false }}
-        >
-          Partners
-        </Heading>
-        <Text
-          w="70%"
-          opacity={0.6}
-          fontSize="sm"
-          mb={[2, 3, 4, 6]}
-          color="inherit"
-          as={motion.p}
-          variants={itemBotToTop(0.2)}
-          initial="offscreen"
-          whileInView="onscreen"
-          viewport={{ once: false }}
-        >
-          We believe in unity by bringing together unrivaled talent, resources,
-          and skills to provide an integrated network offer of design
-          innovation, communication, experience, commerce, management, and
-          technology for businesses.
-        </Text>
+        <Box display="flex" justifyContent="space-between">
+          <Heading
+            mb={6}
+            color="dark"
+            as={motion.h2}
+            variants={itemBotToTop(0)}
+            initial="offscreen"
+            whileInView="onscreen"
+            viewport={{ once: false }}
+          >
+            Our Major Clients
+          </Heading>
 
-        <BoxMotion
-          h="0.5px"
-          w="full"
-          bg="dark"
-          opacity={0.2}
-          mb={[2, 3, 4, 6]}
-          mt={3}
-          variants={itemBotToTop(0.4)}
-          initial="offscreen"
-          whileInView="onscreen"
-          viewport={{ once: false }}
-        />
-        <Text
-          fontSize={12}
-          fontWeight={500}
-          mb={[2, 3, 4, 6]}
-          color="inherit"
-          as={motion.h5}
-          variants={itemBotToTop(0.4)}
-          initial="offscreen"
-          whileInView="onscreen"
-          viewport={{ once: false }}
-        >
-          Associated with
-        </Text>
-        <SimpleGrid columns={[4, null, null, 6]} spacing={[1, null, null, 6]}>
-          {associates.map(
-            ({ collectionName, id, logo, name, url }: any, i: any) => {
+          <Button text="Client List" isLight={false}/>
+        </Box>
+
+        <SimpleGrid columns={[4, null, null, 6]} spacing={5}>
+          {clients
+            .filter(function ({}, i: any) {
+              if (i >= maxItem) {
+                return false;
+              }
+              return true;
+            })
+            .map(({ collectionName, id, logo, name, url }: any, i: any) => {
               return (
                 <BoxMotion
-                  variants={itemBotToTop(0.6 + i * 0.2)}
+                  key={id}
+                  position="relative"
+                  h={{ base: "70px", lg: "12vmin" }}
+                  w="full"
+                  variants={itemBotToTop(i * 0.1)}
                   initial="offscreen"
                   whileInView="onscreen"
                   viewport={{ once: false }}
-                  key={id}
-                  position="relative"
-                  h={{ base: "70px", lg: "125px" }}
-                  w="full"
                   cursor={url ? "pointer" : "unset"}
                 >
                   <Image
@@ -115,70 +90,7 @@ export default function Section4({
                   />
                 </BoxMotion>
               );
-            }
-          )}
-        </SimpleGrid>
-
-        <BoxMotion
-          h="0.5px"
-          w="full"
-          bg="dark"
-          opacity={0.2}
-          mb={[2, 3, 4, 6]}
-          mt={3}
-          variants={itemBotToTop(0.4)}
-          initial="offscreen"
-          whileInView="onscreen"
-          viewport={{ once: false }}
-        />
-        <Text
-          fontSize={12}
-          fontWeight={500}
-          mb={[2, 3, 4, 6]}
-          color="inherit"
-          as={motion.h5}
-          variants={itemBotToTop(0.4)}
-          initial="offscreen"
-          whileInView="onscreen"
-          viewport={{ once: false }}
-        >
-          Partnered with
-        </Text>
-        <SimpleGrid columns={[4, null, null, 6]} spacing={[1, null, null, 6]}>
-          {partners.map(
-            ({ collectionName, id, logo, name, url }: any, i: any) => {
-              return (
-                <BoxMotion
-                  variants={itemBotToTop(0.6 + i * 0.2)}
-                  initial="offscreen"
-                  whileInView="onscreen"
-                  viewport={{ once: false }}
-                  key={id}
-                  position="relative"
-                  h={{ base: "70px", lg: "125px" }}
-                  w="full"
-                  cursor={url ? "pointer" : "unset"}
-                >
-                  <Image
-                    onClick={() => {
-                      url && window.open(url, `_blank`);
-                    }}
-                    src={getImage({
-                      collectionName,
-                      recordId: id,
-                      filename: logo,
-                    })}
-                    alt={name}
-                    fill
-                    style={{
-                      objectFit: "contain",
-                      objectPosition: "left center",
-                    }}
-                  />
-                </BoxMotion>
-              );
-            }
-          )}
+            })}
         </SimpleGrid>
       </Box>
     </Box>

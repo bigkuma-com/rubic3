@@ -37,7 +37,7 @@ export default function Section2({
 
   return (
     <Box
-      w="full"
+      w="70%"
       h="100vh"
       display="flex"
       alignItems="center"

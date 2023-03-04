@@ -17,7 +17,7 @@ export default function Section1() {
   const { push } = useRouter();
   return (
     <Box
-      w="full"
+      w="70%"
       h="full"
       minH="100vh"
       display="flex"

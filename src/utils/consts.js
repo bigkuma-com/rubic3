@@ -19,7 +19,7 @@ export const sidebarAbout = [
   { name: "Company Overview", query: "overview" },
   { name: "Partners & Associations", query: "partners-associations" },
   { name: "Leadership", query: "leadership" },
-  { name: "Partners", query: "partners" },
+  { name: "Clients", query: "clients" },
   { name: "Careers", query: "careers" },
 ];
 

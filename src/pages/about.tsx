@@ -84,8 +84,6 @@ export default function About({
     }
   }, [query]);
 
-  console.log(section, query);
-
   return (
     <>
       <NextSeo
@@ -133,6 +131,7 @@ export default function About({
         position="relative"
         display="flex"
         h="full"
+        w="full"
         initial={{ backgroundColor: themeColor[0] }}
         animate={{
           backgroundColor: themeColor[+isEven],
@@ -152,6 +151,7 @@ export default function About({
           section={section}
           setSection={(section: number) => setSection(section)}
         />
+        <Box w="30%" />
 
         {section == 0 && <Section1 />}
 
@@ -162,7 +162,7 @@ export default function About({
         {section == 2 && <Section3 leaders={leaders} />}
 
         {section == 3 && (
-          <Section4 associates={associates} partners={partners} />
+          <Section4 clients={clients} />
         )}
 
         {section == 4 && (
@@ -294,8 +294,7 @@ export async function getStaticProps() {
   const associates = resultsClients.filter(
     (client) => client.type === "associate"
   );
-  const clients = resultsClients.filter((client) => client.type === "client");
-
+  const clients = resultsClients;
   const leaders = resultLeaders;
   const careers = resultCareers;
   const partnersAssociations = resultsPartnersAssociations.reduce(

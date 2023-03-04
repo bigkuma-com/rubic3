@@ -1,5 +1,11 @@
-import { Box, Heading, Text, useMediaQuery } from "@chakra-ui/react";
-import { motion } from "framer-motion";
+import {
+  Box,
+  Heading,
+  Text,
+  useMediaQuery,
+  useOutsideClick,
+} from "@chakra-ui/react";
+import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { Navigation, Pagination } from "swiper";
@@ -7,15 +13,18 @@ import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import IconArrowLeft from "../../assets/js/IconArrowLeft";
 import IconArrowRight from "../../assets/js/IconArrowRight";
+import IconClose from "../../assets/js/IconClose";
+import IconPlus from "../../assets/js/IconPlus";
 import { getImage } from "../../utils/api";
 import {
+  animateOpacity,
+  animateScaling,
   itemBotToTop,
   sectionMarginLeft,
   sectionMarginRight,
 } from "../../utils/consts";
 import { arrayChunk } from "../../utils/functions";
 import BoxMotion from "../BoxMotion";
-import HomePagination from "../landing/HomePagination";
 
 export default function Section3({ leaders }: { leaders: any }) {
   const prevRefSlides = useRef(null);
@@ -27,24 +36,29 @@ export default function Section3({ leaders }: { leaders: any }) {
   });
 
   const [section, setSection] = useState(0);
+  const [selectedCard, setSelectedCard] = useState(-1);
+  const [isCardOpen, setIsCardOpen] = useState(false);
   const [leadersEnd, setLeadersEnd] = useState<any>([]);
+  const [selectedLeader, setSelectedLeader] = useState<any>(null);
 
   useEffect(() => {
     setLeadersEnd(arrayChunk(leaders, isLarge ? 4 : 2));
   }, [isLarge, leaders]);
 
+  useEffect(() => {
+    selectedCard > -1 && setSelectedLeader(leaders[selectedCard]);
+  }, [leaders, selectedCard]);
+
   return (
     <Box
-      w="full"
+      position="relative"
+      w="70%"
       h="100vh"
       display="flex"
       alignItems="center"
       pl={sectionMarginLeft}
       pr={sectionMarginRight}
       pt={{ base: 12, lg: 0 }}
-      // pl={sectionMarginLeft}
-      // pr={sectionMarginRight}
-      // py="10%"
     >
       <Box display="flex" flexDirection="column" w="full">
         <Heading
@@ -56,56 +70,88 @@ export default function Section3({ leaders }: { leaders: any }) {
           whileInView="onscreen"
           viewport={{ once: false }}
         >
-          Nextgen Leaders
+          Our Leadership
         </Heading>
         <BoxMotion
           w="80%"
-          mb={[8, 10, 12, 14]}
+          mb={[4, 6, 8, 10]}
           variants={itemBotToTop(0.2)}
           initial="offscreen"
           whileInView="onscreen"
           viewport={{ once: false }}
         >
           <Text opacity={0.6} fontSize="sm" whiteSpace="pre-line">
-            {`We invest in our people’s future, create inclusive working environments, and build cultures based on the values of openness, optimism, and a commitment to extraordinary work.
-          An unbeatable force of change to be reckoned with, challenging the status quo.`}
+            {`We invest in our people’s future, create inclusive working environments, and build cultures based on the values of openness, optimism, and a commitment to extraordinary work.`}
           </Text>
         </BoxMotion>
-        <Box w="full" className="section-leaders" position="relative">
-          <BoxMotion
+        <BoxMotion
+          w="full"
+          h={[140, null, null, "45vmin"]}
+          className="section-leaders"
+          position="relative"
+          variants={itemBotToTop(0.6)}
+          initial="offscreen"
+          whileInView="onscreen"
+          viewport={{ once: true }}
+        >
+          <Box
             position="absolute"
             right={0}
-            top={0}
-            transform="translateY(-50%)"
+            top="50%"
+            transform="translate(50%,-50%)"
             zIndex={10}
             color="light"
             display="flex"
             gap={3}
             alignItems="center"
-            variants={itemBotToTop(0.4)}
-            initial="offscreen"
-            whileInView="onscreen"
-            viewport={{ once: false }}
           >
-            <HomePagination section={section} maxSection={leadersEnd.length} />
-            <Box
-              ref={prevRefSlides}
-              opacity={section === 0 ? 0.6 : 1}
-              cursor="pointer"
-            >
-              <IconArrowLeft />
-            </Box>
-            <Box
+            <BoxMotion
               ref={nextRefSlides}
-              opacity={section === leadersEnd.length - 1 ? 0.6 : 1}
-              cursor="pointer"
+              animate={{ opacity: section === leadersEnd.length - 1 ? 0 : 0.6 }}
+              whileHover={{
+                opacity: section === leadersEnd.length - 1 ? 0 : 1,
+              }}
+              cursor={section === leadersEnd.length - 1 ? "unset" : "pointer"}
+              bg="dark"
+              h="45px"
+              w="45px"
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              borderRadius="50%"
+              border="1px"
             >
               <IconArrowRight />
-            </Box>
-          </BoxMotion>
-
+            </BoxMotion>
+          </Box>
+          <Box
+            position="absolute"
+            left={0}
+            top="50%"
+            transform="translate(-50%,-50%)"
+            zIndex={10}
+            color="light"
+            display="flex"
+            gap={3}
+          >
+            <BoxMotion
+              ref={prevRefSlides}
+              cursor={section === 0 ? "unset" : "pointer"}
+              animate={{ opacity: section === 0 ? 0 : 0.6 }}
+              whileHover={{ opacity: section === 0 ? 0 : 1 }}
+              bg="dark"
+              h="45px"
+              w="45px"
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              borderRadius="50%"
+              border="1px"
+            >
+              <IconArrowLeft />
+            </BoxMotion>
+          </Box>
           <Swiper
-            style={{ width: "100%" }}
             pagination={{
               clickable: true,
             }}
@@ -124,13 +170,13 @@ export default function Section3({ leaders }: { leaders: any }) {
               leadersEnd.map((leadersChunck: any, i: number) => {
                 return (
                   <SwiperSlide key={i}>
-                    <BoxMotion
+                    <Box
                       display="flex"
                       w="full"
-                      variants={itemBotToTop(0.6)}
-                      initial="offscreen"
-                      whileInView="onscreen"
-                      viewport={{ once: false }}
+                      h="full"
+                      onMouseLeave={() => {
+                        setSelectedCard(-1);
+                      }}
                     >
                       {leadersChunck.map(
                         (
@@ -138,18 +184,17 @@ export default function Section3({ leaders }: { leaders: any }) {
                           j: number
                         ) => {
                           return (
-                            <Box
-                              w={!isLarge ? "50%" : "25%"}
-                              key={id}
-                              mt={j % 2 === 0 ? 0 : "50px"}
-                              display="flex"
-                              flexDirection="column"
-                            >
+                            <Box key={id} w={!isLarge ? "50%" : "25%"}>
                               <Box
                                 position="relative"
-                                w="full"
-                                h={[140, null, null, 280]}
-                                mb={2}
+                                h="full"
+                                cursor="pointer"
+                                onMouseEnter={() => {
+                                  setSelectedCard(i * leadersChunck.length + j);
+                                }}
+                                onClick={() => {
+                                  setIsCardOpen(true);
+                                }}
                               >
                                 <Image
                                   src={getImage({
@@ -161,24 +206,168 @@ export default function Section3({ leaders }: { leaders: any }) {
                                   fill
                                   style={{ objectFit: "cover" }}
                                 />
+                                <LayoutGroup key={id}>
+                                  <BoxMotion
+                                    layout
+                                    key={id}
+                                    position="absolute"
+                                    bottom={0}
+                                    left={0}
+                                    w="full"
+                                    p={3}
+                                    bg="linear-gradient(180deg, rgba(0,0,0,0) 5%, rgba(0,0,0,0.65) 40%, rgba(0,0,0,0.9) 100%)"
+                                  >
+                                    <Text
+                                      as={motion.h5}
+                                      layout
+                                      fontWeight={500}
+                                    >
+                                      {name}
+                                    </Text>
+                                    <Text
+                                      as={motion.p}
+                                      layout
+                                      fontSize="small"
+                                      opacity={0.5}
+                                    >
+                                      {title}
+                                    </Text>
+                                    <AnimatePresence>
+                                      {selectedCard ===
+                                        i * leadersChunck.length + j && (
+                                        <BoxMotion layout key={`vml-${id}`}>
+                                          <Text
+                                            as={motion.span}
+                                            layout
+                                            fontSize="x-small"
+                                            display="flex"
+                                            alignItems="center"
+                                            gap={1}
+                                            mt={{ base: 5, lg: 3 }}
+                                            onClick={() => {}}
+                                          >
+                                            View more <IconPlus />
+                                          </Text>
+                                        </BoxMotion>
+                                      )}
+                                    </AnimatePresence>
+                                  </BoxMotion>
+                                </LayoutGroup>
                               </Box>
-                              <Text pl={3} fontWeight={500}>
-                                {name}
-                              </Text>
-                              <Text pl={3} fontSize="small" opacity={0.5}>
-                                {title}
-                              </Text>
                             </Box>
                           );
                         }
                       )}
-                    </BoxMotion>
+                    </Box>
                   </SwiperSlide>
                 );
               })}
           </Swiper>
-        </Box>
+        </BoxMotion>
       </Box>
+
+      <PopUpLayout
+        data={selectedLeader}
+        display={isCardOpen}
+        setDisplay={(isCardOpen: boolean | ((prevState: boolean) => boolean)) =>
+          setIsCardOpen(isCardOpen)
+        }
+      />
     </Box>
+  );
+}
+
+function PopUpLayout({
+  children,
+  display = false,
+  setDisplay,
+  data,
+}: {
+  children?: any;
+  display: boolean;
+  setDisplay: any;
+  data: any;
+}) {
+  const boxRef = useRef(null);
+  useOutsideClick({ ref: boxRef, handler: () => setDisplay(false) });
+
+  return (
+    <AnimatePresence>
+      {display && (
+        <BoxMotion
+          variants={animateOpacity}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          position="fixed"
+          top={0}
+          left={0}
+          w="100vw"
+          h="100vh"
+          bg="blackAlpha.900"
+          zIndex={1500}
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <BoxMotion
+            variants={animateScaling}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            w="80%"
+            h="80%"
+            bg="light"
+            position="relative"
+            p={[8, null, null, 20]}
+            ref={boxRef}
+          >
+            <Box
+              position="absolute"
+              top={6}
+              right={6}
+              cursor="pointer"
+              onClick={() => {
+                setDisplay(false);
+              }}
+            >
+              <IconClose />
+            </Box>
+
+            <Box display="flex" h="full" gap={20}>
+              <Box position="relative" h="full" w="30%">
+                <Image
+                  src={getImage({
+                    collectionName: data.collectionName,
+                    recordId: data.id,
+                    filename: data.picture,
+                  })}
+                  alt={data.name}
+                  fill
+                  style={{ objectFit: "cover" }}
+                />
+              </Box>
+              <Box
+                display="flex"
+                flexDirection="column"
+                w="70%"
+                h="full"
+                overflowY="scroll"
+              >
+                <Heading mb={[1]} as="h2" color="dark">
+                  {data.name}
+                </Heading>
+                <Heading fontSize="xl" mb={[2, 4, 6]} as="h3" color="dark">
+                  {data.title}
+                </Heading>
+                <Text fontSize="sm" color="dark" opacity={0.7}>
+                  {data.description}
+                </Text>
+              </Box>
+            </Box>
+          </BoxMotion>
+        </BoxMotion>
+      )}
+    </AnimatePresence>
   );
 }

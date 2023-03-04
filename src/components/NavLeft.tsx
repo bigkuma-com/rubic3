@@ -8,17 +8,17 @@ export default function NavLef({
   contents,
   section,
   setSection,
+  showPaddingLeft = true,
 }: {
   color?: string;
   contents: any;
   section: number;
   setSection: any;
+  showPaddingLeft?: boolean;
 }) {
   const { query, replace } = useRouter();
   return (
     <>
-      <Box w="30%" ml="10%" />
-
       <Box
         position="fixed"
         left={0}
