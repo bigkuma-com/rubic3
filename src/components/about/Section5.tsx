@@ -1,4 +1,4 @@
-import { Box, Heading, Link, Text, useMediaQuery } from "@chakra-ui/react";
+import { Box, Heading, Text, useMediaQuery } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { Navigation, Pagination } from "swiper";
@@ -6,7 +6,6 @@ import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import IconArrowLeft from "../../assets/js/IconArrowLeft";
 import IconArrowRight from "../../assets/js/IconArrowRight";
-import IconPlus from "../../assets/js/IconPlus";
 import {
   itemBotToTop,
   sectionMarginLeft,
@@ -14,15 +13,11 @@ import {
 } from "../../utils/consts";
 import { arrayChunk } from "../../utils/functions";
 import BoxMotion from "../BoxMotion";
+import Button from "../Button";
 import HomePagination from "../landing/HomePagination";
+import PopUpLayout from "../Layout/PopupLayout";
 
-export default function Section5({
-  careers,
-  setSelectedCareer,
-}: {
-  careers: any;
-  setSelectedCareer: any;
-}) {
+export default function Section5({ careers }: { careers: any }) {
   const prevRefSlides = useRef(null);
   const nextRefSlides = useRef(null);
 
@@ -33,21 +28,22 @@ export default function Section5({
 
   const [section, setSection] = useState(0);
   const [careersEnd, setCareersEnd] = useState<any>([]);
+  const [selectedCareer, setSelectedCareer] = useState(-1);
+  const [isCardOpen, setIsCardOpen] = useState(false);
 
   useEffect(() => {
-    setCareersEnd(arrayChunk(careers, isLarge ? 3 : 2));
+    setCareersEnd(arrayChunk(careers, isLarge ? 4 : 5));
   }, [isLarge, careers]);
 
   return (
     <Box
-      w="full"
+      w="70%"
       h="100vh"
-      overflowY="scroll"
       display="flex"
       alignItems="center"
       pl={sectionMarginLeft}
       pr={sectionMarginRight}
-      py="10%"
+      pt={{ base: 12, lg: 0 }}
       position="relative"
     >
       <Box display="flex" flexDirection="column" w="full">
@@ -74,18 +70,9 @@ export default function Section5({
         >
           <Text as="span" opacity={0.6}>
             We work best with like-minded partners who are creatively and
-            culturally ambitious—open to pushing the limits and possibilities of
-            design. Let’s make something great together. Send your resume and
-            portfolio (not bigger than 5 MB) to{" "}
+            culturally ambitious— open to pushing the limits and possibilities
+            of design. Let’s make something great together.
           </Text>
-          <Link
-            as="span"
-            className="opacity-100"
-            cursor="pointer"
-            onClick={() => window.open("mailto:career@rubic3.com", "_blank")}
-          >
-            career@rubic3.com
-          </Link>
         </Text>
 
         <BoxMotion
@@ -144,7 +131,7 @@ export default function Section5({
                     display="flex"
                     flexDirection="column"
                     w="full"
-                    gap={5}
+                    gap={7}
                   >
                     {careersChunck.map(
                       ({ title, description, url, id }: any, j: number) => {
@@ -171,6 +158,7 @@ export default function Section5({
                                   cursor="pointer"
                                   _hover={{ opacity: 1 }}
                                   onClick={() => {
+                                    setIsCardOpen(true);
                                     setSelectedCareer(
                                       i * (isLarge ? 3 : 2) + j
                                     );
@@ -178,30 +166,18 @@ export default function Section5({
                                 >
                                   {title}
                                 </Heading>
-                                <Text
-                                  opacity={0.6}
-                                  fontSize="small"
-                                  noOfLines={[3, null, null, null, 4, 4, 5]}
-                                  overflow="hidden"
-                                  whiteSpace="pre-line"
-                                >
-                                  {description}
-                                </Text>
                               </Box>
-                              <Text
-                                wordBreak="keep-all"
-                                flexWrap="nowrap"
-                                fontSize="small"
-                                display="flex"
-                                alignItems="center"
-                                gap={1}
-                                cursor="pointer"
-                                onClick={() => {
-                                  setSelectedCareer(i * (isLarge ? 3 : 2) + j);
-                                }}
-                              >
-                                Read more <IconPlus />
-                              </Text>
+                              <Box>
+                                <Button
+                                  text="Read More"
+                                  onClick={() => {
+                                    setIsCardOpen(true);
+                                    setSelectedCareer(
+                                      i * (isLarge ? 3 : 2) + j
+                                    );
+                                  }}
+                                />
+                              </Box>
                             </Box>
                             <Box
                               w="full"
@@ -220,6 +196,38 @@ export default function Section5({
           </Swiper>
         </Box>
       </Box>
+
+      <PopUpLayout
+        display={isCardOpen && selectedCareer > -1}
+        setDisplay={(isCardOpen: boolean | ((prevState: boolean) => boolean)) =>
+          setIsCardOpen(isCardOpen)
+        }
+      >
+        <Box
+          display="flex"
+          flexDirection="column"
+          w="full"
+          h="full"
+          overflowY="scroll"
+        >
+          <Heading mb={[2, 4, 6]} as="h3" color="dark">
+            {careers[selectedCareer]?.title}
+          </Heading>
+          <Text color="dark" whiteSpace="pre-line">
+            {careers[selectedCareer]?.description}
+          </Text>
+
+          <Box mt={12}>
+            <Button
+              isLight={false}
+              text="Apply Now"
+              onClick={() => {
+                window.open(careers[selectedCareer]?.url, "_blank");
+              }}
+            />
+          </Box>
+        </Box>
+      </PopUpLayout>
     </Box>
   );
 }

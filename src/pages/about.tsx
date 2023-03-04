@@ -53,6 +53,7 @@ export default function About({
   leaders,
   careers,
   partnersAssociations,
+  clientTypes
 }: {
   clients: any;
   partners: any;
@@ -60,11 +61,11 @@ export default function About({
   leaders: any;
   careers: any;
   partnersAssociations: any;
+  clientTypes: any;
 }) {
   const { push, query, replace } = useRouter();
   const [section, setSection] = useState(0);
   const [isEven, setIsEven] = useState(true);
-  const [selectedCareer, setSelectedCareer] = useState(-1);
 
   const [isLarge] = useMediaQuery("(min-width: 991px)", {
     ssr: true,
@@ -73,7 +74,6 @@ export default function About({
 
   useEffect(() => {
     setIsEven(!!(section % 2));
-    section !== 4 && setSelectedCareer(-1);
   }, [section]);
 
   useEffect(() => {
@@ -161,110 +161,15 @@ export default function About({
 
         {section == 2 && <Section3 leaders={leaders} />}
 
-        {section == 3 && (
-          <Section4 clients={clients} />
-        )}
+        {section == 3 && <Section4 clients={clients} clientTypes={clientTypes} />}
 
         {section == 4 && (
           <Section5
             careers={careers}
-            setSelectedCareer={(selectedCareer: number) =>
-              setSelectedCareer(selectedCareer)
-            }
           />
         )}
 
-        <AnimatePresence>
-          {selectedCareer > -1 && (
-            <BoxMotion
-              variants={animateOpacity}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              position="fixed"
-              top={0}
-              left={0}
-              w="100vw"
-              h="100vh"
-              bg="blackAlpha.900"
-              zIndex={1500}
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-            >
-              <BoxMotion
-                variants={animateScaling}
-                initial="initial"
-                animate="animate"
-                exit="exit"
-                w="80%"
-                h="80%"
-                bg="light"
-                position="relative"
-                p={[8, null, null, 12]}
-              >
-                <Box
-                  position="absolute"
-                  top={6}
-                  right={6}
-                  cursor="pointer"
-                  onClick={() => {
-                    setSelectedCareer(-1);
-                  }}
-                >
-                  <IconClose />
-                </Box>
 
-                <Box
-                  display="flex"
-                  flexDirection="column"
-                  w="full"
-                  h="full"
-                  overflowY="scroll"
-                >
-                  <Heading w="70%" mb={[2, 4, 6]} as="h2" color="dark">
-                    Careers
-                  </Heading>
-                  <Text w={{ base: "full", lg: "70%" }} fontSize="sm">
-                    <Text as="span" color="dark">
-                      We work best with like-minded partners who are creatively
-                      and culturally ambitious— open to pushing the limits and
-                      possibilities of design. Let’s make something great
-                      together. Send your resume and portfolio (not bigger than
-                      5 MB) to{" "}
-                    </Text>
-                    <Link
-                      as="span"
-                      className="opacity-100"
-                      cursor="pointer"
-                      color="dark"
-                      onClick={() =>
-                        window.open("mailto:career@rubic3.com", "_blank")
-                      }
-                    >
-                      career@rubic3.com
-                    </Link>
-                  </Text>
-
-                  <Box>
-                    <Box my={8} opacity={0.2} bg="dark" w="full" h="1px" />
-                  </Box>
-
-                  <Heading mb={[2, 4, 6]} as="h3" color="dark">
-                    {careers[selectedCareer].title}
-                  </Heading>
-                  <Text color="dark" whiteSpace="pre-line">
-                    {careers[selectedCareer].description}
-                  </Text>
-
-                  <Box>
-                    <Box my={8} opacity={0.2} bg="dark" w="full" h="1px" />
-                  </Box>
-                </Box>
-              </BoxMotion>
-            </BoxMotion>
-          )}
-        </AnimatePresence>
 
         <Footer isLight={!isEven} />
       </BoxMotion>
@@ -308,11 +213,26 @@ export async function getStaticProps() {
     },
     {}
   );
+  const clientTypes = resultsClients.map(({ type }: any) => type);
+
+  const result = resultsClients.reduce((acc:any, obj:any) => {
+    const type = obj.type;
+    if (!acc[type]) {
+      acc[type] = { type, data: [] };
+    }
+    acc[type].data.push(obj);
+    return acc;
+  }, {});
+
+  const finalResult = Object.values(result);
+
+  console.log(finalResult)
 
   return {
     props: {
       partners: JSON.parse(JSON.stringify(partners)),
       clients: JSON.parse(JSON.stringify(clients)),
+      clientTypes: JSON.parse(JSON.stringify(finalResult)),
       associates: JSON.parse(JSON.stringify(associates)),
       leaders: JSON.parse(JSON.stringify(leaders)),
       careers: JSON.parse(JSON.stringify(careers)),

@@ -97,6 +97,7 @@ export default function Section1({ sliders }: { sliders: any }) {
             }: any,
             i: any
           ) => {
+            console.log(i, section, i == section);
             return (
               <SwiperSlide
                 key={i}
@@ -145,20 +146,23 @@ export default function Section1({ sliders }: { sliders: any }) {
                       style={{
                         width: "100%",
                         height: "100%",
-                        backgroundColor: "var(--chakra-colors-dark)",
+                        backgroundColor: "black",
                       }}
                       autoPlay={i == section}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.play();
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.pause();
+                      }}
                       loop
                       muted={i != section}
-                    >
-                      <source
-                        src={getImage({
-                          collectionName: collectionName,
-                          recordId: id,
-                          filename: file,
-                        })}
-                      />
-                    </video>
+                      src={getImage({
+                        collectionName: collectionName,
+                        recordId: id,
+                        filename: file,
+                      })}
+                    />
                   ) : (
                     <Image
                       src={getImage({

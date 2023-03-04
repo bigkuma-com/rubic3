@@ -2,7 +2,7 @@ import { Box, Heading } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import ImageBgSection1 from "../../assets/images/francesco-ungaro-n3kAqdcF_Fo-unsplash.jpg";
+import ImageBgSection1 from "../../assets/images/Homepage Background Work Thumbnail.webp";
 import { marginXSection } from "../../utils/consts";
 import BoxMotion from "../BoxMotion";
 import Button from "../Button";
@@ -76,7 +76,7 @@ export default function Section2() {
           whileInView="onscreen"
           viewport={{ once: false }}
         >
-          <Button text="View Our Works" onClick={() => push("/about")} />
+          <Button text="View Our Works" onClick={() => push("/works")} />
         </BoxMotion>
       </Box>
     </BoxMotion>

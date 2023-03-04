@@ -1,7 +1,19 @@
-import { Box, Heading, SimpleGrid, useMediaQuery } from "@chakra-ui/react";
+import {
+  Accordion,
+  AccordionButton,
+  AccordionItem,
+  AccordionPanel,
+  Box,
+  Heading,
+  SimpleGrid,
+  Text,
+  useMediaQuery,
+} from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import IconAccordionMinus from "../../assets/js/IconAccordionMinus";
+import IconAccordionPlus from "../../assets/js/IconAccordionPlus";
 import { getImage } from "../../utils/api";
 import {
   itemBotToTop,
@@ -11,7 +23,13 @@ import {
 import BoxMotion from "../BoxMotion";
 import Button from "../Button";
 
-export default function Section2({ clients }: { clients: any }) {
+export default function Section2({
+  clients,
+  clientTypes,
+}: {
+  clients: any;
+  clientTypes: any;
+}) {
   const [isLarge] = useMediaQuery("(min-width: 991px)", {
     ssr: true,
     fallback: false,
@@ -23,6 +41,8 @@ export default function Section2({ clients }: { clients: any }) {
   useEffect(() => {
     setMaxItem(isLarge ? 24 : 20);
   }, [isLarge]);
+
+  console.log("clients: ", clientTypes);
 
   return (
     <>
@@ -51,23 +71,26 @@ export default function Section2({ clients }: { clients: any }) {
                 Our Major Clients
               </Heading>
 
-              <Button
-                text="Client List"
-                isLight={false}
-                onClick={() => {
-                  setSection(1);
-                }}
-              />
+              <BoxMotion
+                variants={itemBotToTop(0)}
+                initial="offscreen"
+                whileInView="onscreen"
+                viewport={{ once: false }}
+              >
+                <Button
+                  text="Client List"
+                  isLight={false}
+                  onClick={() => {
+                    setSection(1);
+                  }}
+                />
+              </BoxMotion>
             </Box>
 
             <SimpleGrid columns={[4, null, null, 6]} spacing={5}>
-              {clients
-                .filter(function ({ type }: any, i: any) {
-                  if (i >= maxItem || type !== "featured") {
-                    return false;
-                  }
-                  return true;
-                })
+              {clientTypes
+                .find(({ type }: any) => type === "featured")
+                .data.slice(0, maxItem)
                 .map(({ collectionName, id, logo, name, url }: any, i: any) => {
                   return (
                     <BoxMotion
@@ -127,51 +150,122 @@ export default function Section2({ clients }: { clients: any }) {
                 whileInView="onscreen"
                 viewport={{ once: false }}
               >
-                Our Major Clients
+                Our Client List
               </Heading>
 
-              <Button
-                text="Client List"
-                isLight={false}
-                onClick={() => {
-                  setSection(0);
-                }}
-                arrowLeft
-                iconOnLeft
-              />
+              <BoxMotion
+                variants={itemBotToTop(0)}
+                initial="offscreen"
+                whileInView="onscreen"
+                viewport={{ once: false }}
+              >
+                <Button
+                  text="Client List"
+                  isLight={false}
+                  onClick={() => {
+                    setSection(0);
+                  }}
+                  arrowLeft
+                  iconOnLeft
+                />
+              </BoxMotion>
             </Box>
 
-            <Box overflowY="scroll">
-              <SimpleGrid columns={[1, null, null, 2]} spacing={5}>
-                {clients
-                  .filter(function ({ type }: any, i: any) {
-                    if (i >= maxItem || type === "featured") {
-                      return false;
-                    }
-                    return true;
-                  })
-                  .map(
-                    ({ collectionName, id, logo, name, url }: any, i: any) => {
-                      return (
-                        <BoxMotion
-                          key={id}
-                          position="relative"
-                          h={{ base: "70px", lg: "12vmin" }}
-                          w="full"
-                          variants={itemBotToTop(i * 0.1)}
-                          initial="offscreen"
-                          whileInView="onscreen"
-                          viewport={{ once: false }}
-                          cursor={url ? "pointer" : "unset"}
-                          whileHover={{ scale: url ? 1.1 : 1 }}
-                        >
-                          {name}
-                        </BoxMotion>
-                      );
-                    }
-                  )}
-              </SimpleGrid>
-            </Box>
+            <BoxMotion
+              variants={itemBotToTop(0.2)}
+              initial="offscreen"
+              whileInView="onscreen"
+              viewport={{ once: false }}
+              overflowY="scroll"
+              pb="20vh"
+            >
+              <Accordion allowToggle allowMultiple>
+                {clientTypes
+                  .filter(({ type }: any) => type !== "featured")
+                  .map(({ data, type }: any, i: any) => {
+                    return (
+                      <AccordionItem
+                        key={type}
+                        borderTop="0"
+                        borderBottom="1px solid var(--chakra-colors-dark)"
+                      >
+                        {({ isExpanded }) => (
+                          <>
+                            <Box>
+                              <AccordionButton px={0} py={4}>
+                                <Text
+                                  fontSize="xl"
+                                  fontWeight={400}
+                                  textTransform="capitalize"
+                                  as="h3"
+                                  color="dark"
+                                  flex="1"
+                                  textAlign="left"
+                                >
+                                  {type}
+                                </Text>
+                                {isExpanded ? (
+                                  <Box color="dark">
+                                    <IconAccordionMinus />
+                                  </Box>
+                                ) : (
+                                  <Box color="dark">
+                                    <IconAccordionPlus />
+                                  </Box>
+                                )}
+                              </AccordionButton>
+                            </Box>
+                            <AccordionPanel p={0} mb={6}>
+                              <SimpleGrid
+                                columns={[1, null, null, 2]}
+                                rowGap={1}
+                              >
+                                {data.map(
+                                  (
+                                    {
+                                      collectionName,
+                                      id,
+                                      logo,
+                                      name,
+                                      url,
+                                      type,
+                                    }: any,
+                                    i: any
+                                  ) => {
+                                    return (
+                                      <BoxMotion
+                                        key={id}
+                                        position="relative"
+                                        w="full"
+                                        variants={itemBotToTop(i * 0.05)}
+                                        initial="offscreen"
+                                        whileInView="onscreen"
+                                        viewport={{ once: true }}
+                                        cursor={url ? "pointer" : "unset"}
+                                      >
+                                        <Text
+                                          opacity={0.7}
+                                          color="dark"
+                                          _hover={{
+                                            opacity: url ? 1 : 0.7,
+                                          }}
+                                          as={url ? "a" : "span"}
+                                        >
+                                          {name}
+                                        </Text>
+                                      </BoxMotion>
+                                    );
+                                  }
+                                )}
+                              </SimpleGrid>
+                            </AccordionPanel>
+                          </>
+                        )}
+                      </AccordionItem>
+                    );
+                  })}
+              </Accordion>
+            </BoxMotion>
           </Box>
         </Box>
       )}

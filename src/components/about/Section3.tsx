@@ -25,6 +25,7 @@ import {
 } from "../../utils/consts";
 import { arrayChunk } from "../../utils/functions";
 import BoxMotion from "../BoxMotion";
+import PopUpLayout from "../Layout/PopupLayout";
 
 export default function Section3({ leaders }: { leaders: any }) {
   const prevRefSlides = useRef(null);
@@ -48,6 +49,8 @@ export default function Section3({ leaders }: { leaders: any }) {
   useEffect(() => {
     selectedCard > -1 && setSelectedLeader(leaders[selectedCard]);
   }, [leaders, selectedCard]);
+
+  console.log("leaders: ", leadersEnd, selectedCard, selectedLeader);
 
   return (
     <Box
@@ -190,7 +193,8 @@ export default function Section3({ leaders }: { leaders: any }) {
                                 h="full"
                                 cursor="pointer"
                                 onMouseEnter={() => {
-                                  setSelectedCard(i * leadersChunck.length + j);
+                                  console.log(i, j);
+                                  setSelectedCard(i * (isLarge ? 4 : 2) + j);
                                 }}
                                 onClick={() => {
                                   setIsCardOpen(true);
@@ -267,7 +271,8 @@ export default function Section3({ leaders }: { leaders: any }) {
       </Box>
 
       <PopUpLayout
-        data={selectedLeader}
+        isLeadership
+        dataLeadership={selectedLeader}
         display={isCardOpen}
         setDisplay={(isCardOpen: boolean | ((prevState: boolean) => boolean)) =>
           setIsCardOpen(isCardOpen)
@@ -277,97 +282,3 @@ export default function Section3({ leaders }: { leaders: any }) {
   );
 }
 
-function PopUpLayout({
-  children,
-  display = false,
-  setDisplay,
-  data,
-}: {
-  children?: any;
-  display: boolean;
-  setDisplay: any;
-  data: any;
-}) {
-  const boxRef = useRef(null);
-  useOutsideClick({ ref: boxRef, handler: () => setDisplay(false) });
-
-  return (
-    <AnimatePresence>
-      {display && (
-        <BoxMotion
-          variants={animateOpacity}
-          initial="initial"
-          animate="animate"
-          exit="exit"
-          position="fixed"
-          top={0}
-          left={0}
-          w="100vw"
-          h="100vh"
-          bg="blackAlpha.900"
-          zIndex={1500}
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-        >
-          <BoxMotion
-            variants={animateScaling}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            w="80%"
-            h="80%"
-            bg="light"
-            position="relative"
-            p={[8, null, null, 20]}
-            ref={boxRef}
-          >
-            <Box
-              position="absolute"
-              top={6}
-              right={6}
-              cursor="pointer"
-              onClick={() => {
-                setDisplay(false);
-              }}
-            >
-              <IconClose />
-            </Box>
-
-            <Box display="flex" h="full" gap={20}>
-              <Box position="relative" h="full" w="30%">
-                <Image
-                  src={getImage({
-                    collectionName: data.collectionName,
-                    recordId: data.id,
-                    filename: data.picture,
-                  })}
-                  alt={data.name}
-                  fill
-                  style={{ objectFit: "cover" }}
-                />
-              </Box>
-              <Box
-                display="flex"
-                flexDirection="column"
-                w="70%"
-                h="full"
-                overflowY="scroll"
-              >
-                <Heading mb={[1]} as="h2" color="dark">
-                  {data.name}
-                </Heading>
-                <Heading fontSize="xl" mb={[2, 4, 6]} as="h3" color="dark">
-                  {data.title}
-                </Heading>
-                <Text fontSize="sm" color="dark" opacity={0.7}>
-                  {data.description}
-                </Text>
-              </Box>
-            </Box>
-          </BoxMotion>
-        </BoxMotion>
-      )}
-    </AnimatePresence>
-  );
-}
