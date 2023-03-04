@@ -17,6 +17,7 @@ export default function Button({
   type = "button",
   disable = false,
   isLight = true,
+  iconOnLeft = false,
 }: {
   text: string;
   onClick?: any;
@@ -30,6 +31,7 @@ export default function Button({
   type?: any;
   disable?: boolean;
   isLight?: boolean;
+  iconOnLeft?: boolean;
 }) {
   return (
     <Box
@@ -62,9 +64,7 @@ export default function Button({
       display="flex"
       alignItems="center"
       gap={3}
-      color={
-        isActive ? themeColor[+!isLight] : themeColor[+isLight]
-      }
+      color={isActive ? themeColor[+!isLight] : themeColor[+isLight]}
       _hover={
         disable
           ? {}
@@ -78,8 +78,18 @@ export default function Button({
       opacity={disable ? 0.5 : 1}
       cursor={disable ? "unset" : "pointer"}
     >
+      {withIcon &&
+        iconOnLeft &&
+        (arrowDown ? (
+          <ArrowDownSm />
+        ) : arrowLeft ? (
+          <ArrowLeftSm />
+        ) : (
+          <ArrowRightSm />
+        ))}
       {text}
       {withIcon &&
+        !iconOnLeft &&
         (arrowDown ? (
           <ArrowDownSm />
         ) : arrowLeft ? (
