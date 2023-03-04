@@ -15,7 +15,7 @@ import { arrayChunk } from "../../utils/functions";
 import BoxMotion from "../BoxMotion";
 import Button from "../Button";
 import HomePagination from "../landing/HomePagination";
-import PopUpLayout from "../Layout/PopupLayout";
+import PopUpLayout from "../Layout/PopUpLayout";
 
 export default function Section5({ careers }: { careers: any }) {
   const prevRefSlides = useRef(null);

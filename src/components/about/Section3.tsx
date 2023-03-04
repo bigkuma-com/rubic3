@@ -1,10 +1,4 @@
-import {
-  Box,
-  Heading,
-  Text,
-  useMediaQuery,
-  useOutsideClick,
-} from "@chakra-ui/react";
+import { Box, Heading, Text, useMediaQuery } from "@chakra-ui/react";
 import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
@@ -13,19 +7,16 @@ import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import IconArrowLeft from "../../assets/js/IconArrowLeft";
 import IconArrowRight from "../../assets/js/IconArrowRight";
-import IconClose from "../../assets/js/IconClose";
 import IconPlus from "../../assets/js/IconPlus";
 import { getImage } from "../../utils/api";
 import {
-  animateOpacity,
-  animateScaling,
   itemBotToTop,
   sectionMarginLeft,
   sectionMarginRight,
 } from "../../utils/consts";
 import { arrayChunk } from "../../utils/functions";
 import BoxMotion from "../BoxMotion";
-import PopUpLayout from "../Layout/PopupLayout";
+import PopUpLayout from "../Layout/PopUpLayout";
 
 export default function Section3({ leaders }: { leaders: any }) {
   const prevRefSlides = useRef(null);
@@ -281,4 +272,3 @@ export default function Section3({ leaders }: { leaders: any }) {
     </Box>
   );
 }
-
