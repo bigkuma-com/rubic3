@@ -1,4 +1,4 @@
-export default function IconChevronDown() {
+export default function IconChevronUp() {
   return (
     <svg
       width="24"

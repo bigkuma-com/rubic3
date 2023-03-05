@@ -29,9 +29,11 @@ import MenuToggle from "./MenuToggle";
 export default function Header({
   isLight = true,
   isTransparent = true,
+  contactMarginRight = 0,
 }: {
   isLight?: boolean;
   isTransparent?: boolean;
+  contactMarginRight?: number;
 }) {
   const { push } = useRouter();
 
@@ -96,9 +98,13 @@ export default function Header({
 
       <LayoutGroup>
         <Box display="flex" alignItems="center" gap={10}>
-          <BoxMotion layout>
+          <BoxMotion
+            position={contactMarginRight > 0 ? "absolute" : "relative"}
+            layout
+            right={contactMarginRight}
+          >
             <Button
-            isLight={isLight}
+              isLight={isLight}
               text="Contact Us"
               withIcon={false}
               onClick={() => {
