@@ -76,7 +76,7 @@ export default function Section2({
                   mb={6}
                 />
                 {title == "Products & Services" ? (
-                  <SimpleGrid columns={[2]} mt={2}>
+                  <SimpleGrid columns={[2]} mt={2} mb={8}>
                     {partnersAssociations[title].map(
                       ({
                         id,

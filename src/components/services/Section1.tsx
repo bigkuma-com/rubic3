@@ -6,10 +6,8 @@ import {
   itemBotToTop,
   sectionMarginLeft,
   sectionMarginRight,
-  showOnLarge,
 } from "../../utils/consts";
 import BoxMotion from "../BoxMotion";
-import HomePagination from "../landing/HomePagination";
 
 export default function Section1() {
   const { replace, query } = useRouter();
@@ -40,19 +38,6 @@ export default function Section1() {
         >
           <LogoRubicubeHospitality />
         </BoxMotion>
-
-        <Box display={showOnLarge}>
-          <HomePagination
-            section={0}
-            maxSection={4}
-            enableNavigation={true}
-            nextSlide={() => {
-              replace({
-                query: { ...query, selected: "hospitality" },
-              });
-            }}
-          />
-        </Box>
       </Box>
       <Box display="flex" alignItems="center">
         <Box display="flex" flexDirection="column" h="100%" gap={10}>
@@ -74,7 +59,7 @@ export default function Section1() {
                     whileInView="onscreen"
                     viewport={{ once: false }}
                   >
-                    <span style={{ opacity: 0.6 }}>0{i + 1}.</span> {title}
+                    0{i + 1}. {title}
                   </Text>
                   <BoxMotion
                     variants={itemBotToTop(0.4)}
@@ -146,19 +131,6 @@ export default function Section1() {
             );
           })}
         </Box>
-      </Box>
-
-      <Box display={showOnLarge} mt={5}>
-        <HomePagination
-          section={0}
-          maxSection={4}
-          enableNavigation={true}
-          nextSlide={() => {
-            replace({
-              query: { ...query, selected: "hospitality" },
-            });
-          }}
-        />
       </Box>
     </Box>
   );

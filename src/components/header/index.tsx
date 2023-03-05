@@ -20,6 +20,7 @@ import {
   animateTopToBottom,
   marginX,
   marginY,
+  showOnLarge,
   themeColor,
 } from "../../utils/consts";
 import BoxMotion from "../BoxMotion";
@@ -99,6 +100,7 @@ export default function Header({
       <LayoutGroup>
         <Box display="flex" alignItems="center" gap={10}>
           <BoxMotion
+            display={showOnLarge}
             position={contactMarginRight > 0 ? "absolute" : "relative"}
             layout
             right={contactMarginRight}

@@ -1,11 +1,9 @@
-import { Box, Divider, Heading, Link, Text } from "@chakra-ui/react";
-import { motion } from "framer-motion";
+import { Box, Divider, Heading, Link } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import IconEmailSm from "../assets/js/IconEmailSm";
 import IconFacebookSm from "../assets/js/IconFacebookSm";
 import IconInstagramSm from "../assets/js/IconInstagramSm";
 import IconWhatsappSm from "../assets/js/IconWhatsappSm";
-import { showOnLarge } from "../utils/consts";
 import BoxMotion from "./BoxMotion";
 import Button from "./Button";
 
@@ -41,49 +39,10 @@ export default function Contacts({
       color={"white"}
       zIndex={5}
     >
-      <Box display="none" gap={{ base: "10%", lg: 0 }}>
-        {contents.address.map(({ name, description }, i) => {
-          return (
-            <BoxMotion
-              variants={itemBotToTop(i * 0.2)}
-              initial="offscreen"
-              whileInView="onscreen"
-              viewport={{ once: false }}
-              key={i}
-              w={{ base: "45%", lg: "33%" }}
-              lineHeight="1"
-            >
-              <Heading fontSize="lg" mb={3} as="h4">
-                {name}
-              </Heading>
-
-              <Link fontSize="sm" opacity={0.6} lineHeight="1.3" href="#">
-                {description}
-              </Link>
-            </BoxMotion>
-          );
-        })}
-        <Box display={showOnLarge} w="33%" />
-      </Box>
-
-      <Divider display="none" />
-
-      <Text
-        display="none"
-        fontSize="small"
-        letterSpacing="widest"
-        as={motion.h3}
-        variants={itemBotToTop(0)}
-        initial="offscreen"
-        whileInView="onscreen"
-        viewport={{ once: false }}
-      >
-        Marketing Representative
-      </Text>
-
       <Box
         display="flex"
         flexWrap="wrap"
+        flexDir={{ base: "column", lg: "row" }}
         gap={{ base: "10%", lg: "min(15%, 2rem)" }}
       >
         {contents.contacts.map(
@@ -98,7 +57,7 @@ export default function Contacts({
                 whileInView="onscreen"
                 viewport={{ once: false }}
                 key={i}
-                w={{ base: "45%", lg: "33%" }}
+                w={{ base: "full", lg: "33%" }}
                 mb={{ base: i === 2 ? 0 : "10%", lg: 0 }}
               >
                 <Heading fontSize="lg" mb={3}>
@@ -164,7 +123,6 @@ export default function Contacts({
             );
           }
         )}
-        {/* <Box display={showOnLarge} w="1%" /> */}
       </Box>
 
       {hasContactButton && (
@@ -267,13 +225,5 @@ const contents = {
         </>
       ),
     },
-    // {
-    //   location: "Malaysia",
-    //   name: "Office",
-    //   whatsapp: "+60.12.653.7424",
-    //   email: "info.my@rubic3.com",
-    //   instagram: "rubicubecreative.my",
-    //   facebook: "rubicube creative malaysia",
-    // },
   ],
 };

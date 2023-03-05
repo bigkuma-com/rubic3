@@ -177,14 +177,30 @@ export default function Section3({ leaders }: { leaders: any }) {
                           { collectionName, id, name, picture, title }: any,
                           j: number
                         ) => {
+                          console.log(
+                            selectedCard,
+                            i,
+                            j,
+                            i * leadersChunck.length + j,
+                            i * (isLarge ? 4 : 2) + j
+                          );
                           return (
-                            <Box key={id} w={!isLarge ? "50%" : "25%"}>
+                            <Box
+                              key={id}
+                              w={!isLarge ? "50%" : "25%"}
+                              overflow="hidden"
+                            >
                               <Box
                                 position="relative"
                                 h="full"
                                 cursor="pointer"
                                 onMouseEnter={() => {
-                                  console.log(i, j);
+                                  console.log(
+                                    "hoow",
+                                    i,
+                                    j,
+                                    i * (isLarge ? 4 : 2) + j
+                                  );
                                   setSelectedCard(i * (isLarge ? 4 : 2) + j);
                                 }}
                                 onClick={() => {
@@ -229,7 +245,7 @@ export default function Section3({ leaders }: { leaders: any }) {
                                     </Text>
                                     <AnimatePresence>
                                       {selectedCard ===
-                                        i * leadersChunck.length + j && (
+                                        i * (isLarge ? 4 : 2) + j && (
                                         <BoxMotion layout key={`vml-${id}`}>
                                           <Text
                                             as={motion.span}

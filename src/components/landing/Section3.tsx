@@ -2,7 +2,11 @@ import { Box, Heading, Text, useMediaQuery } from "@chakra-ui/react";
 import { AnimatePresence, LayoutGroup } from "framer-motion";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { marginXSection, sidebarServices } from "../../utils/consts";
+import {
+  marginXSection,
+  showOnLarge,
+  sidebarServices,
+} from "../../utils/consts";
 import BoxMotion from "../BoxMotion";
 import Button from "../Button";
 import Divider from "../Divider";
@@ -33,7 +37,12 @@ export default function Section3() {
   });
 
   return (
-    <Box my="5vh" px={marginXSection} h="65vh" bg="dark">
+    <Box
+      my="5vh"
+      px={marginXSection}
+      h={{ base: "60vh", xl: "65vh" }}
+      bg="dark"
+    >
       <Divider text="Our Division" />
 
       <LayoutGroup>
@@ -41,7 +50,6 @@ export default function Section3() {
           display="flex"
           flexDir="column"
           gap={5}
-          // h="full"
           w="full"
           mr={{ base: 0, lg: "25%" }}
           color={"white"}
@@ -76,7 +84,7 @@ export default function Section3() {
                     <Heading
                       fontWeight="thin"
                       cursor="pointer"
-                      fontSize="5xl"
+                      fontSize={{ base: "3xl", lg: "5xl" }}
                       onClick={() =>
                         isLarge
                           ? push(
@@ -116,12 +124,13 @@ export default function Section3() {
                             fontWeight={200}
                             letterSpacing="wider"
                             opacity={0.6}
+                            fontSize={{ base: "sm", lg: "md" }}
                           >
                             {subtitle}
                           </Text>
                         </BoxMotion>
 
-                        <BoxMotion layout>
+                        <BoxMotion layout display={showOnLarge}>
                           <Button
                             text="View more"
                             onClick={() =>

@@ -33,6 +33,7 @@ export default function Section2() {
       bg="dark"
       display="flex"
       px={marginXSection}
+      py={{ base: 20, lg: 0 }}
       position="relative"
       flexDir={{ base: "column", lg: "row" }}
       gap={{ base: 10, lg: 0 }}
@@ -51,7 +52,7 @@ export default function Section2() {
       <Box
         w={{ base: "full", lg: "50%" }}
         color="white"
-        mt="12%"
+        mt={{base:0,lg:"12%"}}
         pr={{ base: 0, lg: "7%" }}
         display="flex"
         flexDir={"column"}
@@ -59,7 +60,7 @@ export default function Section2() {
         zIndex={5}
       >
         <Heading
-          fontSize="5xl"
+          fontSize={["3xl", null, null, "4xl", "5xl"]}
           as={motion.h2}
           variants={itemBotToTop(0)}
           initial="offscreen"

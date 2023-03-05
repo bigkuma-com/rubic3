@@ -1,10 +1,9 @@
-import { Box, Heading, Link, Text, useMediaQuery } from "@chakra-ui/react";
-import { AnimatePresence } from "framer-motion";
+import { Box, Text, useMediaQuery } from "@chakra-ui/react";
+import { AnimatePresence, motion } from "framer-motion";
 import { NextSeo } from "next-seo";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import "swiper/css";
-import IconClose from "../assets/js/IconClose";
 import Section1 from "../components/about/Section1";
 import Section2 from "../components/about/Section2";
 import Section3 from "../components/about/Section3";
@@ -12,13 +11,17 @@ import Section4 from "../components/about/Section4";
 import Section5 from "../components/about/Section5";
 import BackToHome from "../components/BackToHome";
 import BoxMotion from "../components/BoxMotion";
+import Button from "../components/Button";
 import Footer from "../components/footer";
 import Header from "../components/header";
 import NavLef from "../components/NavLeft";
 import { getFullList } from "../utils/api";
 import {
-  animateOpacity,
-  animateScaling,
+  animateTopToBottom,
+  containerFilter,
+  itemFilter,
+  marginX,
+  showOnLarge,
   sidebarAbout,
   themeColor,
 } from "../utils/consts";
@@ -53,7 +56,7 @@ export default function About({
   leaders,
   careers,
   partnersAssociations,
-  clientTypes
+  clientTypes,
 }: {
   clients: any;
   partners: any;
@@ -66,6 +69,7 @@ export default function About({
   const { push, query, replace } = useRouter();
   const [section, setSection] = useState(0);
   const [isEven, setIsEven] = useState(true);
+  const [isShowFilter, setIsShowFilter] = useState(false);
 
   const [isLarge] = useMediaQuery("(min-width: 991px)", {
     ssr: true,
@@ -130,6 +134,7 @@ export default function About({
       <BoxMotion
         position="relative"
         display="flex"
+        flexDirection={{ base: "column", lg: "row" }}
         h="full"
         w="full"
         initial={{ backgroundColor: themeColor[0] }}
@@ -145,13 +150,108 @@ export default function About({
 
         <BackToHome color={themeColor[+!isEven]} />
 
-        <NavLef
-          color={themeColor[+!isEven]}
-          contents={sidebarAbout}
-          section={section}
-          setSection={(section: number) => setSection(section)}
-        />
-        <Box w="30%" />
+        {isLarge ? (
+          <>
+            <NavLef
+              color={themeColor[+!isEven]}
+              contents={sidebarAbout}
+              section={section}
+              setSection={(section: number) => setSection(section)}
+            />
+            <Box display={showOnLarge} w="30%" />
+          </>
+        ) : (
+          <BoxMotion
+            variants={animateTopToBottom}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            pl={marginX}
+            position="fixed"
+            left={0}
+            top={24}
+            zIndex={1001}
+            h="100vh"
+            w="100vw"
+          >
+            <BoxMotion>
+              <Button
+                text={sidebarAbout[section].name}
+                onClick={() => {
+                  setIsShowFilter(!isShowFilter);
+                }}
+                arrowDown
+              />
+            </BoxMotion>
+            <AnimatePresence>
+              {isShowFilter && (
+                <BoxMotion
+                  display="flex"
+                  flexDirection="column"
+                  gap={3}
+                  variants={containerFilter}
+                  initial="hidden"
+                  animate="show"
+                  exit="hidden"
+                  mt={2}
+                  ml={5}
+                  zIndex={1001}
+                >
+                  {sidebarAbout.map((item, i) => {
+                    return (
+                      <Box
+                        key={i}
+                        _hover={{ opacity: 0.6 }}
+                        cursor="pointer"
+                        onClick={() => {
+                          setSection(i);
+                          replace({
+                            query: {
+                              ...query,
+                              selected: sidebarAbout[i].query,
+                            },
+                          });
+                          setIsShowFilter(false);
+                        }}
+                      >
+                        <Text
+                          as={motion.span}
+                          variants={itemFilter}
+                          fontSize="sm"
+                        >
+                          {item.name}
+                        </Text>
+                      </Box>
+                    );
+                  })}
+                </BoxMotion>
+              )}
+            </AnimatePresence>
+          </BoxMotion>
+        )}
+
+        <AnimatePresence>
+          {isShowFilter && (
+            <BoxMotion
+              w="100vw"
+              h="100vh"
+              position="fixed"
+              top={0}
+              left={0}
+              zIndex={500}
+              bg="black"
+              initial={{ opacity: 0 }}
+              animate={{
+                opacity: 0.7,
+                transition: { ease: "easeInOut", duration: 0.5 },
+              }}
+              exit={{
+                opacity: 0,
+                transition: { ease: "easeInOut", duration: 0.5 },
+              }}
+            />
+          )}
+        </AnimatePresence>
 
         {section == 0 && <Section1 />}
 
@@ -161,15 +261,11 @@ export default function About({
 
         {section == 2 && <Section3 leaders={leaders} />}
 
-        {section == 3 && <Section4 clients={clients} clientTypes={clientTypes} />}
-
-        {section == 4 && (
-          <Section5
-            careers={careers}
-          />
+        {section == 3 && (
+          <Section4 clients={clients} clientTypes={clientTypes} />
         )}
 
-
+        {section == 4 && <Section5 careers={careers} />}
 
         <Footer isLight={!isEven} />
       </BoxMotion>
@@ -215,7 +311,7 @@ export async function getStaticProps() {
   );
   const clientTypes = resultsClients.map(({ type }: any) => type);
 
-  const result = resultsClients.reduce((acc:any, obj:any) => {
+  const result = resultsClients.reduce((acc: any, obj: any) => {
     const type = obj.type;
     if (!acc[type]) {
       acc[type] = { type, data: [] };
@@ -226,7 +322,7 @@ export async function getStaticProps() {
 
   const finalResult = Object.values(result);
 
-  console.log(finalResult)
+  console.log(finalResult);
 
   return {
     props: {

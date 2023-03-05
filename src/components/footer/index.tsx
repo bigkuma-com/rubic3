@@ -35,12 +35,6 @@ export default function Footer({
       display={position == "relative" ? "flex" : "unset"}
       justifyContent={position == "relative" ? "space-between" : "unset"}
     >
-      {/* <AnimatePresence>
-        {(scrollPosition > 400 || !isHomepage || isShowing) && (
-          <Copyright key="copyright" isLight={isLight} position={position} />
-        )}
-      </AnimatePresence> */}
-
       <AdhyaGroup key="adhya-group" isLight={isLight} position={position} />
       <SocialButtons isLight={isLight} position={position} />
     </Box>

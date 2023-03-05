@@ -1,225 +1,252 @@
-import { Box, Text } from "@chakra-ui/react";
+import { Box, Text, useMediaQuery } from "@chakra-ui/react";
+import { AnimatePresence, LayoutGroup } from "framer-motion";
+import Image from "next/image";
 import { useRouter } from "next/router";
+import { useState } from "react";
+import Image360 from "../../assets/images/360 Digital.webp";
 import LogoRubicubeHospitality from "../../assets/js/LogoRubicubeHospitality";
 import {
   itemBotToTop,
   sectionMarginLeft,
   sectionMarginRight,
-  showOnLarge,
 } from "../../utils/consts";
 import BoxMotion from "../BoxMotion";
-import HomePagination from "../landing/HomePagination";
 
-export default function Section3() {
-  const { replace, query } = useRouter();
+export default function Section4() {
+  const { replace, query, push } = useRouter();
+  const [menuSelected, setMenuSelected] = useState(-1);
+
+  const [isLarge] = useMediaQuery("(min-width: 991px)", {
+    ssr: true,
+    fallback: false,
+  });
 
   return (
-    <Box
-      w="full"
-      pt={28}
-      pb={36}
-      pr={sectionMarginRight}
-      pl={sectionMarginLeft}
-      display="flex"
-      flexDirection="column"
-    >
+    <LayoutGroup>
       <Box
-        pb={12}
-        color="white"
-        display="flex"
-        justifyContent="space-between"
-        alignItems="center"
         w="full"
+        h="fit-content"
+        pt={28}
+        pb={36}
+        pr={sectionMarginRight}
+        pl={sectionMarginLeft}
+        display="flex"
+        flexDirection="column"
       >
+        <Box
+          pb={12}
+          color="white"
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+          w="full"
+          h="full"
+        >
+          <BoxMotion
+            layout
+            variants={itemBotToTop(0)}
+            initial="offscreen"
+            whileInView="onscreen"
+            viewport={{ once: false }}
+          >
+            <LogoRubicubeHospitality />
+          </BoxMotion>
+        </Box>
+
         <BoxMotion
-          variants={itemBotToTop(0)}
+          layout
+          variants={itemBotToTop(0.2)}
           initial="offscreen"
           whileInView="onscreen"
           viewport={{ once: false }}
         >
-          <LogoRubicubeHospitality />
+          <BoxMotion layout w="full" position="relative">
+            <Image
+              src={Image360}
+              alt="360 digital"
+              height={isLarge ? 700 : 400}
+              style={{ objectFit: "contain", objectPosition: "center center" }}
+            />
+          </BoxMotion>
+
+          <BoxMotion layout mt={16} mb={5}>
+            <Text as="h2">Our Services</Text>
+          </BoxMotion>
+
+          <BoxMotion
+            layout
+            display="flex"
+            flexDir="column"
+            gap={3}
+            w="full"
+            mr="25%"
+            color={"white"}
+            zIndex={5}
+            h="full"
+          >
+            {contents.map(({ title, subtitle, list, listContent }, i) => {
+              return (
+                <BoxMotion layout key={i} opacity={1} className="animate-fade">
+                  <Box display="flex" flexDir="column" gap={2}>
+                    <BoxMotion layout>
+                      {i === 0 && (
+                        <Box
+                          h="0.5px"
+                          w="full"
+                          bg="light"
+                          mb={1}
+                        />
+                      )}
+                    </BoxMotion>
+
+                    <BoxMotion
+                      layout
+                      display="flex"
+                      w="full"
+                      alignItems="center"
+                      justifyContent="space-between"
+                    >
+                      <Text
+                        as="h4"
+                        fontSize={{ base: "xl", lg: "3xl" }}
+                        fontWeight={300}
+                        cursor="pointer"
+                        onClick={() => {
+                          setMenuSelected(menuSelected === i ? -1 : i);
+                        }}
+                      >
+                        <span style={{ opacity: 0.6 }}>0{i + 1}.</span> {title}
+                      </Text>
+                    </BoxMotion>
+
+                    <BoxMotion layout>
+                      <AnimatePresence>
+                        {menuSelected === i && (
+                          <BoxMotion
+                            pb={4}
+                            display="flex"
+                            flexDirection="column"
+                            initial={{ opacity: 0 }}
+                            animate={{
+                              opacity: 1,
+                              transition: {
+                                duration: 0.5,
+                                ease: "easeInOut",
+                              },
+                            }}
+                            exit={{
+                              opacity: 0,
+                              transition: {
+                                duration: 0.5,
+                                ease: "easeInOut",
+                              },
+                            }}
+                          >
+                            <Text
+                              fontWeight={300}
+                              letterSpacing="wider"
+                              opacity={0.6}
+                              fontSize="xs"
+                              my={5}
+                            >
+                              {subtitle}
+                            </Text>
+                            <Box
+                              as="ul"
+                              listStyleType="none"
+                              display="flex"
+                              flexDirection="column"
+                              gap={4}
+                            >
+                              {list.map((v, i) => {
+                                return (
+                                  <Box key={v}>
+                                    <Text key={v} as="li">
+                                      {v}
+                                    </Text>
+                                    <Text mt={1} opacity={0.6} fontSize="xs">
+                                      {listContent[i]}
+                                    </Text>
+                                  </Box>
+                                );
+                              })}
+                            </Box>
+                          </BoxMotion>
+                        )}
+                      </AnimatePresence>
+                    </BoxMotion>
+
+                    <BoxMotion layout>
+                      <Box h="0.5px" w="full" bg="light" opacity={0.6} />
+                    </BoxMotion>
+                  </Box>
+                </BoxMotion>
+              );
+            })}
+          </BoxMotion>
         </BoxMotion>
-
-        <Box display={showOnLarge}>
-          <HomePagination
-            section={2}
-            maxSection={4}
-            enableNavigation={true}
-            prevSlide={() => {
-              replace({
-                query: { ...query, selected: "hospitality" },
-              });
-            }}
-            nextSlide={() => {
-              replace({
-                query: { ...query, selected: "360" },
-              });
-            }}
-          />
-        </Box>
       </Box>
-
-      <BoxMotion
-        w="75%"
-        variants={itemBotToTop(0.2)}
-        initial="offscreen"
-        whileInView="onscreen"
-        viewport={{ once: false }}
-      >
-        <Text opacity={0.7} fontSize="sm" mb={12}>
-          For now the content is in the stage of refinement. Will be released
-          soon.
-        </Text>
-      </BoxMotion>
-    </Box>
+    </LayoutGroup>
   );
 }
 
 const contents = [
   {
-    title: "Hotel/Resort Management",
-    subtitle: "What we do",
-    topDesc: (
-      <>
-        Delivery of high-quality personal service leveraging the unique
-        character of each hotel/ resort, creating superior guest experiences,
-        extraordinary guest satisfaction, and high online reputation scores.
-        Using creative strategies and best practices, the objective is to
-        outperform the competition and become local market leader
-      </>
-    ),
-    isList: false,
-    bottomDesc: (
-      <>
-        Sales & Marketing, Engineering, Human resources & Talent development,
-        Safety & security, Financial services, Food & beverage management, Rooms
-        management, Other operating & departments.
-      </>
-    ),
-  },
-  {
-    title: "Owners Advisor",
-    subtitle: "What we do",
-    topDesc: (
-      <>
-        To provide customized management strategies to maximize cash flow,
-        value, and business continuation. To also provide continuous business
-        improvement recommendations whilst evaluating all internal processes
-        against the industry standards.
-        <br />
-        <br />
-        The aim is to ensure property performance is ahead of its competitors.
-      </>
-    ),
-    isList: true,
-    bottomList: [
-      "Advise on concept design and operational functionality of the hotel infrastructural designs at every stage of development.",
-      "Selection of most suitable management for the property and continuous liaison between owner,management, and other third party specialists/consultants during all phases: pre-opening conversion, fully operational, initial and ongoing operations.",
-      "Advisory services concerning Re-branding.",
-      "Maintain complete control and coordination between the Owner and the operating party and also ensure all service level agreements are in compliance.",
-      "Preparation of a preliminary Annual Business plan with a detailed focus on revenue forecasting.",
+    title: "Creative Content",
+    subtitle:
+      "Content marketing is the key to reach your target audience and the foundation of a successful digital marketing strategy.",
+    list: ["Copywriting", "Photography", "Video Production", "Motion Graphic"],
+    listContent: [
+      "We plan and produce written content for your website with consistent style and message.",
+      "We provide professional photography for various purposes from commercial, corporate, industrial, lifestyle, and many more.",
+      "We offer one-stop video production services, starting from concept to post-production, for various purposes from advertising, company profile, digital campaign, etc.",
+      "We animate your story to live through infographic, 2D/3D animation, video bumper, special effects, etc.",
     ],
   },
   {
-    title: "Asset Management",
-    topDesc: (
-      <>
-        Rubicube Hospitality provides collective hospitality expertise gained
-        from years of experience practiced and adopted by international hotel
-        brands in the world.
-        <br />
-        <br />
-        Given the volatility in the global tourism industry, hotel owners can
-        vastly benefit by having an Asset Management service to practice
-        efficient check and balances on the operator to maximize owner’s
-        returns.
-      </>
-    ),
-    subtitle: "Our Process with 4 key focus areas",
-    isList: true,
-    bottomList: [
-      "Revenue Generation",
-      "Financial Returns",
-      "Marketing Positioning",
-      "Guest Experiences & Human Resources",
+    title: "Digital Marketing",
+    subtitle:
+      "Our one-stop digital marketing service is tailored to establish your online presence and drive maximum results.",
+    list: [
+      "Digital Marketing Strategy",
+      "Media Planning",
+      "SEM Media Buying",
+      "SEO Search Engine Optimization",
+    ],
+    listContent: [
+      "We utilize various channels and platforms based on the formulated digital marketing strategy to achieve your marketing goals.",
+      "We develop media planning based on your marketing strategy to deliver the right content on the right channel to create an efficient campaign.",
+      "Based on identification, we make ad placements on PPC Google Ads, Social Media Paid ADs for Facebook, Instagram, and Youtube.",
+      "We strategize to increase your website visibility on Google search to create a stronger digital presence.",
     ],
   },
   {
-    title: "Feasibility Study",
-    topDesc: (
-      <>
-        A comprehensive feasibility study will provide important market analysis
-        and financial evaluation of the project facilities and operations
-        perspectives.
-        <br />
-        <br />A feasibility study and hotel business plan forms the cornerstone
-        of your preparations for the new or remodeled hotel. It shows the
-        investors return of investment (ROI). This forms an important and
-        crucial step in the initial planning process.
-      </>
-    ),
-    subtitle: "Our Process",
-    isList: true,
-    bottomList: [
-      "Location Analysis",
-      "Total Costs Calculation",
-      "Room Rates and Year-round Occupancy Levels",
-      "Local Hotel Supply and Demand Investigation",
-      "Establishing and Projecting Hotel Revenue Sources",
-      "Hotel Feasibility Study Projected ROI",
+    title: "Social Media Marketing",
+    subtitle:
+      "In this social media driven society, we utilize popular social media platforms as a creative channel to boost your brand image and engage with your target market.",
+    list: [
+      "Social Media Strategy",
+      "Digital Campaign Activation",
+      "Social Media Management",
+      "KOL & Influencer",
+    ],
+    listContent: [
+      "We streamline various social media platforms to strategize and execute your digital campaign through marketing funnels.",
+      "In order to drive consumer action and sales, we create brand interaction and experience to engage deeper with your customers.",
+      "We manage your social media channels and produce engaging content based on the specified target market to increase brand awareness. Traffic Distribution: Facebook, Instagram, LinkedIn, and YouTube",
+      "We connect you to KOL or influencers that best represent your brand to increase customer trust and drive sales.",
     ],
   },
   {
-    title: "Change Management",
-    topDesc: (
-      <>
-        To develop a customized strategy plan and reposition the property more
-        efficiently amongst its competitive market set. Hotel management
-        specialists will identify and focus on the unique selling points (USP)
-        of the property to increase financial performance of all levels.
-      </>
-    ),
-    subtitle: "Our Process",
-    isList: false,
-    bottomDesc: (
-      <>
-        Business & Marketing Plan
-        <br />
-        Revenue Generation
-        <br />
-        Cost Management
-        <br />
-        Policy & Procedure
-        <br />
-        Guest Experience
-        <br />
-        HR & Talent Development
-        <br />
-        Financial & Risk Management
-        <br />
-        Reputation Management
-        <br />
-        Health & Safety and Security
-      </>
-    ),
-  },
-  {
-    title: "Other Creative Services",
-    topDesc: (
-      <>
-        Rubicube Creative specializes in developing a holistic hotel brand
-        positioning and identity design that incorporates brand research and
-        business strategy.
-      </>
-    ),
-    subtitle: "What we do",
-    isList: true,
-    bottomList: [
-      "Hotel Website Development",
-      "CRM Loyalty Program",
-      "Mystery Audit Program",
-      "Brand Development",
-      "Social & Digital Marketing",
+    title: "Hosting & Security",
+    subtitle:
+      "With our cloud-based servers and full maintenance services, you can rest assured that your business’ hosting needs are covered.",
+    list: ["Hosting", "Web Security", "Maintenance", "Email Hosting"],
+    listContent: [
+      "Our cloud-based servers guarantee security, faster performance and better accessibility.",
+      "Our web security service offers double security measures through secure servers and secure coding, and SSL certificate.",
+      "Our regular maintenance services include server maintenance, routine backups, bug patch, and system updates, with the support of our web admin.",
+      "Our email hosting service allows you to manage your email professionally.",
     ],
   },
 ];

@@ -17,14 +17,14 @@ export default function Section1() {
   const { push } = useRouter();
   return (
     <Box
-      w="70%"
+      w={{ base: "full", lg: "70%" }}
       h="full"
       minH="100vh"
       display="flex"
       alignItems="center"
       pl={sectionMarginLeft}
       pr={sectionMarginRight}
-      pt={{ base: 12, lg: 0 }}
+      pt={{ base: 48, lg: 0 }}
     >
       <Box display="flex" flexDirection="column">
         <Heading
@@ -72,6 +72,7 @@ export default function Section1() {
           display="flex"
           gap={10}
           alignItems="center"
+          flexDir={{ base: "column", lg: "row" }}
         >
           {rubicServices.map(({ image, link, title }, i) => {
             return (

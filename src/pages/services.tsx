@@ -16,7 +16,6 @@ import HomePagination from "../components/landing/HomePagination";
 import Section1 from "../components/services/Section1";
 import Section2 from "../components/services/Section2";
 import Section3 from "../components/services/Section3";
-import Section4 from "../components/services/Section4";
 import { getFullList } from "../utils/api";
 import {
   marginX,
@@ -114,7 +113,11 @@ export default function About({
           },
         ]}
       />
-      <BoxMotion position="relative" display="flex" bg="dark">
+      <BoxMotion
+        position="relative"
+        display="flex"
+        bg={sidebarServices[section].color}
+      >
         <Header />
         <Box
           display={showOnLarge}
@@ -291,9 +294,6 @@ export default function About({
             </SwiperSlide>
             <SwiperSlide>
               <Section3 />
-            </SwiperSlide>
-            <SwiperSlide>
-              <Section4 />
             </SwiperSlide>
           </Swiper>
         </Box>

@@ -24,10 +24,9 @@ export const sidebarAbout = [
 ];
 
 export const sidebarServices = [
-  { name: "Rubicube Creative", query: "creative" },
-  { name: "Rubicube Hospitality", query: "hospitality" },
-  { name: "Rubicube Connoisseur", query: "connoisseur" },
-  { name: "Rubicube 360 Digital", query: "360" },
+  { name: "Rubicube Creative", query: "creative",color:"dark" },
+  { name: "Rubicube Hospitality", query: "hospitality",color:"blue.700" },
+  { name: "Rubicube 360 Digital", query: "360",color:"yellow.500" },
 ];
 
 export const animateBottomToTop = {
@@ -234,3 +233,21 @@ export const itemBotToTop = (delay = 0) => ({
     },
   },
 });
+
+export const containerFilter = {
+  hidden: { opacity: 0, transition: { duration: 0.5, ease: "easeInOut" } },
+  show: {
+    opacity: 1,
+    transition: {
+      duration: 0.2,
+      staggerChildren: 0.1,
+      delayChildren: 0.05,
+      ease: "easeInOut",
+    },
+  },
+};
+
+export const itemFilter = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1 },
+};
