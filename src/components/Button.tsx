@@ -18,6 +18,7 @@ export default function Button({
   disable = false,
   isLight = true,
   iconOnLeft = false,
+  fontSize="unset",
 }: {
   text: string;
   onClick?: any;
@@ -32,6 +33,7 @@ export default function Button({
   disable?: boolean;
   isLight?: boolean;
   iconOnLeft?: boolean;
+  fontSize?: string;
 }) {
   return (
     <Box

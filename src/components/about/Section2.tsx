@@ -7,7 +7,6 @@ import {
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { useEffect, useState } from "react";
 import { getImage } from "../../utils/api";
 import {
   itemBotToTop,
@@ -27,27 +26,17 @@ export default function Section2({
     fallback: false,
   });
 
-  const [maxItem, setMaxItem] = useState(isLarge ? 25 : 20);
-
-  useEffect(() => {
-    setMaxItem(isLarge ? 25 : 20);
-  }, [isLarge]);
-
-  console.log(partnersAssociations);
-
   return (
     <Box
-      w="70%"
-      h="100vh"
+      w={{ base: "full", lg: "70%" }}
       display="flex"
       alignItems="center"
       pl={sectionMarginLeft}
       pr={sectionMarginRight}
-      py="10%"
+      py={{ base: "25vmax", lg: "15vh" }}
     >
-      <Box display="flex" flexDirection="column" w="full" h="100vh">
+      <Box display="flex" flexDirection="column" w="full">
         <Heading
-          mt="15%"
           mb={6}
           color="dark"
           as={motion.h2}
@@ -58,7 +47,7 @@ export default function Section2({
           Partners & Associations
         </Heading>
 
-        <Box overflowY="scroll" pb="20vh">
+        <Box>
           {[
             "Our Partners",
             "Property.Place & Hospitality",
@@ -76,7 +65,7 @@ export default function Section2({
                   mb={6}
                 />
                 {title == "Products & Services" ? (
-                  <SimpleGrid columns={[2]} mt={2} mb={8}>
+                  <SimpleGrid columns={[2]} mt={2} mb={8} columnGap={4}>
                     {partnersAssociations[title].map(
                       ({
                         id,
@@ -97,7 +86,7 @@ export default function Section2({
                             <Text
                               as={link ? "a" : "p"}
                               color="dark"
-                              fontSize="sm"
+                              fontSize={{base:"xs",lg:"sm"}}
                               opacity={0.8}
                               _hover={
                                 link ? { opacity: 1, cursor: "pointer" } : {}
@@ -114,7 +103,7 @@ export default function Section2({
                     )}
                   </SimpleGrid>
                 ) : (
-                  <SimpleGrid columns={[4, null, null, 6]} spacing={6} mb={6}>
+                  <SimpleGrid columns={[3, null, null, 6]} spacing={6} mb={6}>
                     {partnersAssociations[title].map(
                       ({
                         id,

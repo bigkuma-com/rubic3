@@ -118,7 +118,7 @@ export default function About({
         display="flex"
         bg={sidebarServices[section].color}
       >
-        <Header />
+        <Header isLight={section != 2} />
         <Box
           display={showOnLarge}
           position="fixed"
@@ -126,7 +126,7 @@ export default function About({
           left="5%"
           transform="translate(-50%, -50%)"
           zIndex={50}
-          color="light"
+          color={section == 2 ? "dark" : "light"}
         >
           <Box
             display="flex"
@@ -162,7 +162,7 @@ export default function About({
           display={{ base: "none", lg: "flex" }}
           alignItems="center"
           pl="10%"
-          color="light"
+          color={section == 2 ? "dark" : "light"}
         >
           <Box
             as="ul"
@@ -204,7 +204,10 @@ export default function About({
             zIndex={5}
             layout
             animate={{
-              backgroundColor: "var(--chakra-colors-light)",
+              backgroundColor:
+                section == 2
+                  ? "var(--chakra-colors-dark)"
+                  : "var(--chakra-colors-light)",
               transition: {
                 backgroundColor: {
                   duration: 0.5,
@@ -225,7 +228,10 @@ export default function About({
             top={0}
             zIndex={4}
             animate={{
-              backgroundColor: "var(--chakra-colors-light)",
+              backgroundColor:
+                section == 2
+                  ? "var(--chakra-colors-dark)"
+                  : "var(--chakra-colors-light)",
               transition: {
                 duration: 0.5,
                 ease: "easeInOut",
@@ -297,7 +303,7 @@ export default function About({
             </SwiperSlide>
           </Swiper>
         </Box>
-        <Footer />
+        <Footer isLight={section != 2} />
       </BoxMotion>
     </>
   );

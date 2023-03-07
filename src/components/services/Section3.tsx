@@ -3,8 +3,7 @@ import { AnimatePresence, LayoutGroup } from "framer-motion";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import Image360 from "../../assets/images/360 Digital.webp";
-import LogoRubicubeHospitality from "../../assets/js/LogoRubicubeHospitality";
+import Image360 from "../../assets/images/RC Digital Service Wheel.webp";
 import {
   itemBotToTop,
   sectionMarginLeft,
@@ -33,26 +32,6 @@ export default function Section4() {
         display="flex"
         flexDirection="column"
       >
-        <Box
-          pb={12}
-          color="white"
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-          w="full"
-          h="full"
-        >
-          <BoxMotion
-            layout
-            variants={itemBotToTop(0)}
-            initial="offscreen"
-            whileInView="onscreen"
-            viewport={{ once: false }}
-          >
-            <LogoRubicubeHospitality />
-          </BoxMotion>
-        </Box>
-
         <BoxMotion
           layout
           variants={itemBotToTop(0.2)}
@@ -70,7 +49,9 @@ export default function Section4() {
           </BoxMotion>
 
           <BoxMotion layout mt={16} mb={5}>
-            <Text as="h2">Our Services</Text>
+            <Text as="h2" color="dark">
+              Our Services
+            </Text>
           </BoxMotion>
 
           <BoxMotion
@@ -80,23 +61,16 @@ export default function Section4() {
             gap={3}
             w="full"
             mr="25%"
-            color={"white"}
             zIndex={5}
             h="full"
+            color="dark"
           >
             {contents.map(({ title, subtitle, list, listContent }, i) => {
               return (
                 <BoxMotion layout key={i} opacity={1} className="animate-fade">
                   <Box display="flex" flexDir="column" gap={2}>
                     <BoxMotion layout>
-                      {i === 0 && (
-                        <Box
-                          h="0.5px"
-                          w="full"
-                          bg="light"
-                          mb={1}
-                        />
-                      )}
+                      {i === 0 && <Box h="0.5px" w="full" bg="dark" mb={1} />}
                     </BoxMotion>
 
                     <BoxMotion
@@ -111,11 +85,12 @@ export default function Section4() {
                         fontSize={{ base: "xl", lg: "3xl" }}
                         fontWeight={300}
                         cursor="pointer"
+                        color="dark"
                         onClick={() => {
                           setMenuSelected(menuSelected === i ? -1 : i);
                         }}
                       >
-                        <span style={{ opacity: 0.6 }}>0{i + 1}.</span> {title}
+                        <span>0{i + 1}.</span> {title}
                       </Text>
                     </BoxMotion>
 
@@ -143,11 +118,11 @@ export default function Section4() {
                             }}
                           >
                             <Text
-                              fontWeight={300}
+                              fontWeight={400}
                               letterSpacing="wider"
-                              opacity={0.6}
                               fontSize="xs"
                               my={5}
+                              color="dark"
                             >
                               {subtitle}
                             </Text>
@@ -161,10 +136,20 @@ export default function Section4() {
                               {list.map((v, i) => {
                                 return (
                                   <Box key={v}>
-                                    <Text key={v} as="li">
+                                    <Text
+                                      key={v}
+                                      as="li"
+                                      color="dark"
+                                      fontWeight={400}
+                                    >
                                       {v}
                                     </Text>
-                                    <Text mt={1} opacity={0.6} fontSize="xs">
+                                    <Text
+                                      mt={1}
+                                      opacity={0.6}
+                                      fontSize="xs"
+                                      color="dark"
+                                    >
                                       {listContent[i]}
                                     </Text>
                                   </Box>
@@ -177,7 +162,7 @@ export default function Section4() {
                     </BoxMotion>
 
                     <BoxMotion layout>
-                      <Box h="0.5px" w="full" bg="light" opacity={0.6} />
+                      <Box h="0.5px" w="full" bg="dark" opacity={0.6} />
                     </BoxMotion>
                   </Box>
                 </BoxMotion>

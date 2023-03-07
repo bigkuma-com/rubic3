@@ -171,11 +171,11 @@ export default function About({
             left={0}
             top={24}
             zIndex={1001}
-            h="100vh"
-            w="100vw"
           >
             <BoxMotion>
               <Button
+                style={{ fontSize: "var(--chakra-fontSizes-xs)" }}
+                isLight={!isEven}
                 text={sidebarAbout[section].name}
                 onClick={() => {
                   setIsShowFilter(!isShowFilter);
@@ -193,7 +193,7 @@ export default function About({
                   initial="hidden"
                   animate="show"
                   exit="hidden"
-                  mt={2}
+                  mt={3}
                   ml={5}
                   zIndex={1001}
                 >
@@ -217,7 +217,7 @@ export default function About({
                         <Text
                           as={motion.span}
                           variants={itemFilter}
-                          fontSize="sm"
+                          fontSize="xs"
                         >
                           {item.name}
                         </Text>

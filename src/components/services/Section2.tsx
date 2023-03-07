@@ -24,25 +24,6 @@ export default function Section1() {
       display="flex"
       flexDirection="column"
     >
-      <Box
-        pb={12}
-        color="white"
-        display="flex"
-        justifyContent="space-between"
-        alignItems="center"
-        w="full"
-      >
-        <BoxMotion
-          variants={itemBotToTop(0)}
-          initial="offscreen"
-          whileInView="onscreen"
-          viewport={{ once: false }}
-        >
-          <LogoRubicubeHospitality />
-        </BoxMotion>
-
-      </Box>
-
       <BoxMotion
         w={["full", null, null, "75%"]}
         variants={itemBotToTop(0.2)}

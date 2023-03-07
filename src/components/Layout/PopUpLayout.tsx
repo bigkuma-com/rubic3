@@ -4,7 +4,11 @@ import Image from "next/image";
 import { useRef } from "react";
 import IconClose from "../../assets/js/IconClose";
 import { getImage } from "../../utils/api";
-import { animateOpacity, animateScaling } from "../../utils/consts";
+import {
+  animateOpacity,
+  animateScaling,
+  showOnLarge,
+} from "../../utils/consts";
 import BoxMotion from "../BoxMotion";
 
 export default function PopUpLayout({
@@ -47,11 +51,12 @@ export default function PopUpLayout({
             initial="initial"
             animate="animate"
             exit="exit"
-            w="80%"
-            h="80%"
+            w={{ base: "90%", lg: "80%" }}
+            h={{ base: "90%", lg: "80%" }}
             bg="light"
             position="relative"
-            p={[8, null, null, 20]}
+            px={[4, null, null, 20]}
+            py={[10, null, null, 20]}
             ref={boxRef}
           >
             <Box
@@ -68,7 +73,7 @@ export default function PopUpLayout({
 
             {isLeadership && (
               <Box display="flex" h="full" gap={20}>
-                <Box position="relative" h="full" w="30%">
+                <Box position="relative" h="full" w="30%" display={showOnLarge}>
                   <Image
                     src={getImage({
                       collectionName: dataLeadership.collectionName,
@@ -83,17 +88,32 @@ export default function PopUpLayout({
                 <Box
                   display="flex"
                   flexDirection="column"
-                  w="70%"
+                  w={{ base: "full", lg: "70%" }}
                   h="full"
                   overflowY="scroll"
+                  mt={{ base: 2, lg: 0 }}
                 >
-                  <Heading mb={[1]} as="h2" color="dark">
+                  <Heading
+                    mb={[1]}
+                    as="h2"
+                    fontSize={{ base: "xl", lg: "3xl" }}
+                    color="dark"
+                  >
                     {dataLeadership.name}
                   </Heading>
-                  <Heading fontSize="xl" mb={[2, 4, 6]} as="h3" color="dark">
+                  <Heading
+                    fontSize={{ base: "md", lg: "xl" }}
+                    mb={[5, null, null, 6]}
+                    as="h3"
+                    color="dark"
+                  >
                     {dataLeadership.title}
                   </Heading>
-                  <Text fontSize="sm" color="dark" opacity={0.7}>
+                  <Text
+                    fontSize={{ base: "xs", lg: "sm" }}
+                    color="dark"
+                    opacity={0.7}
+                  >
                     {dataLeadership.description}
                   </Text>
                 </Box>

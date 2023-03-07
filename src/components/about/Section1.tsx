@@ -1,4 +1,4 @@
-import { Box, Heading, Text } from "@chakra-ui/react";
+import { Box, Heading, Text, useMediaQuery } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -15,6 +15,12 @@ import BoxMotion from "../BoxMotion";
 
 export default function Section1() {
   const { push } = useRouter();
+
+  const [isLarge] = useMediaQuery("(min-width: 991px)", {
+    ssr: true,
+    fallback: false,
+  });
+
   return (
     <Box
       w={{ base: "full", lg: "70%" }}
@@ -24,7 +30,7 @@ export default function Section1() {
       alignItems="center"
       pl={sectionMarginLeft}
       pr={sectionMarginRight}
-      pt={{ base: 48, lg: 0 }}
+      py={{ base: "25vmax", lg: 0 }}
     >
       <Box display="flex" flexDirection="column">
         <Heading
@@ -70,8 +76,8 @@ export default function Section1() {
           whileInView="onscreen"
           viewport={{ once: false }}
           display="flex"
-          gap={10}
-          alignItems="center"
+          gap={{ base: 4, lg: 10 }}
+          alignItems={{ base: "flex-start", lg: "center" }}
           flexDir={{ base: "column", lg: "row" }}
         >
           {rubicServices.map(({ image, link, title }, i) => {
@@ -81,11 +87,12 @@ export default function Section1() {
                   onClick={() => {
                     push(link);
                   }}
+                  position="relative"
                 >
                   <BoxMotion
                     position="relative"
-                    w={{ base: "full", xl: "180px" }}
-                    h={{ base: "180px", xl: "120px" }}
+                    w={{ base: "120px", xl: "180px" }}
+                    h={{ base: "80px", xl: "120px" }}
                     cursor="pointer"
                     whileHover={{ scale: 1.05 }}
                   >
@@ -101,7 +108,13 @@ export default function Section1() {
                   </BoxMotion>
                 </Box>
 
-                {i < 2 && <Box h="80px" w="1px" bg="light" />}
+                {i < 2 && (
+                  <Box
+                    h={{ base: "1px", lg: "80px" }}
+                    w={{ base: "full", lg: "1px" }}
+                    bg="light"
+                  />
+                )}
               </Fragment>
             );
           })}

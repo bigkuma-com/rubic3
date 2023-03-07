@@ -1,7 +1,10 @@
 import { Box, Text } from "@chakra-ui/react";
-import { motion } from "framer-motion";
+import Image from "next/image";
 import { useRouter } from "next/router";
-import LogoRubicubeHospitality from "../../assets/js/LogoRubicubeHospitality";
+import IconDiscovery from "../../assets/svg/IconDiscovery.svg";
+import IconEnvision from "../../assets/svg/IconEnvision.svg";
+import IconProduction from "../../assets/svg/IconProduction.svg";
+import IconRealization from "../../assets/svg/IconRealization.svg";
 import {
   itemBotToTop,
   sectionMarginLeft,
@@ -15,33 +18,15 @@ export default function Section1() {
   return (
     <Box
       w="full"
-      pt={28}
-      pb={36}
+      py="20vh"
       pr={sectionMarginRight}
       pl={sectionMarginLeft}
       display="flex"
       flexDirection="column"
     >
-      <Box
-        pb={12}
-        color="white"
-        display="flex"
-        justifyContent="space-between"
-        alignItems="center"
-        w="full"
-      >
-        <BoxMotion
-          variants={itemBotToTop(0)}
-          initial="offscreen"
-          whileInView="onscreen"
-          viewport={{ once: false }}
-        >
-          <LogoRubicubeHospitality />
-        </BoxMotion>
-      </Box>
       <Box display="flex" alignItems="center">
         <Box display="flex" flexDirection="column" h="100%" gap={10}>
-          {contents.map(({ bottomDesc, title, topList }, i: any) => {
+          {contents.map(({ bottomDesc, title, topList, icon }, i: any) => {
             return (
               <Box key={i}>
                 <Box
@@ -49,18 +34,40 @@ export default function Section1() {
                   fontSize="small"
                   flexDirection={{ base: "column", lg: "row" }}
                 >
-                  <Text
-                    w={["full", null, null, "40%"]}
-                    fontSize="2xl"
-                    mb={[6, null, null, 0]}
-                    as={motion.h4}
+                  <BoxMotion
                     variants={itemBotToTop(0.2)}
                     initial="offscreen"
                     whileInView="onscreen"
                     viewport={{ once: false }}
+                    display="flex"
+                    gap={4}
+                    w={["full", null, null, "40%"]}
+                    mb={[6, null, null, 0]}
+                    mr={4}
                   >
-                    0{i + 1}. {title}
-                  </Text>
+                    <Box
+                      h={{ base: 12, lg: 16 }}
+                      w={{ base: 12, lg: 16 }}
+                      position="relative"
+                    >
+                      <Image
+                        src={icon}
+                        fill
+                        alt={title}
+                        style={{
+                          objectFit: "contain",
+                        }}
+                      />
+                    </Box>
+                    <Text
+                      fontSize="2xl"
+                      as="h4"
+                      alignSelf={{ lg: "unset", base: "flex-end" }}
+                      m={0}
+                    >
+                      0{i + 1}. {title}
+                    </Text>
+                  </BoxMotion>
                   <BoxMotion
                     variants={itemBotToTop(0.4)}
                     initial="offscreen"
@@ -139,6 +146,7 @@ export default function Section1() {
 const contents = [
   {
     title: "Discovery",
+    icon: IconDiscovery,
     topList: [
       "Clarify the corporate vision, strategies, goals, and values",
       "Research stakeholder needs and perceptions",
@@ -151,6 +159,7 @@ const contents = [
   },
   {
     title: "Envision",
+    icon: IconEnvision,
     topList: [
       "Synthesize the research into actionable data",
       "Clarify the brand strategy",
@@ -165,6 +174,7 @@ const contents = [
   },
   {
     title: "Realization",
+    icon: IconRealization,
     topList: [
       "Design brand identity",
       "Explore brand applications",
@@ -176,6 +186,7 @@ const contents = [
   },
   {
     title: "Production",
+    icon: IconProduction,
     topList: [
       "Finalize identity design",
       "Initiate trademark protection",

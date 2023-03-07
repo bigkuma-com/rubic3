@@ -7,6 +7,9 @@ export const showOnLarge = { base: "none", lg: "unset" };
 export const sectionMarginLeft = [5, 6, 10, 16];
 export const sectionMarginRight = [5, 6, 10, 52];
 
+export const sectionMarginLeft2 = [0, null, null, 16];
+export const sectionMarginRight2 = [0, null, null, 52];
+
 export const themeColor = [
   "var(--chakra-colors-dark)",
   "var(--chakra-colors-light)",
@@ -18,15 +21,15 @@ export const phoneRegExp =
 export const sidebarAbout = [
   { name: "Company Overview", query: "overview" },
   { name: "Partners & Associations", query: "partners-associations" },
-  { name: "Leadership", query: "leadership" },
+  { name: "Team", query: "team" },
   { name: "Clients", query: "clients" },
   { name: "Careers", query: "careers" },
 ];
 
 export const sidebarServices = [
-  { name: "Rubicube Creative", query: "creative",color:"dark" },
-  { name: "Rubicube Hospitality", query: "hospitality",color:"blue.700" },
-  { name: "Rubicube 360 Digital", query: "360",color:"yellow.500" },
+  { name: "Rubicube Creative", query: "creative", color: "dark" },
+  { name: "Rubicube Hospitality", query: "hospitality", color: "#325D92" },
+  { name: "Rubicube 360 Digital", query: "360", color: "#FFC925" },
 ];
 
 export const animateBottomToTop = {
