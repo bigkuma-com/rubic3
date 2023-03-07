@@ -89,7 +89,7 @@ export default function Section2({
 
             <SimpleGrid columns={[4, null, null, 6]} spacing={5}>
               {clientTypes
-                .find(({ type }: any) => type === "featured")
+                .find(({ type }: any) => type == "featured")
                 .data.slice(0, maxItem)
                 .map(({ collectionName, id, logo, name, url }: any, i: any) => {
                   return (
@@ -181,7 +181,7 @@ export default function Section2({
             >
               <Accordion allowToggle allowMultiple>
                 {clientTypes
-                  .filter(({ type }: any) => type !== "featured")
+                  .filter(({ type }: any) => type != "featured")
                   .map(({ data, type }: any, i: any) => {
                     return (
                       <AccordionItem
