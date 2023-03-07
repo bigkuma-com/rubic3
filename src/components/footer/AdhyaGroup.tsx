@@ -5,7 +5,9 @@ import IconAdhya from "../../assets/svg/icon-member-of-adhya.svg";
 import {
   animateBottomToTop,
   marginX,
+  marginXHeader,
   marginY,
+  marginYHeader,
   themeColor,
 } from "../../utils/consts";
 import BoxMotion from "../BoxMotion";
@@ -25,8 +27,8 @@ export default function AdhyaGroup({
   return (
     <BoxMotion
       position={position}
-      bottom={marginY}
-      left={marginX}
+      bottom={marginYHeader}
+      left={marginXHeader}
       zIndex={500}
       variants={animateBottomToTop}
       initial="initial"
@@ -48,8 +50,8 @@ export default function AdhyaGroup({
         {isLight ? (
           <Image
             src={IconAdhyaLight}
-            height={isLarge ? 35 : 25}
-            width={isLarge ? 160 : 120}
+            height={isLarge ? 30 : 20}
+            width={isLarge ? 140 : 100}
             alt="Adhya"
             style={{
               objectFit: "contain",
@@ -58,8 +60,8 @@ export default function AdhyaGroup({
         ) : (
           <Image
             src={IconAdhya}
-            height={isLarge ? 35 : 25}
-            width={isLarge ? 160 : 120}
+            height={isLarge ? 30 : 20}
+            width={isLarge ? 140 : 100}
             alt="Adhya"
             style={{
               objectFit: "contain",

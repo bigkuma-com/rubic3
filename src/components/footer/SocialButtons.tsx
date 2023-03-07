@@ -5,8 +5,8 @@ import IconInstagram from "../../assets/js/IconInstagram";
 import IconYoutube from "../../assets/js/IconYoutube";
 import {
   animateBottomToTop,
-  marginX,
-  marginY,
+  marginXHeader,
+  marginYHeader,
   showOnLarge,
   themeColor,
 } from "../../utils/consts";
@@ -30,8 +30,8 @@ export default function SocialButtons({
   return (
     <BoxMotion
       position={position}
-      bottom={marginY}
-      right={marginX}
+      bottom={marginYHeader}
+      right={marginXHeader}
       zIndex={500}
       variants={animateBottomToTop}
       initial="initial"
@@ -55,7 +55,7 @@ export default function SocialButtons({
           }}
         >
           <Text
-            fontSize="small"
+            fontSize="xs"
             as="span"
             color="inherit"
             className="text-shadow"

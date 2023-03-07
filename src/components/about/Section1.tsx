@@ -8,6 +8,8 @@ import RubicCreative from "../../assets/images/FA Rubicube Creativity Logo2.png"
 import RubicHospitality from "../../assets/images/FA Rubicube Hospitality Logo2.png";
 import {
   itemBotToTop,
+  marginRightContact,
+  marginXHeader,
   sectionMarginLeft,
   sectionMarginRight,
 } from "../../utils/consts";
@@ -29,7 +31,7 @@ export default function Section1() {
       display="flex"
       alignItems="center"
       pl={sectionMarginLeft}
-      pr={sectionMarginRight}
+      pr={marginRightContact}
       py={{ base: "25vmax", lg: 0 }}
     >
       <Box display="flex" flexDirection="column">
@@ -128,16 +130,16 @@ const rubicServices = [
   {
     image: RubicCreative,
     title: "Rubicube Creativity",
-    link: "/services?selected=creative",
+    link: "/our-company?selected=creative",
   },
   {
     image: Rubic360,
     title: "Rubicube 360 Digital",
-    link: "/services?selected=360",
+    link: "/our-company?selected=360",
   },
   {
     image: RubicHospitality,
     title: "Rubicube Hospitality",
-    link: "/services?selected=hospitality",
+    link: "/our-company?selected=hospitality",
   },
 ];

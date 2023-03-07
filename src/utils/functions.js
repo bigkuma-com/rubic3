@@ -55,3 +55,7 @@ export function makeBold(input, wordsToBold) {
 export function randomInteger(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
+export function vhToPixels(vh) {
+  return Math.round(window.innerHeight / (100 / vh));
+}

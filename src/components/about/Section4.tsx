@@ -17,6 +17,7 @@ import IconAccordionPlus from "../../assets/js/IconAccordionPlus";
 import { getImage } from "../../utils/api";
 import {
   itemBotToTop,
+  marginRightContact,
   sectionMarginLeft,
   sectionMarginRight,
 } from "../../utils/consts";
@@ -54,7 +55,7 @@ export default function Section2({
           display="flex"
           alignItems="center"
           pl={sectionMarginLeft}
-          pr={sectionMarginRight}
+          pr={marginRightContact}
           pt={{ base: 12, lg: 0 }}
         >
           <Box display="flex" flexDirection="column" w="full">
@@ -136,7 +137,7 @@ export default function Section2({
           display="flex"
           alignItems="center"
           pl={sectionMarginLeft}
-          pr={sectionMarginRight}
+          pr={marginRightContact}
           pt={{ base: 12, lg: 0 }}
         >
           <Box display="flex" flexDirection="column" w="full" h="100vh">

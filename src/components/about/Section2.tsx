@@ -10,6 +10,7 @@ import Image from "next/image";
 import { getImage } from "../../utils/api";
 import {
   itemBotToTop,
+  marginRightContact,
   sectionMarginLeft,
   sectionMarginRight,
 } from "../../utils/consts";
@@ -32,7 +33,7 @@ export default function Section2({
       display="flex"
       alignItems="center"
       pl={sectionMarginLeft}
-      pr={sectionMarginRight}
+      pr={marginRightContact}
       py={{ base: "25vmax", lg: "15vh" }}
     >
       <Box display="flex" flexDirection="column" w="full">
@@ -86,7 +87,7 @@ export default function Section2({
                             <Text
                               as={link ? "a" : "p"}
                               color="dark"
-                              fontSize={{base:"xs",lg:"sm"}}
+                              fontSize={{ base: "xs", lg: "sm" }}
                               opacity={0.8}
                               _hover={
                                 link ? { opacity: 1, cursor: "pointer" } : {}

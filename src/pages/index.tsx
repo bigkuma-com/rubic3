@@ -8,6 +8,7 @@ import Section2 from "../components/landing/Section2";
 import Section3 from "../components/landing/Section3";
 import Section4 from "../components/landing/Section4";
 import { getFullList } from "../utils/api";
+import { marginRightContact } from "../utils/consts";
 
 const seo = {
   url: "https://rubic3.com",
@@ -60,16 +61,15 @@ export default function Home({ sliders }: any) {
           },
         ]}
       />
-      <Header />
+      <Header contactMarginRight={marginRightContact} />
 
       <Box bg="dark" display="flex" flexDirection="column">
         <Section1 sliders={sliders} />
         <Section2 />
         <Section3 />
         <Section4 />
+        <Footer position="relative" />
       </Box>
-
-      <Footer isHomepage isShowing={false} />
     </>
   );
 }

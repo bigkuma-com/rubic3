@@ -8,8 +8,8 @@ import IconArrowLeft from "../../assets/js/IconArrowLeft";
 import IconArrowRight from "../../assets/js/IconArrowRight";
 import {
   itemBotToTop,
+  marginRightContact,
   sectionMarginLeft,
-  sectionMarginRight,
 } from "../../utils/consts";
 import { arrayChunk } from "../../utils/functions";
 import BoxMotion from "../BoxMotion";
@@ -42,7 +42,7 @@ export default function Section5({ careers }: { careers: any }) {
       display="flex"
       alignItems="center"
       pl={sectionMarginLeft}
-      pr={sectionMarginRight}
+      pr={marginRightContact}
       pt={{ base: 12, lg: 0 }}
       position="relative"
     >

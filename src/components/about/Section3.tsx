@@ -17,8 +17,8 @@ import IconPlus from "../../assets/js/IconPlus";
 import { getImage } from "../../utils/api";
 import {
   itemBotToTop,
+  marginRightContact,
   sectionMarginLeft2,
-  sectionMarginRight2,
 } from "../../utils/consts";
 import { arrayChunk } from "../../utils/functions";
 import BoxMotion from "../BoxMotion";
@@ -58,7 +58,7 @@ export default function Section3({ leaders }: { leaders: any }) {
       h="full"
       minH="100vh"
       pl={sectionMarginLeft2}
-      pr={sectionMarginRight2}
+      pr={marginRightContact}
     >
       <Box
         display="flex"
@@ -79,7 +79,7 @@ export default function Section3({ leaders }: { leaders: any }) {
         >
           Our Team
         </Heading>
-        <BoxMotion
+        {/* <BoxMotion
           w={{ base: "full", lg: "80%" }}
           mb={[4, 6, 8, 10]}
           variants={itemBotToTop(0.2)}
@@ -91,7 +91,7 @@ export default function Section3({ leaders }: { leaders: any }) {
           <Text opacity={0.6} fontSize="sm" whiteSpace="pre-line">
             {`We invest in our people’s future, create inclusive working environments, and build cultures based on the values of openness, optimism, and a commitment to extraordinary work.`}
           </Text>
-        </BoxMotion>
+        </BoxMotion> */}
         {isLarge ? (
           <BoxMotion
             w="full"
@@ -102,7 +102,6 @@ export default function Section3({ leaders }: { leaders: any }) {
             initial="offscreen"
             whileInView="onscreen"
             viewport={{ once: true }}
-            // px={{ base: 0, lg: 16 }}
           >
             <Box
               position="absolute"

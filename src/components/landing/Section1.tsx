@@ -97,7 +97,6 @@ export default function Section1({ sliders }: { sliders: any }) {
             }: any,
             i: any
           ) => {
-            console.log(i, section, i == section);
             return (
               <SwiperSlide
                 key={i}

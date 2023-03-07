@@ -7,8 +7,8 @@ import IconProduction from "../../assets/svg/IconProduction.svg";
 import IconRealization from "../../assets/svg/IconRealization.svg";
 import {
   itemBotToTop,
+  marginRightContact,
   sectionMarginLeft,
-  sectionMarginRight,
 } from "../../utils/consts";
 import BoxMotion from "../BoxMotion";
 
@@ -17,12 +17,13 @@ export default function Section1() {
 
   return (
     <Box
-      w="full"
-      py="20vh"
-      pr={sectionMarginRight}
-      pl={sectionMarginLeft}
+      w={{ base: "full", lg: "70%" }}
+      h="full"
       display="flex"
-      flexDirection="column"
+      alignItems="center"
+      pl={sectionMarginLeft}
+      pr={marginRightContact}
+      py={{ base: "25vmax", lg: "15vh" }}
     >
       <Box display="flex" alignItems="center">
         <Box display="flex" flexDirection="column" h="100%" gap={10}>
@@ -137,6 +138,8 @@ export default function Section1() {
               </Box>
             );
           })}
+
+          <Box></Box>
         </Box>
       </Box>
     </Box>

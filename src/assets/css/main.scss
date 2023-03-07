@@ -78,6 +78,10 @@ select:-webkit-autofill:focus {
   transition: opacity 0.2s ease-in-out;
 }
 
+.animate-bg{
+  transition: background-color 0.5s ease-in-out;
+}
+
 .opacity-100 {
   opacity: 1 !important;
 }

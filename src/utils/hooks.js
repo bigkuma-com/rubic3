@@ -46,3 +46,22 @@ export function useWindowDimensions() {
   return windowDimensions;
 }
 
+export function useScrollPosition() {
+  const [scrollPosition, setScrollPosition] = useState(0);
+
+  useEffect(() => {
+    function handleScroll() {
+      const scrollTop = window.pageYOffset;
+      setScrollPosition(scrollTop);
+    }
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  return scrollPosition;
+}
+

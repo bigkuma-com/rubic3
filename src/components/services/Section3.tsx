@@ -6,6 +6,7 @@ import { useState } from "react";
 import Image360 from "../../assets/images/RC Digital Service Wheel.webp";
 import {
   itemBotToTop,
+  marginRightContact,
   sectionMarginLeft,
   sectionMarginRight,
 } from "../../utils/consts";
@@ -23,13 +24,12 @@ export default function Section4() {
   return (
     <LayoutGroup>
       <Box
-        w="full"
-        h="fit-content"
-        pt={28}
-        pb={36}
-        pr={sectionMarginRight}
-        pl={sectionMarginLeft}
+        w={{ base: "full", lg: "70%" }}
+        h="full"
         display="flex"
+        pl={sectionMarginLeft}
+        pr={marginRightContact}
+        py={{ base: "25vmax", lg: "15vh" }}
         flexDirection="column"
       >
         <BoxMotion

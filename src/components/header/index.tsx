@@ -18,11 +18,12 @@ import {
   animateRightLeft100,
   animateRightLeftHalf,
   animateTopToBottom,
-  marginX,
-  marginY,
+  marginXHeader,
+  marginYHeader,
   showOnLarge,
   themeColor,
 } from "../../utils/consts";
+import { useScrollPosition } from "../../utils/hooks";
 import BoxMotion from "../BoxMotion";
 import Button from "../Button";
 import MenuToggle from "./MenuToggle";
@@ -31,12 +32,16 @@ export default function Header({
   isLight = true,
   isTransparent = true,
   contactMarginRight = 0,
+  bg,
 }: {
   isLight?: boolean;
   isTransparent?: boolean;
-  contactMarginRight?: number;
+  contactMarginRight?: any;
+  bg?: string;
 }) {
   const { push } = useRouter();
+
+  const scrollPosition = useScrollPosition();
 
   const navRef = useRef<any>(null);
   const containerRef = useRef<any>(null);
@@ -44,6 +49,7 @@ export default function Header({
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [navHover, setNavHover] = useState(-1);
+  const [showBg, setShowBg] = useState(false);
 
   const [isLarge] = useMediaQuery("(min-width: 991px)", {
     ssr: true,
@@ -57,6 +63,10 @@ export default function Header({
   useEffect(() => {
     !isModalOpen && setIsNavOpen(false);
   }, [isModalOpen]);
+
+  useEffect(() => {
+    scrollPosition > 20 ? setShowBg(true) : setShowBg(false);
+  }, [scrollPosition]);
 
   useOutsideClick({
     ref: navRef,
@@ -72,15 +82,20 @@ export default function Header({
       h="fit-content"
       position="fixed"
       top={0}
-      px={marginX}
-      pt={marginY}
-      pb={isTransparent ? 0 : 8}
+      py={marginYHeader}
+      px={marginXHeader}
       variants={animateTopToBottom}
       initial="initial"
       animate="animate"
       exit="exit"
       zIndex={isNavOpen ? 1002 : 1000}
-      bg={isTransparent ? "transparent" : "dark"}
+      bg={
+        showBg
+          ? (bg ? bg : !isLight ? "light" : "dark") ?? "transparent"
+          : "transparent"
+      }
+      // bg={!showBg || isTransparent ? "transparent" : bg ?? "dark"}
+      className="animate-bg"
     >
       <Box position="relative" cursor="pointer" onClick={() => push("/")}>
         <BoxMotion
@@ -91,30 +106,28 @@ export default function Header({
               ease: "easeInOut",
             },
           }}
-          className="drop-shadow"
         >
           <LogoRubicGroup />
         </BoxMotion>
       </Box>
 
+      <Box
+        display={showOnLarge}
+        position={"absolute"}
+        right={contactMarginRight}
+      >
+        <Button
+          isLight={isLight}
+          text="Contact Us"
+          withIcon={false}
+          onClick={() => {
+            push("/contact");
+          }}
+        />
+      </Box>
+
       <LayoutGroup>
         <Box display="flex" alignItems="center" gap={10}>
-          <BoxMotion
-            display={showOnLarge}
-            position={contactMarginRight > 0 ? "absolute" : "relative"}
-            layout
-            right={contactMarginRight}
-          >
-            <Button
-              isLight={isLight}
-              text="Contact Us"
-              withIcon={false}
-              onClick={() => {
-                push("/contact");
-              }}
-            />
-          </BoxMotion>
-
           <Box
             cursor="pointer"
             onClick={() => {
@@ -132,6 +145,7 @@ export default function Header({
               alignItems="center"
               gap={1}
               className={isNavOpen ? "" : "drop-shadow"}
+              w="full"
             >
               <AnimatePresence>
                 {isNavOpen && (
@@ -165,7 +179,7 @@ export default function Header({
               bg="blackAlpha.900"
               variants={animateOpacityHalf}
               initial="initial"
-              animate="animate"
+              animate={"animate"}
               exit="exit"
             />
           )}
@@ -182,8 +196,8 @@ export default function Header({
               w={{ base: "full", lg: "50%" }}
               display="flex"
               alignItems="center"
-              justifyContent={{ base: "center", lg: "flex-start" }}
-              pl={{ base: 0, lg: 32 }}
+              justifyContent={{ base: "flex-start", lg: "flex-start" }}
+              pl={{ base: 10, lg: 32 }}
               h={{ base: "100vh", lg: "80vh" }}
               bg="light"
               variants={
@@ -199,7 +213,7 @@ export default function Header({
                 color="dark"
                 display="flex"
                 flexDirection="column"
-                alignItems={{ base: "center", lg: "flex-start" }}
+                alignItems="flex-start"
                 gap={5}
                 mt={-12}
                 onMouseLeave={() => {
@@ -212,7 +226,7 @@ export default function Header({
                       as="li"
                       key={i}
                       fontWeight={500}
-                      fontSize="3xl"
+                      fontSize={{ base: "3xl", lg: "3xl" }}
                       className="animate-fade"
                       color="dark"
                       cursor="pointer"
@@ -225,16 +239,20 @@ export default function Header({
                       }}
                       onClick={() => push(path)}
                       position="relative"
+                      display={{ base: "flex", lg: "unset" }}
+                      alignItems={{ base: "center", lg: "unset" }}
+                      gap={{ base: 2, lg: 0 }}
                     >
                       <Box
-                        position="absolute"
-                        left="-30%"
-                        top="50%"
-                        transform="translateY(-50%)"
+                        position={{ base: "relative", lg: "absolute" }}
+                        left={{ base: "unset", lg: -8 }}
+                        top={{ base: "unset", lg: "50%" }}
+                        transform={{ base: "unset", lg: "translateY(-50%)" }}
                       >
                         <AnimatePresence>
                           {navHover === i && (
                             <BoxMotion
+                              layout
                               variants={animateRightLeftHalf}
                               initial="initial"
                               animate="animate"
@@ -250,11 +268,11 @@ export default function Header({
                   );
                 })}
               </Box>
+
               <Box
                 position="absolute"
                 bottom={"5rem"}
-                left={{ base: "50%", lg: "8rem" }}
-                transform={{ base: "translateX(-50%)", lg: "unset" }}
+                left={{ base: 12, lg: "8rem" }}
               >
                 <Image
                   src={IconAdhya}
@@ -277,6 +295,6 @@ export default function Header({
 const navbarContents = [
   { name: "About", path: "/about" },
   { name: "Works", path: "/works" },
-  { name: "Services", path: "/services" },
+  { name: "Our Company", path: "/our-company" },
   { name: "Contact", path: "/contact" },
 ];

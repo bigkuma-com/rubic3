@@ -26,12 +26,12 @@ import {
 import { arrayChunk } from "../utils/functions";
 
 const seo = {
-  url: "https://rubic3.com/services",
+  url: "https://rubic3.com/our-company",
   title: "Services - Rubicube Group",
   description: "What we do.",
 };
 
-export default function About({
+export default function OurCompany({
   clients,
   partners,
   associates,
@@ -302,8 +302,11 @@ export default function About({
               <Section3 />
             </SwiperSlide>
           </Swiper>
+          <Footer
+            isLight={section != 2}
+            position={isLarge ? undefined : "relative"}
+          />
         </Box>
-        <Footer isLight={section != 2} />
       </BoxMotion>
     </>
   );
@@ -322,7 +325,7 @@ export async function getStaticProps() {
     params: { sort: "order" },
   });
   const resultLeaders = await getFullList({
-    collection: "leaderships",
+    collection: "team",
     params: { sort: "order" },
   });
   const resultCareers = await getFullList({

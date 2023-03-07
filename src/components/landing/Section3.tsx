@@ -53,6 +53,7 @@ export default function Section3() {
           w="full"
           mr={{ base: 0, lg: "25%" }}
           color={"white"}
+          
           onMouseLeave={() => {
             isLarge && setMenuHover(-1);
           }}
@@ -64,6 +65,9 @@ export default function Section3() {
                 key={i}
                 onMouseEnter={() => {
                   isLarge && setMenuHover(i);
+                }}
+                onMouseLeave={() => {
+                  isLarge && setMenuHover(-1);
                 }}
                 _hover={{
                   opacity: menuHover === i ? 1 : 0.5,
@@ -88,7 +92,7 @@ export default function Section3() {
                       onClick={() =>
                         isLarge
                           ? push(
-                              `/services?selected=${sidebarServices[i].query}`
+                              `/our-company?selected=${sidebarServices[i].query}`
                             )
                           : setMenuHover(menuHover === i ? -1 : i)
                       }
@@ -97,8 +101,9 @@ export default function Section3() {
                     </Heading>
                   </BoxMotion>
                   <AnimatePresence>
-                    {menuHover === i && (
+                    {menuHover == i && (
                       <BoxMotion
+                        layout
                         display="flex"
                         justifyContent="space-between"
                         flexDirection={{ base: "column", lg: "row" }}
@@ -107,14 +112,14 @@ export default function Section3() {
                         animate={{
                           opacity: 1,
                           transition: {
-                            duration: 0.8,
+                            duration: 0.3,
                             ease: "easeInOut",
                           },
                         }}
                         exit={{
                           opacity: 0,
                           transition: {
-                            duration: 0.6,
+                            duration: 0.1,
                             ease: "easeInOut",
                           },
                         }}
@@ -135,7 +140,7 @@ export default function Section3() {
                             text="View more"
                             onClick={() =>
                               push(
-                                `/services?selected=${sidebarServices[i].query}`
+                                `/our-company?selected=${sidebarServices[i].query}`
                               )
                             }
                           />

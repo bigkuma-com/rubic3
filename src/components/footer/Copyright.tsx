@@ -1,8 +1,8 @@
 import { Text } from "@chakra-ui/react";
 import {
   animateBottomToTop,
-  marginX,
-  marginY,
+  marginXHeader,
+  marginYHeader,
   showOnLarge,
   themeColor,
 } from "../../utils/consts";
@@ -19,8 +19,8 @@ export default function Copyright({
     <BoxMotion
       display={showOnLarge}
       position={position}
-      bottom={marginY}
-      left={marginX}
+      bottom={marginYHeader}
+      left={marginXHeader}
       zIndex={500}
       variants={animateBottomToTop}
       initial="initial"
@@ -37,12 +37,7 @@ export default function Copyright({
           },
         }}
       >
-        <Text
-          fontSize="small"
-          as="span"
-          color="inherit"
-          className="text-shadow"
-        >
+        <Text fontSize="xs" as="span" color="inherit" className="text-shadow">
           ©2022 Rubicube Group. All Right Reserved
         </Text>
       </BoxMotion>

@@ -2,19 +2,20 @@ import { Box, Text, useMediaQuery } from "@chakra-ui/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { NextSeo } from "next-seo";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "swiper/css";
-import Section1 from "../components/about/Section1";
-import Section2 from "../components/about/Section2";
-import Section3 from "../components/about/Section3";
-import Section4 from "../components/about/Section4";
-import Section5 from "../components/about/Section5";
+import LogoRubicGroup from "../assets/js/LogoRubicGroup";
+import LogoRubicubeConnoisseur from "../assets/js/LogoRubicubeConnoisseur";
+import LogoRubicubeHospitality from "../assets/js/LogoRubicubeHospitality";
 import BackToHome from "../components/BackToHome";
 import BoxMotion from "../components/BoxMotion";
 import Button from "../components/Button";
 import Footer from "../components/footer";
 import Header from "../components/header";
 import NavLef from "../components/NavLeft";
+import Section1 from "../components/services/Section1";
+import Section2 from "../components/services/Section2";
+import Section3 from "../components/services/Section3";
 import { getFullList } from "../utils/api";
 import {
   animateTopToBottom,
@@ -23,66 +24,47 @@ import {
   marginRightContact,
   marginX,
   showOnLarge,
-  sidebarAbout,
+  sidebarServices,
   themeColor,
 } from "../utils/consts";
-
-const itemBotToTop = (delay = 0) => ({
-  offscreen: {
-    opacity: 0,
-    y: 20,
-  },
-  onscreen: {
-    y: 0,
-    opacity: 1,
-    transition: {
-      duration: 0.5,
-      delay: delay,
-      ease: "easeInOut",
-    },
-  },
-});
+import { arrayChunk } from "../utils/functions";
 
 const seo = {
-  url: "https://rubic3.com/about",
-  title: "About - Rubicube Group",
-  description:
-    "With a track record of 14 years, Our deep understanding of and research into the forces of digital disruption, coupled with the new thinking required to unlock growth provides excellence, long-lasting results.",
+  url: "https://rubic3.com/our-company",
+  title: "Our Company - Rubicube Group",
+  description: "What we do.",
 };
 
-export default function About({
+export default function OurCompany({
   clients,
   partners,
   associates,
   leaders,
   careers,
-  partnersAssociations,
-  clientTypes,
 }: {
   clients: any;
   partners: any;
   associates: any;
   leaders: any;
   careers: any;
-  partnersAssociations: any;
-  clientTypes: any;
 }) {
   const { push, query, replace } = useRouter();
-  const [section, setSection] = useState(0);
-  const [isEven, setIsEven] = useState(true);
-  const [isShowFilter, setIsShowFilter] = useState(false);
 
   const [isLarge] = useMediaQuery("(min-width: 991px)", {
     ssr: true,
     fallback: false,
   });
 
-  useEffect(() => {
-    setIsEven(!!(section % 2));
-  }, [section]);
+  const prevRefSlides = useRef(null);
+  const nextRefSlides = useRef(null);
+
+  const [section, setSection] = useState(0);
+  const [isShowFilter, setIsShowFilter] = useState(false);
 
   useEffect(() => {
-    const i = sidebarAbout.findIndex((item) => item.query == query?.selected);
+    const i = sidebarServices.findIndex(
+      (item) => item.query === query?.selected
+    );
 
     if (i > -1) {
       setSection(i);
@@ -138,24 +120,28 @@ export default function About({
         flexDirection={{ base: "column", lg: "row" }}
         h="full"
         w="full"
-        initial={{ backgroundColor: themeColor[0] }}
+        initial={{ backgroundColor: sidebarServices[section].color }}
         animate={{
-          backgroundColor: themeColor[+isEven],
+          backgroundColor: sidebarServices[section].color,
           transition: {
             duration: 0.5,
             ease: "easeInOut",
           },
         }}
       >
-        <Header isLight={!isEven} contactMarginRight={marginRightContact} />
+        <Header
+          isLight={section != 2}
+          contactMarginRight={marginRightContact}
+          bg={sidebarServices[section].color}
+        />
 
-        <BackToHome color={themeColor[+!isEven]} />
+        <BackToHome color={themeColor[+(section < 2)]} />
 
         {isLarge ? (
           <>
             <NavLef
-              color={themeColor[+!isEven]}
-              contents={sidebarAbout}
+              color={themeColor[+(section < 2)]}
+              contents={sidebarServices}
               section={section}
               setSection={(section: number) => setSection(section)}
             />
@@ -176,8 +162,8 @@ export default function About({
             <BoxMotion>
               <Button
                 style={{ fontSize: "var(--chakra-fontSizes-xs)" }}
-                isLight={!isEven}
-                text={sidebarAbout[section].name}
+                isLight={section < 2}
+                text={sidebarServices[section].name}
                 onClick={() => {
                   setIsShowFilter(!isShowFilter);
                 }}
@@ -198,7 +184,7 @@ export default function About({
                   ml={5}
                   zIndex={1001}
                 >
-                  {sidebarAbout.map((item, i) => {
+                  {sidebarServices.map((item, i) => {
                     return (
                       <Box
                         key={i}
@@ -209,7 +195,7 @@ export default function About({
                           replace({
                             query: {
                               ...query,
-                              selected: sidebarAbout[i].query,
+                              selected: sidebarServices[i].query,
                             },
                           });
                           setIsShowFilter(false);
@@ -256,23 +242,25 @@ export default function About({
 
         {section == 0 && <Section1 />}
 
-        {section == 1 && (
-          <Section2 partnersAssociations={partnersAssociations} />
-        )}
+        {section == 1 && <Section2 />}
 
-        {section == 2 && <Section3 leaders={leaders} />}
+        {section == 2 && <Section3 />}
 
-        {section == 3 && (
-          <Section4 clients={clients} clientTypes={clientTypes} />
-        )}
-
-        {section == 4 && <Section5 careers={careers} />}
-
-        <Footer isLight={!isEven} position={isLarge ? undefined : "relative"} />
+        <Footer
+          isLight={section != 2}
+          position={isLarge ? undefined : "relative"}
+        />
       </BoxMotion>
     </>
   );
 }
+
+const serviceLogos = [
+  <LogoRubicGroup key={1} />,
+  <LogoRubicubeHospitality key={2} />,
+  <LogoRubicubeConnoisseur key={3} />,
+  <LogoRubicGroup key={4} />,
+];
 
 export async function getStaticProps() {
   const resultsClients = await getFullList({
@@ -287,83 +275,24 @@ export async function getStaticProps() {
     collection: "careers",
     params: { sort: "-created" },
   });
-  const resultsPartnersAssociations = await getFullList({
-    collection: "partners_associations",
-    params: { sort: "order" },
-  });
 
   const partners = resultsClients.filter((client) => client.type === "partner");
   const associates = resultsClients.filter(
     (client) => client.type === "associate"
   );
-  const clients = resultsClients;
-  const leaders = resultLeaders;
-  const careers = resultCareers;
-  const partnersAssociations = resultsPartnersAssociations.reduce(
-    (acc: any, curr: any) => {
-      const { tag, ...rest } = curr;
-      if (!acc[tag]) {
-        acc[tag] = [];
-      }
-      acc[tag].push(rest);
-      return acc;
-    },
-    {}
-  );
-  const clientTypes = resultsClients.map(({ type }: any) => type);
+  const clients = resultsClients.filter((client) => client.type === "client");
 
-  const result = resultsClients.reduce((acc: any, obj: any) => {
-    const type = obj.type;
-    if (!acc[type]) {
-      acc[type] = { type, data: [] };
-    }
-    acc[type].data.push(obj);
-    return acc;
-  }, {});
-
-  const finalResult = Object.values(result);
-
-  console.log(finalResult);
+  const leaders = arrayChunk(resultLeaders, 4);
+  const careers = arrayChunk(resultCareers, 3);
 
   return {
     props: {
       partners: JSON.parse(JSON.stringify(partners)),
       clients: JSON.parse(JSON.stringify(clients)),
-      clientTypes: JSON.parse(JSON.stringify(finalResult)),
       associates: JSON.parse(JSON.stringify(associates)),
       leaders: JSON.parse(JSON.stringify(leaders)),
       careers: JSON.parse(JSON.stringify(careers)),
-      partnersAssociations: JSON.parse(JSON.stringify(partnersAssociations)),
     },
     revalidate: 2,
   };
 }
-
-const dataResult = [
-  { tag: "", data: {} },
-  { tag: "", data: {} },
-  //...
-];
-
-const data = [
-  {
-    id: "eqgzov05pb6iorb",
-    name: "Adhya Group",
-    tag: "Our Partners",
-  },
-  {
-    id: "o3lo42k5sacnva8",
-    name: "Ria",
-    tag: "Food & Beverage",
-  },
-  {
-    id: "wh4xoed6p0zpptd",
-    name: "Dextonindo Persada",
-    tag: "Products & Services",
-  },
-  {
-    id: "zr8q4ehza7x1blf",
-    name: "Adhya Indo Jaya",
-    tag: "Products & Services",
-  },
-];

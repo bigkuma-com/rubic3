@@ -1,7 +1,14 @@
+// export const marginX = { base: 4, lg: 8 };
+// export const marginY = { base: 4, lg: 6 };
+// export const marginXSection = { base: 5, lg: "8%" };
+
+export const marginXHeader = { base: 4, lg: 8 };
+export const marginYHeader = { base: 4, lg: 6 };
+export const marginRightContact = { base: 4, lg: 28 };
+
 export const marginX = [5, 6, 10, 16];
 export const marginY = [6, 8, 10, 12];
 export const marginXSection = [5, 6, 10, "8%"];
-
 export const showOnLarge = { base: "none", lg: "unset" };
 
 export const sectionMarginLeft = [5, 6, 10, 16];
@@ -27,7 +34,11 @@ export const sidebarAbout = [
 ];
 
 export const sidebarServices = [
-  { name: "Rubicube Creative", query: "creative", color: "dark" },
+  {
+    name: "Rubicube Creative",
+    query: "creative",
+    color: "var(--chakra-colors-dark)",
+  },
   { name: "Rubicube Hospitality", query: "hospitality", color: "#325D92" },
   { name: "Rubicube 360 Digital", query: "360", color: "#FFC925" },
 ];
@@ -232,6 +243,36 @@ export const itemBotToTop = (delay = 0) => ({
     transition: {
       duration: 0.5,
       delay: delay,
+      ease: "easeInOut",
+    },
+  },
+});
+
+export const animateYWithBg = (bg1, bg2, y) => ({
+  initial: { y, opacity: 0 },
+  animate1: {
+    y: 0,
+    opacity: 1,
+    backgroundColor: bg1,
+    transition: {
+      duration: 1,
+      ease: "easeInOut",
+    },
+  },
+  animate2: {
+    y: 0,
+    opacity: 1,
+    backgroundColor: bg2,
+    transition: {
+      duration: 1,
+      ease: "easeInOut",
+    },
+  },
+  exit: {
+    y,
+    opacity: 0,
+    transition: {
+      duration: 0.5,
       ease: "easeInOut",
     },
   },

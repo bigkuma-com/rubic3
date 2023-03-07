@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import LogoRubicubeHospitality from "../../assets/js/LogoRubicubeHospitality";
 import {
   itemBotToTop,
+  marginRightContact,
   sectionMarginLeft,
   sectionMarginRight,
   showOnLarge,
@@ -16,16 +17,16 @@ export default function Section1() {
 
   return (
     <Box
-      w="full"
-      pt={28}
-      pb={36}
-      pr={sectionMarginRight}
-      pl={sectionMarginLeft}
+      w={{ base: "full", lg: "70%" }}
+      h="full"
       display="flex"
       flexDirection="column"
+      pl={sectionMarginLeft}
+      pr={marginRightContact}
+      py={{ base: "25vmax", lg: "15vh" }}
     >
       <BoxMotion
-        w={["full", null, null, "75%"]}
+        w="full"
         variants={itemBotToTop(0.2)}
         initial="offscreen"
         whileInView="onscreen"
@@ -125,7 +126,6 @@ export default function Section1() {
           )}
         </Box>
       </Box>
-
     </Box>
   );
 }

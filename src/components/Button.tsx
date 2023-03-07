@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import ArrowDownSm from "../assets/js/ArrowDownSm";
 import ArrowLeftSm from "../assets/js/ArrowLeftSm";
 import ArrowRightSm from "../assets/js/ArrowRightSm";
@@ -18,7 +18,7 @@ export default function Button({
   disable = false,
   isLight = true,
   iconOnLeft = false,
-  fontSize="unset",
+  fontSize = "unset",
 }: {
   text: string;
   onClick?: any;
@@ -89,7 +89,9 @@ export default function Button({
         ) : (
           <ArrowRightSm />
         ))}
-      {text}
+      <Text as="span" fontSize="xs" color="inherit" >
+        {text}
+      </Text>
       {withIcon &&
         !iconOnLeft &&
         (arrowDown ? (

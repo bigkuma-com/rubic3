@@ -25,8 +25,9 @@ import {
   animateBottomToTop,
   animateTopToBottom,
   itemBotToTop,
-  marginX,
+  marginRightContact,
   marginY,
+  showOnLarge,
 } from "../../utils/consts";
 import { makeBold } from "../../utils/functions";
 import { ICoordinate } from "../../utils/types";
@@ -165,7 +166,7 @@ export default function Works() {
     width: w,
   } = blockSpacing;
 
-  if (query.show == "all")
+  if (query.show == "all" || !isLarge)
     return (
       <>
         <NextSeo
@@ -214,13 +215,14 @@ export default function Works() {
           w="full"
           h="full"
           minH="100vh"
-          py="20vh"
+          py={{ base: 24, lg: "20vh" }}
           position="relative"
         >
-          <Header contactMarginRight={80} />
+          <Header contactMarginRight={marginRightContact} />
 
           <Box
-            position="fixed"
+            display={showOnLarge}
+            position={"fixed"}
             top={marginY}
             left="50%"
             transform="translateX(-50%)"
@@ -244,18 +246,11 @@ export default function Works() {
           </Box>
 
           <Box
-            position="fixed"
+            position={{ base: "absolute", lg: "fixed" }}
             zIndex={1001}
-            mt={marginY}
-            {...(isLarge
-              ? {
-                  top: 1.5,
-                  right: 28,
-                }
-              : {
-                  top: [24],
-                  left: marginX,
-                })}
+            top={{ base: 24, lg: 6 }}
+            transform="translateY(20%)"
+            right={{ base: 4, lg: 64 }}
           >
             <BoxMotion
               variants={animateTopToBottom}
@@ -263,7 +258,7 @@ export default function Works() {
               animate="animate"
               exit="exit"
             >
-              <BoxMotion pr={12}>
+              <BoxMotion>
                 <Button
                   text={isLarge ? "Filter by" : "Filter"}
                   onClick={() => {
@@ -271,75 +266,80 @@ export default function Works() {
                   }}
                 />
               </BoxMotion>
-              <AnimatePresence>
-                {isFilterOpen && (
-                  <BoxMotion
-                    mt={6}
-                    ml={5}
-                    display="flex"
-                    flexDirection="column"
-                    gap={3}
-                    variants={containerFilter}
-                    initial="hidden"
-                    animate="show"
-                    exit="hidden"
-                  >
-                    <Box
-                      key="all"
-                      _hover={{ opacity: 0.6 }}
-                      cursor="pointer"
-                      onClick={() => {
-                        replace({
-                          query: { ...query, filter: "all" },
-                        });
-                        setSelectedFilter("");
-                        setIsFilterOpen(false);
-                        setDataLoading(true);
-                        setTimeout(() => {
-                          setDataLoading(false);
-                        }, 100);
-                      }}
-                    >
-                      <Text
-                        as={motion.span}
-                        variants={itemFilter}
-                        fontSize="sm"
-                      >
-                        All
-                      </Text>
-                    </Box>
-                    {filters?.map(({ name, id }) => {
-                      return (
-                        <Box
-                          key={id}
-                          _hover={{ opacity: 0.6 }}
-                          cursor="pointer"
-                          onClick={() => {
-                            setSelectedFilter(id);
-                            replace({
-                              query: { ...query, filter: name.toLowerCase() },
-                            });
-                            setIsFilterOpen(false);
-                            setDataLoading(true);
-                            setTimeout(() => {
-                              setDataLoading(false);
-                            }, 100);
-                          }}
-                        >
-                          <Text
-                            as={motion.span}
-                            variants={itemFilter}
-                            fontSize="sm"
-                          >
-                            {name}
-                          </Text>
-                        </Box>
-                      );
-                    })}
-                  </BoxMotion>
-                )}
-              </AnimatePresence>
             </BoxMotion>
+          </Box>
+
+          <Box
+            position={{ base: "absolute", lg: "fixed" }}
+            zIndex={1001}
+            top={{ base: 24, lg: 6 }}
+            transform="translateY(20%)"
+            right={{ base: 4, lg: "17rem" }}
+          >
+            <AnimatePresence>
+              {isFilterOpen && (
+                <BoxMotion
+                  mt={6}
+                  ml={5}
+                  display="flex"
+                  flexDirection="column"
+                  gap={3}
+                  variants={containerFilter}
+                  initial="hidden"
+                  animate="show"
+                  exit="hidden"
+                >
+                  <Box
+                    key="all"
+                    _hover={{ opacity: 0.6 }}
+                    cursor="pointer"
+                    onClick={() => {
+                      replace({
+                        query: { ...query, filter: "all" },
+                      });
+                      setSelectedFilter("");
+                      setIsFilterOpen(false);
+                      setDataLoading(true);
+                      setTimeout(() => {
+                        setDataLoading(false);
+                      }, 100);
+                    }}
+                  >
+                    <Text as={motion.span} variants={itemFilter} fontSize="sm">
+                      All
+                    </Text>
+                  </Box>
+                  {filters?.map(({ name, id }) => {
+                    return (
+                      <Box
+                        key={id}
+                        _hover={{ opacity: 0.6 }}
+                        cursor="pointer"
+                        onClick={() => {
+                          setSelectedFilter(id);
+                          replace({
+                            query: { ...query, filter: name.toLowerCase() },
+                          });
+                          setIsFilterOpen(false);
+                          setDataLoading(true);
+                          setTimeout(() => {
+                            setDataLoading(false);
+                          }, 100);
+                        }}
+                      >
+                        <Text
+                          as={motion.span}
+                          variants={itemFilter}
+                          fontSize="sm"
+                        >
+                          {name}
+                        </Text>
+                      </Box>
+                    );
+                  })}
+                </BoxMotion>
+              )}
+            </AnimatePresence>
           </Box>
 
           <AnimatePresence>
@@ -371,11 +371,13 @@ export default function Works() {
             initial="offscreen"
             whileInView="onscreen"
             viewport={{ once: true }}
-            mb={20}
-            textAlign="center"
+            mb={{ base: 12, lg: 20 }}
+            ml={[5, 6, 10, 0]}
+            textAlign={{ base: "left", lg: "center" }}
           >
             Our Works
           </Heading>
+
           {isLoading || dataLoading ? (
             <Box
               display="flex"
@@ -388,7 +390,7 @@ export default function Works() {
               <Spinner color="light" size="xl" />
             </Box>
           ) : (
-            <SimpleGrid columns={3} mb={20}>
+            <SimpleGrid columns={{ base: 1, lg: 3 }} mb={20}>
               {data?.slice(0, numOfBlocks).map((item, i) => {
                 return <ImageWrapperAll data={item} idx={i % 12} key={i} />;
               })}

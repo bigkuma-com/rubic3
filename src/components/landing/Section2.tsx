@@ -45,7 +45,6 @@ export default function Section2() {
           alt="s2"
           style={{
             objectFit: "cover",
-            opacity: 0.2,
           }}
         />
       </Box>

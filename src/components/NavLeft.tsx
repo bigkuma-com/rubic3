@@ -29,7 +29,6 @@ export default function NavLef({
         display={{ base: "none", lg: "flex" }}
         alignItems="center"
         color={color}
-        zIndex={49}
       >
         <Box
           as="ul"
@@ -48,13 +47,14 @@ export default function NavLef({
               >
                 <Box
                   as="li"
+                  fontWeight={section == i ? 400 : 300}
                   opacity={section == i ? 1 : 0.6}
                   _hover={{ opacity: 1 }}
                   cursor="pointer"
                   onClick={() => {
                     setSection(i);
                     replace({
-                      query: { ...query, selected: sidebarAbout[i].query },
+                      query: { ...query, selected: contents[i].query },
                     });
                   }}
                   className="animate-fade"
@@ -65,55 +65,57 @@ export default function NavLef({
             );
           })}
         </Box>
-        <BoxMotion
-          w="2px"
-          position="absolute"
-          opacity={0.6}
-          right={0}
-          top={0}
-          zIndex={5}
-          layout
-          initial={{
-            height: "0%",
-          }}
-          animate={{
-            height: `${(section + 1) * 20}%`,
-            backgroundColor: color,
-            transition: {
-              backgroundColor: {
-                duration: 0.5,
-                ease: "easeInOut",
-              },
-              height: {
-                duration: 2,
-              },
-            },
-          }}
-        />
-        <BoxMotion
-          opacity={0.1}
-          w="2px"
-          position="absolute"
-          right={0}
-          top={0}
-          zIndex={4}
-          initial={{
-            height: "0vh",
-          }}
-          animate={{
-            height: "100vh",
-            backgroundColor: color,
-            transition: {
+      </Box>
+
+      <BoxMotion
+        w="2px"
+        position="fixed"
+        opacity={0.6}
+        left="30%"
+        top={0}
+        zIndex={1005}
+        layout
+        initial={{
+          height: "0%",
+        }}
+        animate={{
+          height: `${(section + 1) * 20}%`,
+          backgroundColor: color,
+          transition: {
+            backgroundColor: {
               duration: 0.5,
               ease: "easeInOut",
-              height: {
-                duration: 1,
-                ease: "easeInOut",
-              },
             },
-          }}
-        />
-      </Box>
+            height: {
+              duration: 2,
+            },
+          },
+        }}
+      />
+
+      <BoxMotion
+        opacity={0.1}
+        w="2px"
+        position="absolute"
+        left="30%"
+        top={0}
+        zIndex={1004}
+        initial={{
+          height: "0%",
+        }}
+        animate={{
+          height: "100%",
+          backgroundColor: color,
+          transition: {
+            duration: 0.5,
+            ease: "easeInOut",
+            height: {
+              duration: 1,
+              ease: "easeInOut",
+            },
+          },
+        }}
+      />
 
       <Box h="full" display={{ base: "flex", lg: "none" }} alignItems="center">
         <BoxMotion
