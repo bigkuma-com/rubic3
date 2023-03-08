@@ -131,6 +131,8 @@ export default function Works() {
   }, [query]);
 
   const onIdle = () => {
+    if (!isLarge) return;
+
     if (
       windowSize !== null &&
       containerSize !== null &&
@@ -485,7 +487,7 @@ export default function Works() {
           setPan({ x: panX, y: panY });
         }}
       >
-        <Header />
+        <Header contactMarginRight={marginRightContact} />
 
         <Box
           position="fixed"
@@ -712,7 +714,7 @@ export default function Works() {
             ))}
         </Box>
 
-        <Footer />
+        <Footer position="fixed" />
       </Box>
     </>
   );
