@@ -82,6 +82,12 @@ export default function Works() {
     }
   );
 
+  useEffect(()=>{
+    if(!query.show && isLarge){
+      replace('/works?show=featured')
+    }
+  },[query,isLarge])
+
   useEffect(() => {
     if (query.show !== "all") return;
 
@@ -131,7 +137,7 @@ export default function Works() {
   }, [query]);
 
   const onIdle = () => {
-    if (!isLarge) return;
+    if (query.show == "all" || !isLarge) return;
 
     if (
       windowSize !== null &&
