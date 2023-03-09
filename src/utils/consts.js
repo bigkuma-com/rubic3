@@ -1,6 +1,6 @@
-// export const marginX = { base: 4, lg: 8 };
-// export const marginY = { base: 4, lg: 6 };
-// export const marginXSection = { base: 5, lg: "8%" };
+import Rubic360 from "../assets/images/FA Rubicube 360 Digital logo2.webp";
+import RubicCreative from "../assets/images/FA Rubicube Creativity Logo2.png";
+import RubicHospitality from "../assets/images/FA Rubicube Hospitality Logo2.png";
 
 export const marginXHeader = { base: 4, lg: 8 };
 export const marginYHeader = { base: 4, lg: 6 };
@@ -38,9 +38,20 @@ export const sidebarServices = [
     name: "Rubicube Creative",
     query: "creative",
     color: "var(--chakra-colors-dark)",
+    logo: RubicCreative,
   },
-  { name: "Rubicube Hospitality", query: "hospitality", color: "#325D92" },
-  { name: "Rubicube 360 Digital", query: "360", color: "#FFC925" },
+  {
+    name: "Rubicube Hospitality",
+    query: "hospitality",
+    color: "#325D92",
+    logo: RubicHospitality,
+  },
+  {
+    name: "Rubicube 360 Digital",
+    query: "360",
+    color: "#FFC925",
+    logo: Rubic360,
+  },
 ];
 
 export const animateBottomToTop = {

@@ -12,7 +12,7 @@ import {
   itemBotToTop,
   marginRightContact,
   sectionMarginLeft,
-  sectionMarginRight,
+  showOnLarge,
 } from "../../utils/consts";
 import BoxMotion from "../BoxMotion";
 import Divider from "../Divider";
@@ -38,6 +38,7 @@ export default function Section2({
     >
       <Box display="flex" flexDirection="column" w="full">
         <Heading
+          display={showOnLarge}
           mb={6}
           color="dark"
           as={motion.h2}

@@ -11,8 +11,10 @@ import {
   sectionMarginLeft,
 } from "../../utils/consts";
 import BoxMotion from "../BoxMotion";
+import Divider from "../Divider";
+import TeamShowCase from "../TeamShowCase";
 
-export default function Section1() {
+export default function Section1({ team }: { team: any }) {
   const { replace, query } = useRouter();
 
   return (
@@ -25,8 +27,8 @@ export default function Section1() {
       pr={marginRightContact}
       py={{ base: "25vmax", lg: "15vh" }}
     >
-      <Box display="flex" alignItems="center">
-        <Box display="flex" flexDirection="column" h="100%" gap={10}>
+      <Box display="flex" alignItems="center" w="full">
+        <Box display="flex" flexDirection="column" h="100%" w="full" gap={10}>
           {contents.map(({ bottomDesc, title, topList, icon }, i: any) => {
             return (
               <Box key={i}>
@@ -139,7 +141,10 @@ export default function Section1() {
             );
           })}
 
-          <Box></Box>
+          <Box w="full" h="full" position="relative">
+            <Divider text="Division" lineOpacity={0.2} />
+            <TeamShowCase leaders={team} />
+          </Box>
         </Box>
       </Box>
     </Box>

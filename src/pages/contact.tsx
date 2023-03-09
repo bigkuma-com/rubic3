@@ -50,7 +50,7 @@ export default function Contact() {
       phone: Yup.string()
         .matches(phoneRegExp, "Phone number is not valid")
         .required("Required"),
-      message: Yup.string(),
+      message: Yup.string().required("Required"),
       subscribe: Yup.boolean(),
     }),
     onSubmit: (values) => {
@@ -115,7 +115,7 @@ export default function Contact() {
         ]}
       />
       <Box position="relative" bg="dark">
-        <Header isTransparent={true} />
+        <Header isTransparent showContact={false} />
 
         <AnimatePresence>
           {isPopOpen && (
@@ -166,14 +166,14 @@ export default function Contact() {
         </AnimatePresence>
 
         <Box
-          px={[5, 6, 10, "12%"]}
+          px={[5, 6, 10, "20%"]}
           py={[28, null, null, "12%"]}
           w="full"
           minH="100vh"
         >
           <Heading
-            fontSize="3xl"
-            mb={[8, null, null, 10]}
+            fontSize={{ base: "2xl", lg: "3xl" }}
+            mb={[8, null, null, 12]}
             as={motion.h1}
             variants={itemBotToTop(0)}
             initial="offscreen"
@@ -183,56 +183,65 @@ export default function Contact() {
             Hello! You can drop us a message.
           </Heading>
 
-          <Box display="flex" flexDirection={{ base: "column", lg: "row" }}>
-            <BoxMotion
-              variants={itemBotToTop(0.2)}
-              initial="offscreen"
-              whileInView="onscreen"
-              viewport={{ once: false }}
-              w={{ base: "full", lg: "20%" }}
-              mb={[4, null, null, 0]}
-            >
-              <Box
-                display="flex"
-                flexDirection={{ base: "row", lg: "column" }}
-                gap={3}
-                w="fit-content"
-              >
-                <Button
-                  text="General inquiry"
-                  withIcon={false}
-                  px={6}
-                  py={5}
-                  isActive={activeInquiry === 0}
-                  onClick={() => {
-                    setActiveInquity(0);
-                  }}
-                />
-                <Button
-                  text="Project inquiry"
-                  withIcon={false}
-                  px={6}
-                  py={5}
-                  isActive={activeInquiry === 1}
-                  onClick={() => {
-                    setActiveInquity(1);
-                  }}
-                />
-              </Box>
-            </BoxMotion>
-
+          <Box display="flex" flexDirection="column">
             <BoxMotion
               variants={itemBotToTop(0.4)}
               initial="offscreen"
               whileInView="onscreen"
               viewport={{ once: false }}
-              w={{ base: "full", lg: "70%" }}
             >
               <form onSubmit={formik.handleSubmit}>
-                <Text fontWeight={400} mb={4} fontSize="2xl">
-                  {title[activeInquiry]}
+                <Text
+                  fontWeight={500}
+                  mb={2}
+                  fontSize={{ base: "sm", lg: "lg" }}
+                >
+                  Have a question in mind ?
                 </Text>
-                <Text mb={8}>{subtitle[activeInquiry]}</Text>
+                <Text
+                  mb={10}
+                  opacity={{ base: 0.7, lg: 1 }}
+                  fontSize={{ base: "sm", lg: "lg" }}
+                >
+                  Fill the field below and describe your needs. In return we
+                  will contact you soon as possible.
+                </Text>
+
+                <Text mb={3} fontSize={{ base: "sm", lg: "lg" }} opacity={0.6}>
+                  Which office would you like to speak to?
+                </Text>
+
+                <BoxMotion
+                  variants={itemBotToTop(0.2)}
+                  initial="offscreen"
+                  whileInView="onscreen"
+                  viewport={{ once: false }}
+                  mb={[4, null, null, 8]}
+                  display="flex"
+                  gap={4}
+                  w="full"
+                >
+                  <Button
+                    text="Rubicube Singapore"
+                    withIcon={false}
+                    px={6}
+                    py={5}
+                    isActive={activeInquiry === 0}
+                    onClick={() => {
+                      setActiveInquity(0);
+                    }}
+                  />
+                  <Button
+                    text="Rubicube Indonesia"
+                    withIcon={false}
+                    px={6}
+                    py={5}
+                    isActive={activeInquiry === 1}
+                    onClick={() => {
+                      setActiveInquity(1);
+                    }}
+                  />
+                </BoxMotion>
 
                 <Box
                   display="flex"

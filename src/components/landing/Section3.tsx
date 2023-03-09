@@ -53,7 +53,6 @@ export default function Section3() {
           w="full"
           mr={{ base: 0, lg: "25%" }}
           color={"white"}
-          
           onMouseLeave={() => {
             isLarge && setMenuHover(-1);
           }}
@@ -89,13 +88,22 @@ export default function Section3() {
                       fontWeight="thin"
                       cursor="pointer"
                       fontSize={{ base: "3xl", lg: "5xl" }}
-                      onClick={() =>
-                        isLarge
-                          ? push(
+                      onClick={() => {
+                        if (isLarge) {
+                          push(
+                            `/our-company?selected=${sidebarServices[i].query}`
+                          );
+                        } else {
+                          if (menuHover === i) {
+                            push(
                               `/our-company?selected=${sidebarServices[i].query}`
-                            )
-                          : setMenuHover(menuHover === i ? -1 : i)
-                      }
+                            );
+                            setMenuHover(-1);
+                          } else {
+                            setMenuHover(i);
+                          }
+                        }
+                      }}
                     >
                       {title}
                     </Heading>

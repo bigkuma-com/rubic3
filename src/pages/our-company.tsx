@@ -4,9 +4,6 @@ import { NextSeo } from "next-seo";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import "swiper/css";
-import LogoRubicGroup from "../assets/js/LogoRubicGroup";
-import LogoRubicubeConnoisseur from "../assets/js/LogoRubicubeConnoisseur";
-import LogoRubicubeHospitality from "../assets/js/LogoRubicubeHospitality";
 import BackToHome from "../components/BackToHome";
 import BoxMotion from "../components/BoxMotion";
 import Button from "../components/Button";
@@ -27,7 +24,6 @@ import {
   sidebarServices,
   themeColor,
 } from "../utils/consts";
-import { arrayChunk } from "../utils/functions";
 
 const seo = {
   url: "https://rubic3.com/our-company",
@@ -35,19 +31,7 @@ const seo = {
   description: "What we do.",
 };
 
-export default function OurCompany({
-  clients,
-  partners,
-  associates,
-  leaders,
-  careers,
-}: {
-  clients: any;
-  partners: any;
-  associates: any;
-  leaders: any;
-  careers: any;
-}) {
+export default function OurCompany({ team }: { team: any }) {
   const { push, query, replace } = useRouter();
 
   const [isLarge] = useMediaQuery("(min-width: 991px)", {
@@ -133,6 +117,7 @@ export default function OurCompany({
           isLight={section != 2}
           contactMarginRight={marginRightContact}
           bg={sidebarServices[section].color}
+          logo={sidebarServices[section].logo}
         />
 
         <BackToHome color={themeColor[+(section < 2)]} />
@@ -240,11 +225,11 @@ export default function OurCompany({
           )}
         </AnimatePresence>
 
-        {section == 0 && <Section1 />}
+        {section == 0 && <Section1 team={team["Creative"]} />}
 
-        {section == 1 && <Section2 />}
+        {section == 1 && <Section2 team={team["Hospitality"]} />}
 
-        {section == 2 && <Section3 />}
+        {section == 2 && <Section3 team={team["360 Digital"]} />}
 
         <Footer
           isLight={section != 2}
@@ -255,43 +240,27 @@ export default function OurCompany({
   );
 }
 
-const serviceLogos = [
-  <LogoRubicGroup key={1} />,
-  <LogoRubicubeHospitality key={2} />,
-  <LogoRubicubeConnoisseur key={3} />,
-  <LogoRubicGroup key={4} />,
-];
-
 export async function getStaticProps() {
-  const resultsClients = await getFullList({
-    collection: "clients_partners",
-    params: { sort: "order" },
-  });
   const resultLeaders = await getFullList({
     collection: "team",
-    params: { sort: "order" },
-  });
-  const resultCareers = await getFullList({
-    collection: "careers",
-    params: { sort: "-created" },
+    params: { sort: "order", expand: "filter" },
   });
 
-  const partners = resultsClients.filter((client) => client.type === "partner");
-  const associates = resultsClients.filter(
-    (client) => client.type === "associate"
-  );
-  const clients = resultsClients.filter((client) => client.type === "client");
+  const data = resultLeaders;
+  const categorizedData: any = {};
 
-  const leaders = arrayChunk(resultLeaders, 4);
-  const careers = arrayChunk(resultCareers, 3);
+  data.forEach((obj: any) => {
+    obj.expand.filter?.forEach((filter: any) => {
+      if (!categorizedData[filter.name]) {
+        categorizedData[filter.name] = [];
+      }
+      categorizedData[filter.name].push(obj);
+    });
+  });
 
   return {
     props: {
-      partners: JSON.parse(JSON.stringify(partners)),
-      clients: JSON.parse(JSON.stringify(clients)),
-      associates: JSON.parse(JSON.stringify(associates)),
-      leaders: JSON.parse(JSON.stringify(leaders)),
-      careers: JSON.parse(JSON.stringify(careers)),
+      team: JSON.parse(JSON.stringify(categorizedData)),
     },
     revalidate: 2,
   };

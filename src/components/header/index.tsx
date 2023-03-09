@@ -33,11 +33,15 @@ export default function Header({
   isTransparent = true,
   contactMarginRight = 0,
   bg,
+  showContact = true,
+  logo,
 }: {
   isLight?: boolean;
   isTransparent?: boolean;
   contactMarginRight?: any;
   bg?: string;
+  showContact?: boolean;
+  logo?: any;
 }) {
   const { push } = useRouter();
 
@@ -107,24 +111,44 @@ export default function Header({
             },
           }}
         >
-          <LogoRubicGroup />
+          {logo ? (
+            <Box
+              w={{ base: "130px", lg: "200px" }}
+              h={{ base: "60px", lg: "80px" }}
+              position="relative"
+            >
+              <Image
+                alt={logo}
+                src={logo}
+                fill
+                style={{ objectFit: "contain", objectPosition: "left" }}
+              />
+            </Box>
+          ) : (
+            <LogoRubicGroup
+              width={isLarge ? 138 : 110}
+              height={isLarge ? 46 : 35}
+            />
+          )}
         </BoxMotion>
       </Box>
 
-      <Box
-        display={showOnLarge}
-        position={"absolute"}
-        right={contactMarginRight}
-      >
-        <Button
-          isLight={isLight}
-          text="Contact Us"
-          withIcon={false}
-          onClick={() => {
-            push("/contact");
-          }}
-        />
-      </Box>
+      {showContact && (
+        <Box
+          display={showOnLarge}
+          position={"absolute"}
+          right={contactMarginRight}
+        >
+          <Button
+            isLight={isLight}
+            text="Contact Us"
+            withIcon={false}
+            onClick={() => {
+              push("/contact");
+            }}
+          />
+        </Box>
+      )}
 
       <LayoutGroup>
         <Box display="flex" alignItems="center" gap={10}>
@@ -276,8 +300,8 @@ export default function Header({
               >
                 <Image
                   src={IconAdhya}
-                  height={35}
-                  width={160}
+                  height={25}
+                  width={120}
                   alt="Adhya"
                   style={{
                     objectFit: "contain",

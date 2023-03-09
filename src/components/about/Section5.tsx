@@ -59,7 +59,6 @@ export default function Section5({ careers }: { careers: any }) {
           Careers
         </Heading>
         <Text
-          w={{ base: "full", lg: "80%" }}
           fontSize="sm"
           mb={[4, 4, 6, 8]}
           as={motion.p}

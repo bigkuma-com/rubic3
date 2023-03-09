@@ -10,9 +10,11 @@ import {
   showOnLarge,
 } from "../../utils/consts";
 import BoxMotion from "../BoxMotion";
+import Divider from "../Divider";
 import HomePagination from "../landing/HomePagination";
+import TeamShowCase from "../TeamShowCase";
 
-export default function Section1() {
+export default function Section1({ team }: { team: any }) {
   const { replace, query } = useRouter();
 
   return (
@@ -125,6 +127,11 @@ export default function Section1() {
             }
           )}
         </Box>
+      </Box>
+
+      <Box w="full" h="full" position="relative">
+        <Divider text="Division" lineOpacity={0.2} />
+        <TeamShowCase leaders={team} />
       </Box>
     </Box>
   );

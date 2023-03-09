@@ -8,11 +8,12 @@ import {
   itemBotToTop,
   marginRightContact,
   sectionMarginLeft,
-  sectionMarginRight,
 } from "../../utils/consts";
 import BoxMotion from "../BoxMotion";
+import Divider from "../Divider";
+import TeamShowCase from "../TeamShowCase";
 
-export default function Section4() {
+export default function Section3({ team }: { team: any }) {
   const { replace, query, push } = useRouter();
   const [menuSelected, setMenuSelected] = useState(-1);
 
@@ -20,6 +21,8 @@ export default function Section4() {
     ssr: true,
     fallback: false,
   });
+
+  console.log("30", team);
 
   return (
     <LayoutGroup>
@@ -170,6 +173,11 @@ export default function Section4() {
             })}
           </BoxMotion>
         </BoxMotion>
+
+        <Box w="full" h="full" position="relative" mt={16}>
+          <Divider text="Division" color="dark" />
+          <TeamShowCase leaders={team} />
+        </Box>
       </Box>
     </LayoutGroup>
   );

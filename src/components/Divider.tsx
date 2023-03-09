@@ -6,7 +6,7 @@ export default function Divider({
   text,
   mb,
   lineOpacity = 1,
-  color="light"
+  color = "light",
 }: {
   text?: string;
   mb?: number;
@@ -25,7 +25,12 @@ export default function Divider({
       variants={itemBotToTop(0)}
     >
       {text && (
-        <Heading as="h3" fontSize="lg" mr={5} color={color}>
+        <Heading
+          as="h3"
+          fontSize={{ base: "md", lg: "lg" }}
+          mr={5}
+          color={color}
+        >
           {text}
         </Heading>
       )}
