@@ -147,7 +147,12 @@ export default function About({
           },
         }}
       >
-        <Header isLight={!isEven} contactMarginRight={marginRightContact} />
+        <Header
+          isLight={!isEven}
+          contactMarginRight={marginRightContact}
+          isTransparent={false}
+          bg={themeColor[+isEven]}
+        />
 
         <BackToHome color={themeColor[+!isEven]} />
 
@@ -168,12 +173,17 @@ export default function About({
             animate="animate"
             exit="exit"
             pl={marginX}
-            position="absolute"
+            position="fixed"
+            py={2}
+            bg="dark"
+            layout
             left={0}
-            top={24}
+            top={16}
             zIndex={999}
+            w="full"
+            h={isShowFilter ? "full" : "unset"}
           >
-            <BoxMotion>
+            <BoxMotion layout>
               <Button
                 style={{ fontSize: "var(--chakra-fontSizes-xs)" }}
                 isLight={!isEven}
@@ -184,9 +194,11 @@ export default function About({
                 arrowDown
               />
             </BoxMotion>
+
             <AnimatePresence>
               {isShowFilter && (
                 <BoxMotion
+                  layout
                   display="flex"
                   flexDirection="column"
                   gap={3}
@@ -240,7 +252,7 @@ export default function About({
               top={0}
               left={0}
               zIndex={500}
-              bg="black"
+              bg="dark"
               initial={{ opacity: 0 }}
               animate={{
                 opacity: 0.7,

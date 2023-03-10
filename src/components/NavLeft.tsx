@@ -79,7 +79,7 @@ export default function NavLef({
           height: "0%",
         }}
         animate={{
-          height: `${(section + 1) * 20}%`,
+          height: `${((section + 1) / contents.length)*100}%`,
           backgroundColor: color,
           transition: {
             backgroundColor: {

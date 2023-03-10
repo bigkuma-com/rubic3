@@ -16,7 +16,7 @@ export default function Section3({ leaders }: { leaders: any }) {
       w={{ base: "full", lg: "70%" }}
       display="flex"
       alignItems="center"
-      py={{ base: "25vmax", lg: "15vh" }}
+      py={{ base: "10vh", lg: "15vh" }}
       bg="dark"
       h="full"
       minH="100vh"

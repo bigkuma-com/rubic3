@@ -9,7 +9,7 @@ export default function Divider({
   color = "light",
 }: {
   text?: string;
-  mb?: number;
+  mb?: any;
   lineOpacity?: number;
   color?: string;
 }) {
@@ -18,7 +18,7 @@ export default function Divider({
       display="flex"
       alignItems="flex-end"
       justifyContent="space-between"
-      mb={mb ?? 14}
+      mb={mb ?? { base: 5, lg: 14 }}
       initial="offscreen"
       whileInView="onscreen"
       viewport={{ once: false }}

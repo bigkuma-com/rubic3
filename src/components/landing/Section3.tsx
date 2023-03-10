@@ -40,7 +40,7 @@ export default function Section3() {
     <Box
       my="5vh"
       px={marginXSection}
-      h={{ base: "60vh", xl: "65vh" }}
+      h={{ base: "55vh", xl: "65vh" }}
       bg="dark"
     >
       <Divider text="Our Division" />

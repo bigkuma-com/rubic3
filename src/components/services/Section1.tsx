@@ -25,7 +25,7 @@ export default function Section1({ team }: { team: any }) {
       alignItems="center"
       pl={sectionMarginLeft}
       pr={marginRightContact}
-      py={{ base: "25vmax", lg: "15vh" }}
+      py={{ base: "10vh", lg: "15vh" }}
     >
       <Box display="flex" alignItems="center" w="full">
         <Box display="flex" flexDirection="column" h="100%" w="full" gap={10}>
@@ -141,9 +141,14 @@ export default function Section1({ team }: { team: any }) {
             );
           })}
 
+          <Box w="full" h="full" position="relative" mb={12}>
+            <Divider text="Creative Division Team" lineOpacity={0.2} mb={10} />
+            <TeamShowCase leaders={team} type="creative" />
+          </Box>
+
           <Box w="full" h="full" position="relative">
-            <Divider text="Division" lineOpacity={0.2} />
-            <TeamShowCase leaders={team} />
+            <Divider text="Creative Division Team" lineOpacity={0.2} mb={10} />
+            <TeamShowCase leaders={team} type="creative" />
           </Box>
         </Box>
       </Box>

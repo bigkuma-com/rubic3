@@ -9,6 +9,7 @@ import {
   animateScaling,
   showOnLarge,
 } from "../../utils/consts";
+import { isEmpty } from "../../utils/functions";
 import BoxMotion from "../BoxMotion";
 
 export default function PopUpLayout({
@@ -17,12 +18,14 @@ export default function PopUpLayout({
   setDisplay,
   dataLeadership,
   isLeadership = false,
+  type,
 }: {
   children?: any;
   display: boolean;
   setDisplay: any;
   dataLeadership?: any;
   isLeadership?: boolean;
+  type?: "creative" | "360" | "hospitality";
 }) {
   const boxRef = useRef(null);
   useOutsideClick({ ref: boxRef, handler: () => setDisplay(false) });
@@ -107,7 +110,19 @@ export default function PopUpLayout({
                     as="h3"
                     color="dark"
                   >
-                    {dataLeadership.title}
+                    {type === "creative"
+                      ? isEmpty(dataLeadership.title_creative)
+                        ? dataLeadership.title
+                        : dataLeadership.title_creative
+                      : type === "360"
+                      ? isEmpty(dataLeadership.title_360)
+                        ? dataLeadership.title
+                        : dataLeadership.title_360
+                      : type === "hospitality"
+                      ? isEmpty(dataLeadership.title_hospitality)
+                        ? dataLeadership.title
+                        : dataLeadership.title_hospitality
+                      : dataLeadership.title}
                   </Heading>
                   <Text
                     fontSize={{ base: "xs", lg: "sm" }}

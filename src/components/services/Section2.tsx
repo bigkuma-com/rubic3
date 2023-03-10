@@ -1,20 +1,19 @@
 import { Box, Text } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/router";
-import LogoRubicubeHospitality from "../../assets/js/LogoRubicubeHospitality";
 import {
   itemBotToTop,
   marginRightContact,
+  marginRightContact2,
   sectionMarginLeft,
-  sectionMarginRight,
-  showOnLarge,
+  sectionMarginLeft2,
 } from "../../utils/consts";
 import BoxMotion from "../BoxMotion";
 import Divider from "../Divider";
-import HomePagination from "../landing/HomePagination";
 import TeamShowCase from "../TeamShowCase";
+import WorksShowCase from "../WorksShowCase";
 
-export default function Section1({ team }: { team: any }) {
+export default function Section1({ team, work }: { team: any; work: any }) {
   const { replace, query } = useRouter();
 
   return (
@@ -23,9 +22,7 @@ export default function Section1({ team }: { team: any }) {
       h="full"
       display="flex"
       flexDirection="column"
-      pl={sectionMarginLeft}
-      pr={marginRightContact}
-      py={{ base: "25vmax", lg: "15vh" }}
+      py={{ base: "10vh", lg: "15vh" }}
     >
       <BoxMotion
         w="full"
@@ -33,16 +30,25 @@ export default function Section1({ team }: { team: any }) {
         initial="offscreen"
         whileInView="onscreen"
         viewport={{ once: false }}
+        pl={sectionMarginLeft}
+        pr={marginRightContact}
       >
         <Text opacity={0.7} fontSize="sm" mb={12}>
-          Our team of hotel advisors have extensive international experience in
-          the hotel industry, covering a wide range of areas and services to
-          help you achieve sound financial results and returns with your hotel
-          investment.
+          The founding philosophy behind Rubicube Hospitality is in advancing
+          hospitality success through great collaborations with hotel/resort/
+          villa property owners and investors. We translate fresh ideas and
+          astute talent of Rubicube Hospitality into innovative and refreshing
+          guest experiences, thereby ensuring the growth and success of our
+          property operations.
         </Text>
       </BoxMotion>
 
-      <Box display="flex" alignItems="center">
+      <Box
+        display="flex"
+        alignItems="center"
+        pl={sectionMarginLeft}
+        pr={marginRightContact}
+      >
         <Box display="flex" flexDirection="column" h="100%" gap={10}>
           {contents.map(
             (
@@ -129,9 +135,29 @@ export default function Section1({ team }: { team: any }) {
         </Box>
       </Box>
 
-      <Box w="full" h="full" position="relative">
-        <Divider text="Division" lineOpacity={0.2} />
-        <TeamShowCase leaders={team} />
+      <Box pl={sectionMarginLeft} pr={marginRightContact} mt={10}>
+        <Divider text="Hospitality Division Team" lineOpacity={0.2} mb={10} />
+      </Box>
+      <Box pl={sectionMarginLeft2} pr={marginRightContact2}>
+        <TeamShowCase
+          leaders={team}
+          type="hospitality"
+          buttonBorderColor="light"
+          buttonColor="light"
+          buttonBgColor="#325D92"
+        />
+      </Box>
+
+      <Box pl={sectionMarginLeft} pr={marginRightContact} mt={10}>
+        <Divider text="Related Work" lineOpacity={0.2} mb={10} />
+      </Box>
+      <Box pl={sectionMarginLeft2} pr={marginRightContact2}>
+        <WorksShowCase
+          works={work}
+          buttonBorderColor="light"
+          buttonColor="light"
+          buttonBgColor="#325D92"
+        />
       </Box>
     </Box>
   );

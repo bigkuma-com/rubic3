@@ -24,6 +24,7 @@ import {
   sidebarServices,
   themeColor,
 } from "../utils/consts";
+import { categoirzeTeam, categoirzeWorks } from "../utils/functions";
 
 const seo = {
   url: "https://rubic3.com/our-company",
@@ -31,7 +32,7 @@ const seo = {
   description: "What we do.",
 };
 
-export default function OurCompany({ team }: { team: any }) {
+export default function OurCompany({ team, works }: { team: any; works: any }) {
   const { push, query, replace } = useRouter();
 
   const [isLarge] = useMediaQuery("(min-width: 991px)", {
@@ -54,6 +55,8 @@ export default function OurCompany({ team }: { team: any }) {
       setSection(i);
     }
   }, [query]);
+
+  console.log("works", works);
 
   return (
     <>
@@ -227,7 +230,9 @@ export default function OurCompany({ team }: { team: any }) {
 
         {section == 0 && <Section1 team={team["Creative"]} />}
 
-        {section == 1 && <Section2 team={team["Hospitality"]} />}
+        {section == 1 && (
+          <Section2 team={team["Hospitality"]} work={works["Hospitality"]} />
+        )}
 
         {section == 2 && <Section3 team={team["360 Digital"]} />}
 
@@ -245,22 +250,20 @@ export async function getStaticProps() {
     collection: "team",
     params: { sort: "order", expand: "filter" },
   });
-
-  const data = resultLeaders;
-  const categorizedData: any = {};
-
-  data.forEach((obj: any) => {
-    obj.expand.filter?.forEach((filter: any) => {
-      if (!categorizedData[filter.name]) {
-        categorizedData[filter.name] = [];
-      }
-      categorizedData[filter.name].push(obj);
-    });
+  const resultWorks = await getFullList({
+    collection: "works",
+    params: { sort: "order", expand: "filters" },
   });
+
+  console.log("resultWorks", resultWorks);
+
+  const categorizedTeam = categoirzeTeam(resultLeaders);
+  const categorizedWorks = categoirzeWorks(resultWorks);
 
   return {
     props: {
-      team: JSON.parse(JSON.stringify(categorizedData)),
+      team: JSON.parse(JSON.stringify(categorizedTeam)),
+      works: JSON.parse(JSON.stringify(categorizedWorks)),
     },
     revalidate: 2,
   };

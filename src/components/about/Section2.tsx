@@ -34,7 +34,7 @@ export default function Section2({
       alignItems="center"
       pl={sectionMarginLeft}
       pr={marginRightContact}
-      py={{ base: "25vmax", lg: "15vh" }}
+      py={{ base: "10vh", lg: "15vh" }}
     >
       <Box display="flex" flexDirection="column" w="full">
         <Heading

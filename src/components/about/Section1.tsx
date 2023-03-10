@@ -32,7 +32,8 @@ export default function Section1() {
       alignItems="center"
       pl={sectionMarginLeft}
       pr={marginRightContact}
-      py={{ base: "25vmax", lg: 0 }}
+      pt={{ base: 32, lg: 0 }}
+      pb={{ base: 12, lg: 0 }}
     >
       <Box display="flex" flexDirection="column">
         <Heading

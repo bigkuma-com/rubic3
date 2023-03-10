@@ -95,8 +95,11 @@ export default function Header({
       zIndex={isNavOpen ? 1002 : 1000}
       bg={
         showBg
-          ? (bg ? bg : !isLight ? "light" : "dark") ?? "transparent"
-          : "transparent"
+          ? (bg ? bg : !isLight ? "light" : "dark") ??
+            (isTransparent ? "transparent" : bg)
+          : isTransparent
+          ? "transparent"
+          : bg
       }
       // bg={!showBg || isTransparent ? "transparent" : bg ?? "dark"}
       className="animate-bg"
@@ -113,8 +116,8 @@ export default function Header({
         >
           {logo ? (
             <Box
-              w={{ base: "130px", lg: "200px" }}
-              h={{ base: "60px", lg: "80px" }}
+              w={{ base: "120px", lg: "160px" }}
+              h={{ base: "50px", lg: "65px" }}
               position="relative"
             >
               <Image

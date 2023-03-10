@@ -10,11 +10,23 @@ import IconArrowRight from "../assets/js/IconArrowRight";
 import IconPlus from "../assets/js/IconPlus";
 import { getImage } from "../utils/api";
 import { itemBotToTop } from "../utils/consts";
-import { arrayChunk } from "../utils/functions";
+import { arrayChunk, isEmpty } from "../utils/functions";
 import BoxMotion from "./BoxMotion";
 import PopUpLayout from "./Layout/PopUpLayout";
 
-export default function TeamShowCase({ leaders }: { leaders: any }) {
+export default function TeamShowCase({
+  leaders,
+  type,
+  buttonColor = "light",
+  buttonBgColor = "dark",
+  buttonBorderColor = "light",
+}: {
+  leaders: any;
+  type?: "creative" | "360" | "hospitality";
+  buttonColor?: string;
+  buttonBgColor?: string;
+  buttonBorderColor?: string;
+}) {
   const prevRefSlides = useRef(null);
   const nextRefSlides = useRef(null);
 
@@ -37,6 +49,8 @@ export default function TeamShowCase({ leaders }: { leaders: any }) {
     selectedCard > -1 && setSelectedLeader(leaders[selectedCard]);
   }, [leaders, selectedCard]);
 
+  console.log(leadersEnd);
+
   return (
     <>
       {isLarge ? (
@@ -56,7 +70,6 @@ export default function TeamShowCase({ leaders }: { leaders: any }) {
             top="50%"
             transform="translate(50%,-50%)"
             zIndex={10}
-            color="light"
             display={section == leadersEnd.length - 1 ? "none" : "flex"}
             gap={3}
             alignItems="center"
@@ -65,7 +78,6 @@ export default function TeamShowCase({ leaders }: { leaders: any }) {
               ref={nextRefSlides}
               whileHover={{ scale: 1.1 }}
               cursor="pointer"
-              bg="dark"
               h="40px"
               w="40px"
               display="flex"
@@ -73,6 +85,9 @@ export default function TeamShowCase({ leaders }: { leaders: any }) {
               justifyContent="center"
               borderRadius="50%"
               border="1px"
+              bg={buttonBgColor}
+              borderColor={buttonBorderColor}
+              color={buttonColor}
             >
               <IconArrowRight size={15} />
             </BoxMotion>
@@ -83,7 +98,6 @@ export default function TeamShowCase({ leaders }: { leaders: any }) {
             top="50%"
             transform="translate(-50%,-50%)"
             zIndex={10}
-            color="light"
             display={section == 0 ? "none" : "flex"}
             gap={3}
           >
@@ -91,7 +105,6 @@ export default function TeamShowCase({ leaders }: { leaders: any }) {
               ref={prevRefSlides}
               whileHover={{ scale: 1.1 }}
               cursor="pointer"
-              bg="dark"
               h="40px"
               w="40px"
               display="flex"
@@ -99,6 +112,9 @@ export default function TeamShowCase({ leaders }: { leaders: any }) {
               justifyContent="center"
               borderRadius="50%"
               border="1px"
+              bg={buttonBgColor}
+              borderColor={buttonBorderColor}
+              color={buttonColor}
             >
               <IconArrowLeft size={15} />
             </BoxMotion>
@@ -132,16 +148,27 @@ export default function TeamShowCase({ leaders }: { leaders: any }) {
                     >
                       {leadersChunck.map(
                         (
-                          { collectionName, id, name, picture, title }: any,
+                          {
+                            collectionName,
+                            id,
+                            name,
+                            picture,
+                            title,
+                            title_creative,
+                            title_360,
+                            title_hospitality,
+                          }: any,
                           j: number
                         ) => {
                           console.log(
-                            selectedCard,
-                            i,
-                            j,
-                            i * leadersChunck.length + j,
-                            i * (isLarge ? 4 : 2) + j
+                            name,
+                            type,
+                            title,
+                            title_creative,
+                            title_360,
+                            title_hospitality
                           );
+
                           return (
                             <Box
                               key={id}
@@ -153,12 +180,6 @@ export default function TeamShowCase({ leaders }: { leaders: any }) {
                                 h="full"
                                 cursor="pointer"
                                 onMouseEnter={() => {
-                                  console.log(
-                                    "hoow",
-                                    i,
-                                    j,
-                                    i * (isLarge ? 4 : 2) + j
-                                  );
                                   setSelectedCard(i * (isLarge ? 4 : 2) + j);
                                 }}
                                 onClick={() => {
@@ -204,7 +225,19 @@ export default function TeamShowCase({ leaders }: { leaders: any }) {
                                             fontSize="small"
                                             opacity={0.5}
                                           >
-                                            {title}
+                                            {type === "creative"
+                                              ? isEmpty(title_creative)
+                                                ? title
+                                                : title_creative
+                                              : type === "360"
+                                              ? isEmpty(title_360)
+                                                ? title
+                                                : title_360
+                                              : type === "hospitality"
+                                              ? isEmpty(title_hospitality)
+                                                ? title
+                                                : title_hospitality
+                                              : title}
                                           </Text>
                                           <BoxMotion layout key={`vml-${id}`}>
                                             <Text
@@ -237,9 +270,21 @@ export default function TeamShowCase({ leaders }: { leaders: any }) {
           </Swiper>
         </BoxMotion>
       ) : (
-        <SimpleGrid columns={2} mt={4} position="relative">
+        <SimpleGrid columns={2} position="relative">
           {leaders.map(
-            ({ collectionName, id, name, picture, title }: any, i: number) => {
+            (
+              {
+                collectionName,
+                id,
+                name,
+                picture,
+                title,
+                title_creative,
+                title_360,
+                title_hospitality,
+              }: any,
+              i: number
+            ) => {
               return (
                 <Box
                   key={id}
@@ -299,7 +344,19 @@ export default function TeamShowCase({ leaders }: { leaders: any }) {
                                   fontSize="small"
                                   opacity={0.5}
                                 >
-                                  {title}
+                                  {type === "creative"
+                                    ? isEmpty(title_creative)
+                                      ? title
+                                      : title_creative
+                                    : type === "360"
+                                    ? isEmpty(title_360)
+                                      ? title
+                                      : title_360
+                                    : type === "hospitality"
+                                    ? isEmpty(title_hospitality)
+                                      ? title
+                                      : title_hospitality
+                                    : title}
                                 </Text>
                                 <BoxMotion layout key={`vml-${id}`}>
                                   <Text
@@ -330,6 +387,7 @@ export default function TeamShowCase({ leaders }: { leaders: any }) {
       )}
 
       <PopUpLayout
+        type={type}
         isLeadership
         dataLeadership={selectedLeader}
         display={isCardOpen}

@@ -32,7 +32,7 @@ export default function Section3({ team }: { team: any }) {
         display="flex"
         pl={sectionMarginLeft}
         pr={marginRightContact}
-        py={{ base: "25vmax", lg: "15vh" }}
+        py={{ base: "10vh", lg: "15vh" }}
         flexDirection="column"
       >
         <BoxMotion
@@ -176,7 +176,12 @@ export default function Section3({ team }: { team: any }) {
 
         <Box w="full" h="full" position="relative" mt={16}>
           <Divider text="Division" color="dark" />
-          <TeamShowCase leaders={team} />
+          <TeamShowCase
+            leaders={team}
+            buttonBorderColor="dark"
+            buttonColor="dark"
+            buttonBgColor="#FFC925"
+          />
         </Box>
       </Box>
     </LayoutGroup>

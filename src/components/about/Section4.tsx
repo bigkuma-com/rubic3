@@ -54,7 +54,7 @@ export default function Section2({
         flexDirection="column"
         pl={sectionMarginLeft}
         pr={marginRightContact}
-        py={{ base: "25vmax", lg: "15vh" }}
+        py={{ base: "10vh", lg: "15vh" }}
         gap={8}
       >
         <Divider text="Our Major Clients" color="dark" mb={0} />
@@ -142,7 +142,7 @@ export default function Section2({
                           </AccordionButton>
                         </Box>
                         <AccordionPanel p={0} mb={6}>
-                          <SimpleGrid columns={[2]} >
+                          <SimpleGrid columns={[2]}>
                             {data.map(
                               (
                                 {
@@ -205,7 +205,7 @@ export default function Section2({
           alignItems="center"
           pl={sectionMarginLeft}
           pr={marginRightContact}
-          py={{ base: "25vmax", lg: "15vh" }}
+          py={{ base: "10vh", lg: "15vh" }}
         >
           <Box display="flex" flexDirection="column" w="full">
             <Box

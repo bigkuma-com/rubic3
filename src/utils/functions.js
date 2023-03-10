@@ -59,3 +59,37 @@ export function randomInteger(min, max) {
 export function vhToPixels(vh) {
   return Math.round(window.innerHeight / (100 / vh));
 }
+
+export function isEmpty(value) {
+  return value == null || value === "";
+}
+
+export function categoirzeTeam(data) {
+  const categorizedData={};
+
+  data.forEach((obj) => {
+    obj.expand.filter?.forEach((filter) => {
+      if (!categorizedData[filter.name]) {
+        categorizedData[filter.name] = [];
+      }
+      categorizedData[filter.name].push(obj);
+    });
+  });
+
+  return categorizedData;
+}
+
+export function categoirzeWorks(data) {
+  const categorizedData={};
+
+  data.forEach((obj) => {
+    obj.expand.filters?.forEach((filter) => {
+      if (!categorizedData[filter.name]) {
+        categorizedData[filter.name] = [];
+      }
+      categorizedData[filter.name].push(obj);
+    });
+  });
+
+  return categorizedData;
+}
