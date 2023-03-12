@@ -73,8 +73,8 @@ export default function Contacts({
                     w={10}
                     opacity={0.5}
                     mt={8}
-                    mb={5}
-                  ></Box>
+                    mb={{ base: 3, lg: 5 }}
+                  />
 
                   <Box>
                     <Link

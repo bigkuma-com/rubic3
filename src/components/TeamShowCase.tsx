@@ -49,14 +49,12 @@ export default function TeamShowCase({
     selectedCard > -1 && setSelectedLeader(leaders[selectedCard]);
   }, [leaders, selectedCard]);
 
-  console.log(leadersEnd);
-
   return (
     <>
       {isLarge ? (
         <BoxMotion
           w="full"
-          h={[140, null, null, "45vmin"]}
+          h={[140, null, null, "50vmin"]}
           className="section-leaders"
           position="relative"
           variants={itemBotToTop(0.6)}

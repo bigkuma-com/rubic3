@@ -1,5 +1,5 @@
 import { Box, Text, useMediaQuery } from "@chakra-ui/react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
 import { NextSeo } from "next-seo";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -137,6 +137,7 @@ export default function About({
         display="flex"
         flexDirection={{ base: "column", lg: "row" }}
         h="full"
+        minH="100vh"
         w="full"
         initial={{ backgroundColor: themeColor[0] }}
         animate={{
@@ -167,80 +168,84 @@ export default function About({
             <Box display={showOnLarge} w="30%" />
           </>
         ) : (
-          <BoxMotion
-            variants={animateTopToBottom}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            pl={marginX}
-            position="fixed"
-            py={2}
-            bg="dark"
-            layout
-            left={0}
-            top={16}
-            zIndex={999}
-            w="full"
-            h={isShowFilter ? "full" : "unset"}
-          >
-            <BoxMotion layout>
-              <Button
-                style={{ fontSize: "var(--chakra-fontSizes-xs)" }}
-                isLight={!isEven}
-                text={sidebarAbout[section].name}
-                onClick={() => {
-                  setIsShowFilter(!isShowFilter);
-                }}
-                arrowDown
-              />
-            </BoxMotion>
+          <LayoutGroup>
+            <BoxMotion
+              layout
+              variants={animateTopToBottom}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              pl={marginX}
+              position="fixed"
+              py={2}
+              bg={themeColor[+isEven]}
+              left={0}
+              top={16}
+              zIndex={999}
+              w="full"
+              h={isShowFilter ? "full" : "unset"}
+            >
+              <BoxMotion layout>
+                <Button
+                  style={{ fontSize: "var(--chakra-fontSizes-xs)" }}
+                  isLight={!isEven}
+                  text={sidebarAbout[section].name}
+                  onClick={() => {
+                    setIsShowFilter(!isShowFilter);
+                  }}
+                  arrowDown
+                />
+              </BoxMotion>
 
-            <AnimatePresence>
-              {isShowFilter && (
-                <BoxMotion
-                  layout
-                  display="flex"
-                  flexDirection="column"
-                  gap={3}
-                  variants={containerFilter}
-                  initial="hidden"
-                  animate="show"
-                  exit="hidden"
-                  mt={3}
-                  ml={5}
-                  zIndex={1001}
-                >
-                  {sidebarAbout.map((item, i) => {
-                    return (
-                      <Box
-                        key={i}
-                        _hover={{ opacity: 0.6 }}
-                        cursor="pointer"
-                        onClick={() => {
-                          setSection(i);
-                          replace({
-                            query: {
-                              ...query,
-                              selected: sidebarAbout[i].query,
-                            },
-                          });
-                          setIsShowFilter(false);
-                        }}
-                      >
-                        <Text
-                          as={motion.span}
-                          variants={itemFilter}
-                          fontSize="xs"
+              <AnimatePresence>
+                {isShowFilter && (
+                  <BoxMotion
+                    layout
+                    display="flex"
+                    flexDirection="column"
+                    gap={3}
+                    variants={containerFilter}
+                    initial="hidden"
+                    animate="show"
+                    exit="hidden"
+                    mt={3}
+                    ml={5}
+                    zIndex={1001}
+                  >
+                    {sidebarAbout.map((item, i) => {
+                      return (
+                        <Box
+                          key={i}
+                          _hover={{ opacity: 0.6 }}
+                          cursor="pointer"
+                          onClick={() => {
+                            setSection(i);
+                            replace({
+                              query: {
+                                ...query,
+                                selected: sidebarAbout[i].query,
+                              },
+                            });
+                            setIsShowFilter(false);
+                          }}
                         >
-                          {item.name}
-                        </Text>
-                      </Box>
-                    );
-                  })}
-                </BoxMotion>
-              )}
-            </AnimatePresence>
-          </BoxMotion>
+                          <Text
+                            as={motion.span}
+                            layout
+                            variants={itemFilter}
+                            fontSize="xs"
+                            color={themeColor[+!isEven]}
+                          >
+                            {item.name}
+                          </Text>
+                        </Box>
+                      );
+                    })}
+                  </BoxMotion>
+                )}
+              </AnimatePresence>
+            </BoxMotion>
+          </LayoutGroup>
         )}
 
         <AnimatePresence>
@@ -280,7 +285,10 @@ export default function About({
 
         {section == 4 && <Section5 careers={careers} />}
 
-        <Footer isLight={!isEven} position={isLarge ? undefined : "relative"} />
+        <Footer
+          isLight={!isEven}
+          position={isLarge || section === 4 ? undefined : "relative"}
+        />
       </BoxMotion>
     </>
   );

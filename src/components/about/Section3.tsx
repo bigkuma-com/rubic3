@@ -1,7 +1,12 @@
 import { Box, Heading, useMediaQuery } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import "swiper/css";
-import { itemBotToTop, sectionMarginLeft2 } from "../../utils/consts";
+import {
+  itemBotToTop,
+  marginBottom,
+  marginTop,
+  sectionMarginLeft2,
+} from "../../utils/consts";
 import TeamShowCase from "../TeamShowCase";
 
 export default function Section3({ leaders }: { leaders: any }) {
@@ -16,12 +21,13 @@ export default function Section3({ leaders }: { leaders: any }) {
       w={{ base: "full", lg: "70%" }}
       display="flex"
       alignItems="center"
-      py={{ base: "10vh", lg: "15vh" }}
       bg="dark"
       h="full"
       minH="100vh"
       pl={sectionMarginLeft2}
       pr={{ base: 0, lg: 28 }}
+      pt={isLarge ? 0 : marginTop}
+      pb={marginBottom}
     >
       <Box
         display="flex"

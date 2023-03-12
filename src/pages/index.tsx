@@ -61,9 +61,9 @@ export default function Home({ sliders }: any) {
           },
         ]}
       />
-      <Header contactMarginRight={marginRightContact} />
 
-      <Box bg="dark" display="flex" flexDirection="column">
+      <Box bg="dark" display="flex" flexDirection="column" position="relative">
+        <Header contactMarginRight={marginRightContact} />
         <Section1 sliders={sliders} />
         <Section2 />
         <Section3 />

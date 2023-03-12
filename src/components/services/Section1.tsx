@@ -1,4 +1,4 @@
-import { Box, Text } from "@chakra-ui/react";
+import { Box, Text, useMediaQuery } from "@chakra-ui/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import IconDiscovery from "../../assets/svg/IconDiscovery.svg";
@@ -8,148 +8,184 @@ import IconRealization from "../../assets/svg/IconRealization.svg";
 import {
   itemBotToTop,
   marginRightContact,
+  marginRightContact2,
+  marginTop,
   sectionMarginLeft,
+  sectionMarginLeft2,
 } from "../../utils/consts";
 import BoxMotion from "../BoxMotion";
+import Button from "../Button";
 import Divider from "../Divider";
 import TeamShowCase from "../TeamShowCase";
+import WorksShowCase from "../WorksShowCase";
+import CompanyMobile from "./CompanyMobile";
 
-export default function Section1({ team }: { team: any }) {
-  const { replace, query } = useRouter();
+export default function Section1({ team, work }: { team: any; work: any }) {
+  const { replace, query, push } = useRouter();
+
+  const [isLarge] = useMediaQuery("(min-width: 991px)", {
+    ssr: true,
+    fallback: false,
+  });
 
   return (
     <Box
       w={{ base: "full", lg: "70%" }}
-      h="full"
-      display="flex"
-      alignItems="center"
-      pl={sectionMarginLeft}
-      pr={marginRightContact}
-      py={{ base: "10vh", lg: "15vh" }}
+      pt={marginTop}
+      pb={{ base: 12, lg: 24 }}
     >
-      <Box display="flex" alignItems="center" w="full">
-        <Box display="flex" flexDirection="column" h="100%" w="full" gap={10}>
-          {contents.map(({ bottomDesc, title, topList, icon }, i: any) => {
-            return (
-              <Box key={i}>
-                <Box
-                  display="flex"
-                  fontSize="small"
-                  flexDirection={{ base: "column", lg: "row" }}
-                >
-                  <BoxMotion
-                    variants={itemBotToTop(0.2)}
-                    initial="offscreen"
-                    whileInView="onscreen"
-                    viewport={{ once: false }}
-                    display="flex"
-                    gap={4}
-                    w={["full", null, null, "40%"]}
-                    mb={[6, null, null, 0]}
-                    mr={4}
-                  >
-                    <Box
-                      h={{ base: 12, lg: 16 }}
-                      w={{ base: 12, lg: 16 }}
-                      position="relative"
-                    >
-                      <Image
-                        src={icon}
-                        fill
-                        alt={title}
-                        style={{
-                          objectFit: "contain",
-                        }}
-                      />
-                    </Box>
-                    <Text
-                      fontSize="2xl"
-                      as="h4"
-                      alignSelf={{ lg: "unset", base: "flex-end" }}
-                      m={0}
-                    >
-                      0{i + 1}. {title}
-                    </Text>
-                  </BoxMotion>
-                  <BoxMotion
-                    variants={itemBotToTop(0.4)}
-                    initial="offscreen"
-                    whileInView="onscreen"
-                    viewport={{ once: false }}
-                    w={["full", null, null, "60%"]}
-                  >
-                    <Text mb={1} fontWeight={500}>
-                      What we do
-                    </Text>
-                    <Box as="ul" display="flex" flexDirection="column" mb={5}>
-                      {topList.map((item, i: any) => {
-                        return (
-                          <Box
-                            key={i}
-                            as="li"
-                            opacity={0.6}
-                            color="light"
-                            ml={{ base: 4, lg: 0 }}
-                          >
-                            {item}
-                          </Box>
-                        );
-                      })}
-                    </Box>
-                    <Text as="h5" mb={1} fontWeight={500}>
-                      Key Deliverables
-                    </Text>
-                    <Text mb={10} opacity={0.6}>
-                      {bottomDesc}
-                    </Text>
-                  </BoxMotion>
-                </Box>
-                {i < contents.length - 1 && (
+      {isLarge ? (
+        <Box
+          display="flex"
+          alignItems="center"
+          w="full"
+          pl={sectionMarginLeft}
+          pr={marginRightContact}
+        >
+          <Box display="flex" flexDirection="column" h="100%" w="full" gap={10}>
+            {contents.map(({ bottomDesc, title, topList, icon }, i: any) => {
+              return (
+                <Box key={i}>
                   <Box
-                    h="1.5px"
-                    w="full"
-                    bg="light"
-                    position="relative"
-                    opacity={0.2}
-                    _before={{
-                      content: '""',
-                      display: "inline-block",
-                      height: "17px",
-                      width: "17px",
-                      position: "absolute",
-                      left: "50%",
-                      top: "-8px",
-                      backgroundColor: "var(--chakra-colors-dark)",
-                      transform: "rotate(45deg)",
-                    }}
-                    _after={{
-                      borderStyle: "solid",
-                      borderWidth: "2px 2px 0 0",
-                      content: '""',
-                      display: "inline-block",
-                      height: "18px",
-                      position: "absolute",
-                      left: "50%",
-                      verticalAlign: "top",
-                      width: "18px",
-                      top: "-8px",
-                      transform: "rotate(135deg)",
-                    }}
-                  />
-                )}
-              </Box>
-            );
-          })}
-
-          <Box w="full" h="full" position="relative" mb={12}>
-            <Divider text="Creative Division Team" lineOpacity={0.2} mb={10} />
-            <TeamShowCase leaders={team} type="creative" />
+                    display="flex"
+                    fontSize="md"
+                    flexDirection={{ base: "column", lg: "row" }}
+                  >
+                    <BoxMotion
+                      variants={itemBotToTop(0.2)}
+                      initial="offscreen"
+                      whileInView="onscreen"
+                      viewport={{ once: false }}
+                      display="flex"
+                      gap={4}
+                      w={["full", null, null, "40%"]}
+                      mb={[6, null, null, 0]}
+                      mr={4}
+                    >
+                      <Box
+                        h={{ base: 12, lg: 16 }}
+                        w={{ base: 12, lg: 16 }}
+                        position="relative"
+                      >
+                        <Image
+                          src={icon}
+                          fill
+                          alt={title}
+                          style={{
+                            objectFit: "contain",
+                          }}
+                        />
+                      </Box>
+                      <Text
+                        fontSize="2xl"
+                        as="h4"
+                        alignSelf={{ lg: "unset", base: "flex-end" }}
+                        m={0}
+                      >
+                        0{i + 1}. {title}
+                      </Text>
+                    </BoxMotion>
+                    <BoxMotion
+                      variants={itemBotToTop(0.4)}
+                      initial="offscreen"
+                      whileInView="onscreen"
+                      viewport={{ once: false }}
+                      w={["full", null, null, "60%"]}
+                    >
+                      <Text mb={1} fontWeight={500}>
+                        What we do
+                      </Text>
+                      <Box as="ul" display="flex" flexDirection="column" mb={5}>
+                        {topList.map((item, i: any) => {
+                          return (
+                            <Box
+                              key={i}
+                              as="li"
+                              opacity={0.6}
+                              color="light"
+                              ml={4}
+                              fontWeight={300}
+                            >
+                              {item}
+                            </Box>
+                          );
+                        })}
+                      </Box>
+                      <Text as="h5" mb={1} fontWeight={500}>
+                        Key Deliverables
+                      </Text>
+                      <Text mb={10} opacity={0.6} fontWeight={300}>
+                        {bottomDesc}
+                      </Text>
+                    </BoxMotion>
+                  </Box>
+                  {i < contents.length - 1 && (
+                    <Box
+                      h="1.5px"
+                      w="full"
+                      bg="light"
+                      position="relative"
+                      opacity={0.2}
+                      _before={{
+                        content: '""',
+                        display: "inline-block",
+                        height: "17px",
+                        width: "17px",
+                        position: "absolute",
+                        left: "50%",
+                        top: "-8px",
+                        backgroundColor: "var(--chakra-colors-dark)",
+                        transform: "rotate(45deg)",
+                      }}
+                      _after={{
+                        borderStyle: "solid",
+                        borderWidth: "2px 2px 0 0",
+                        content: '""',
+                        display: "inline-block",
+                        height: "18px",
+                        position: "absolute",
+                        left: "50%",
+                        verticalAlign: "top",
+                        width: "18px",
+                        top: "-8px",
+                        transform: "rotate(135deg)",
+                      }}
+                    />
+                  )}
+                </Box>
+              );
+            })}
           </Box>
+        </Box>
+      ) : (
+        <Box pl={sectionMarginLeft} pr={marginRightContact} mb={16}>
+          <CompanyMobile contents={contents} type="creative" />
+        </Box>
+      )}
 
-          <Box w="full" h="full" position="relative">
-            <Divider text="Creative Division Team" lineOpacity={0.2} mb={10} />
-            <TeamShowCase leaders={team} type="creative" />
-          </Box>
+      <Box>
+        <Box pl={sectionMarginLeft} pr={marginRightContact} mt={10}>
+          <Divider text="Creative Division Team" lineOpacity={0.2} mb={10} />
+        </Box>
+
+        <Box pl={sectionMarginLeft2} pr={marginRightContact2}>
+          <TeamShowCase leaders={team} type="creative" />
+        </Box>
+
+        <Box pl={sectionMarginLeft} pr={marginRightContact} mt={10}>
+          <Divider text="Related Work" lineOpacity={0.2} mb={10} />
+        </Box>
+        <Box pl={sectionMarginLeft2} pr={marginRightContact2}>
+          <WorksShowCase works={work} />
+        </Box>
+
+        <Box ml={sectionMarginLeft} mt={{ base: 6, lg: 10 }}>
+          <Button
+            text="View Creative Works"
+            onClick={() => {
+              push(`/works?show=all&filter=creative`);
+            }}
+          />
         </Box>
       </Box>
     </Box>

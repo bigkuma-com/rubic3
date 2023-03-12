@@ -1,5 +1,5 @@
 import { Box, Text, useMediaQuery } from "@chakra-ui/react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
 import { NextSeo } from "next-seo";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
@@ -121,6 +121,7 @@ export default function OurCompany({ team, works }: { team: any; works: any }) {
           contactMarginRight={marginRightContact}
           bg={sidebarServices[section].color}
           logo={sidebarServices[section].logo}
+          isTransparent={false}
         />
 
         <BackToHome color={themeColor[+(section < 2)]} />
@@ -136,73 +137,82 @@ export default function OurCompany({ team, works }: { team: any; works: any }) {
             <Box display={showOnLarge} w="30%" />
           </>
         ) : (
-          <BoxMotion
-            variants={animateTopToBottom}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            pl={marginX}
-            position="absolute"
-            left={0}
-            top={24}
-            zIndex={999}
-          >
-            <BoxMotion>
-              <Button
-                style={{ fontSize: "var(--chakra-fontSizes-xs)" }}
-                isLight={section < 2}
-                text={sidebarServices[section].name}
-                onClick={() => {
-                  setIsShowFilter(!isShowFilter);
-                }}
-                arrowDown
-              />
-            </BoxMotion>
-            <AnimatePresence>
-              {isShowFilter && (
-                <BoxMotion
-                  display="flex"
-                  flexDirection="column"
-                  gap={3}
-                  variants={containerFilter}
-                  initial="hidden"
-                  animate="show"
-                  exit="hidden"
-                  mt={3}
-                  ml={5}
-                  zIndex={1001}
-                >
-                  {sidebarServices.map((item, i) => {
-                    return (
-                      <Box
-                        key={i}
-                        _hover={{ opacity: 0.6 }}
-                        cursor="pointer"
-                        onClick={() => {
-                          setSection(i);
-                          replace({
-                            query: {
-                              ...query,
-                              selected: sidebarServices[i].query,
-                            },
-                          });
-                          setIsShowFilter(false);
-                        }}
-                      >
-                        <Text
-                          as={motion.span}
-                          variants={itemFilter}
-                          fontSize="xs"
+          <LayoutGroup>
+            <BoxMotion
+              layout
+              variants={animateTopToBottom}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              pl={marginX}
+              position="fixed"
+              py={2}
+              bg={sidebarServices[section].color}
+              left={0}
+              top={20}
+              zIndex={999}
+              w="full"
+              h={isShowFilter ? "full" : "unset"}
+            >
+              <BoxMotion layout>
+                <Button
+                  style={{ fontSize: "var(--chakra-fontSizes-xs)" }}
+                  isLight={section < 2}
+                  text={sidebarServices[section].name}
+                  onClick={() => {
+                    setIsShowFilter(!isShowFilter);
+                  }}
+                  arrowDown
+                />
+              </BoxMotion>
+              <AnimatePresence>
+                {isShowFilter && (
+                  <BoxMotion
+                    layout
+                    display="flex"
+                    flexDirection="column"
+                    gap={3}
+                    variants={containerFilter}
+                    initial="hidden"
+                    animate="show"
+                    exit="hidden"
+                    mt={3}
+                    ml={5}
+                    zIndex={1001}
+                  >
+                    {sidebarServices.map((item, i) => {
+                      return (
+                        <Box
+                          key={i}
+                          _hover={{ opacity: 0.6 }}
+                          cursor="pointer"
+                          onClick={() => {
+                            setSection(i);
+                            replace({
+                              query: {
+                                ...query,
+                                selected: sidebarServices[i].query,
+                              },
+                            });
+                            setIsShowFilter(false);
+                          }}
                         >
-                          {item.name}
-                        </Text>
-                      </Box>
-                    );
-                  })}
-                </BoxMotion>
-              )}
-            </AnimatePresence>
-          </BoxMotion>
+                          <Text
+                            as={motion.span}
+                            variants={itemFilter}
+                            fontSize="xs"
+                            color={themeColor[+(section < 2)]}
+                          >
+                            {item.name}
+                          </Text>
+                        </Box>
+                      );
+                    })}
+                  </BoxMotion>
+                )}
+              </AnimatePresence>
+            </BoxMotion>
+          </LayoutGroup>
         )}
 
         <AnimatePresence>
@@ -214,7 +224,7 @@ export default function OurCompany({ team, works }: { team: any; works: any }) {
               top={0}
               left={0}
               zIndex={500}
-              bg="black"
+              bg="dark"
               initial={{ opacity: 0 }}
               animate={{
                 opacity: 0.7,
@@ -228,13 +238,17 @@ export default function OurCompany({ team, works }: { team: any; works: any }) {
           )}
         </AnimatePresence>
 
-        {section == 0 && <Section1 team={team["Creative"]} />}
+        {section == 0 && (
+          <Section1 team={team["Creative"]} work={works["Creative"]} />
+        )}
 
         {section == 1 && (
           <Section2 team={team["Hospitality"]} work={works["Hospitality"]} />
         )}
 
-        {section == 2 && <Section3 team={team["360 Digital"]} />}
+        {section == 2 && (
+          <Section3 team={team["360 Digital"]} work={works["360 Digital"]} />
+        )}
 
         <Footer
           isLight={section != 2}

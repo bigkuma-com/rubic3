@@ -8,7 +8,9 @@ import IconArrowLeft from "../../assets/js/IconArrowLeft";
 import IconArrowRight from "../../assets/js/IconArrowRight";
 import {
   itemBotToTop,
+  marginBottom,
   marginRightContact,
+  marginTop,
   sectionMarginLeft,
 } from "../../utils/consts";
 import { arrayChunk } from "../../utils/functions";
@@ -21,7 +23,7 @@ export default function Section5({ careers }: { careers: any }) {
   const prevRefSlides = useRef(null);
   const nextRefSlides = useRef(null);
 
-  const [isLarge] = useMediaQuery("(min-width: 1600px)", {
+  const [isLarge] = useMediaQuery("(min-width: 991px)", {
     ssr: true,
     fallback: false,
   });
@@ -37,16 +39,18 @@ export default function Section5({ careers }: { careers: any }) {
 
   return (
     <Box
-      w="70%"
-      h="100vh"
-      display="flex"
-      alignItems="center"
+      w={{ base: "full", lg: "70%" }}
+      h="full"
+      minH="100vh"
       pl={sectionMarginLeft}
       pr={marginRightContact}
-      pt={{ base: 12, lg: 0 }}
+      pt={isLarge ? 0 : marginTop}
+      pb={marginBottom}
       position="relative"
+      display="flex"
+      alignItems={{ base: "unset", lg: "center" }}
     >
-      <Box display="flex" flexDirection="column" w="full">
+      <Box>
         <Heading
           w="70%"
           mb={[2, 4, 6]}
@@ -60,7 +64,7 @@ export default function Section5({ careers }: { careers: any }) {
         </Heading>
         <Text
           fontSize="sm"
-          mb={[4, 4, 6, 8]}
+          mb={{base: 12, lg: 8}}
           as={motion.p}
           variants={itemBotToTop(0.2)}
           initial="offscreen"
@@ -81,7 +85,7 @@ export default function Section5({ careers }: { careers: any }) {
           viewport={{ once: false }}
           zIndex={10}
           color="light"
-          display="flex"
+          display={{ base: "none", lg: "flex" }}
           gap={3}
           justifyContent="flex-end"
           alignItems="center"
@@ -103,97 +107,126 @@ export default function Section5({ careers }: { careers: any }) {
             <IconArrowRight />
           </Box>
         </BoxMotion>
-        <Box w="full" className="section-leaders" position="relative">
-          <Swiper
-            pagination={{
-              clickable: true,
-            }}
-            modules={[Pagination, Navigation]}
-            onSlideChange={(swiper) => {
-              setSection(swiper.realIndex);
-            }}
-            onInit={(swiper: any) => {
-              swiper.params.navigation.prevEl = prevRefSlides.current;
-              swiper.params.navigation.nextEl = nextRefSlides.current;
-              swiper.navigation.init();
-              swiper.navigation.update();
-            }}
-          >
-            {careersEnd?.map((careersChunck: any, i: number) => {
-              return (
-                <SwiperSlide key={i}>
-                  <BoxMotion
-                    variants={itemBotToTop(0.6 + i * 0.2)}
-                    initial="offscreen"
-                    whileInView="onscreen"
-                    viewport={{ once: false }}
-                    display="flex"
-                    flexDirection="column"
-                    w="full"
-                    gap={7}
-                  >
-                    {careersChunck.map(
-                      ({ title, description, url, id }: any, j: number) => {
-                        return (
-                          <Box key={id} color="light">
-                            <Box
-                              display="flex"
-                              flexDirection={{ base: "column", lg: "row" }}
-                              justifyContent="space-between"
-                              alignItems={{
-                                base: "flex-start",
-                                lg: "flex-end",
-                              }}
-                              gap={[2, null, null, 0]}
-                              mb={4}
-                            >
-                              <Box w={{ base: "full", lg: "80%" }}>
-                                <Heading
-                                  as="h4"
-                                  fontSize="lg"
-                                  fontWeight="thin"
-                                  mb={2}
-                                  opacity={0.6}
-                                  cursor="pointer"
-                                  _hover={{ opacity: 1 }}
-                                  onClick={() => {
-                                    setIsCardOpen(true);
-                                    setSelectedCareer(
-                                      i * (isLarge ? 3 : 2) + j
-                                    );
-                                  }}
-                                >
-                                  {title}
-                                </Heading>
+
+        {isLarge ? (
+          <Box w="full" className="section-leaders" position="relative">
+            <Swiper
+              pagination={{
+                clickable: true,
+              }}
+              modules={[Pagination, Navigation]}
+              onSlideChange={(swiper) => {
+                setSection(swiper.realIndex);
+              }}
+              onInit={(swiper: any) => {
+                swiper.params.navigation.prevEl = prevRefSlides.current;
+                swiper.params.navigation.nextEl = nextRefSlides.current;
+                swiper.navigation.init();
+                swiper.navigation.update();
+              }}
+            >
+              {careersEnd?.map((careersChunck: any, i: number) => {
+                return (
+                  <SwiperSlide key={i}>
+                    <BoxMotion
+                      variants={itemBotToTop(0.6 + i * 0.2)}
+                      initial="offscreen"
+                      whileInView="onscreen"
+                      viewport={{ once: false }}
+                      display="flex"
+                      flexDirection="column"
+                      w="full"
+                      gap={7}
+                    >
+                      {careersChunck.map(
+                        ({ title, description, url, id }: any, j: number) => {
+                          return (
+                            <Box key={id} color="light">
+                              <Box
+                                display="flex"
+                                flexDirection={{ base: "column", lg: "row" }}
+                                justifyContent="space-between"
+                                alignItems={{
+                                  base: "flex-start",
+                                  lg: "flex-end",
+                                }}
+                                gap={[2, null, null, 0]}
+                                mb={4}
+                              >
+                                <Box w={{ base: "full", lg: "80%" }}>
+                                  <Heading
+                                    as="h4"
+                                    fontSize="lg"
+                                    fontWeight="thin"
+                                    mb={2}
+                                    opacity={0.6}
+                                    cursor="pointer"
+                                    _hover={{ opacity: 1 }}
+                                    onClick={() => {
+                                      setIsCardOpen(true);
+                                      setSelectedCareer(
+                                        i * (isLarge ? 3 : 2) + j
+                                      );
+                                    }}
+                                  >
+                                    {title}
+                                  </Heading>
+                                </Box>
+                                <Box>
+                                  <Button
+                                    text="Read More"
+                                    onClick={() => {
+                                      setIsCardOpen(true);
+                                      setSelectedCareer(
+                                        i * (isLarge ? 3 : 2) + j
+                                      );
+                                    }}
+                                  />
+                                </Box>
                               </Box>
-                              <Box>
-                                <Button
-                                  text="Read More"
-                                  onClick={() => {
-                                    setIsCardOpen(true);
-                                    setSelectedCareer(
-                                      i * (isLarge ? 3 : 2) + j
-                                    );
-                                  }}
-                                />
-                              </Box>
+                              <Box
+                                w="full"
+                                h="1px"
+                                bg="light"
+                                opacity={0.2}
+                              ></Box>
                             </Box>
-                            <Box
-                              w="full"
-                              h="1px"
-                              bg="light"
-                              opacity={0.2}
-                            ></Box>
-                          </Box>
-                        );
-                      }
-                    )}
-                  </BoxMotion>
-                </SwiperSlide>
+                          );
+                        }
+                      )}
+                    </BoxMotion>
+                  </SwiperSlide>
+                );
+              })}
+            </Swiper>
+          </Box>
+        ) : (
+          <Box display="flex" flexDirection="column" gap={4}>
+            {careers.map(({ title, description, url, id }: any, i: number) => {
+              return (
+                <Box key={id} color="light">
+                  <Heading
+                    mb={4}
+                    as="h4"
+                    fontSize="lg"
+                    fontWeight="thin"
+                    opacity={0.6}
+                    cursor="pointer"
+                    _hover={{ opacity: 1 }}
+                    onClick={() => {
+                      setIsCardOpen(true);
+                      setSelectedCareer(i);
+                    }}
+                  >
+                    {title}
+                  </Heading>
+
+                  <Box w="full" h="1px" bg="light" opacity={0.2} />
+                </Box>
               );
             })}
-          </Swiper>
-        </Box>
+          </Box>
+        )}
       </Box>
 
       <PopUpLayout
@@ -209,10 +242,19 @@ export default function Section5({ careers }: { careers: any }) {
           h="full"
           overflowY="scroll"
         >
-          <Heading mb={[2, 4, 6]} as="h3" color="dark">
+          <Heading
+            mb={[2, 4, 6]}
+            as="h3"
+            color="dark"
+            fontSize={{ base: "xl", lg: "3xl" }}
+          >
             {careers[selectedCareer]?.title}
           </Heading>
-          <Text color="dark" whiteSpace="pre-line">
+          <Text
+            color="dark"
+            whiteSpace="pre-line"
+            fontSize={{ base: "xs", lg: "sm" }}
+          >
             {careers[selectedCareer]?.description}
           </Text>
 

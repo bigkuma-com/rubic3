@@ -8,10 +8,10 @@ import RubicCreative from "../../assets/images/FA Rubicube Creativity Logo2.png"
 import RubicHospitality from "../../assets/images/FA Rubicube Hospitality Logo2.png";
 import {
   itemBotToTop,
+  marginBottom,
   marginRightContact,
-  marginXHeader,
+  marginTop,
   sectionMarginLeft,
-  sectionMarginRight,
 } from "../../utils/consts";
 import BoxMotion from "../BoxMotion";
 
@@ -32,8 +32,8 @@ export default function Section1() {
       alignItems="center"
       pl={sectionMarginLeft}
       pr={marginRightContact}
-      pt={{ base: 32, lg: 0 }}
-      pb={{ base: 12, lg: 0 }}
+      pt={isLarge ? 0 : marginTop}
+      pb={marginBottom}
     >
       <Box display="flex" flexDirection="column">
         <Heading

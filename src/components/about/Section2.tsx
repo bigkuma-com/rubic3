@@ -1,4 +1,5 @@
 import {
+  AspectRatio,
   Box,
   Heading,
   SimpleGrid,
@@ -10,7 +11,9 @@ import Image from "next/image";
 import { getImage } from "../../utils/api";
 import {
   itemBotToTop,
+  marginBottom,
   marginRightContact,
+  marginTop,
   sectionMarginLeft,
   showOnLarge,
 } from "../../utils/consts";
@@ -30,11 +33,10 @@ export default function Section2({
   return (
     <Box
       w={{ base: "full", lg: "70%" }}
-      display="flex"
-      alignItems="center"
       pl={sectionMarginLeft}
       pr={marginRightContact}
-      py={{ base: "10vh", lg: "15vh" }}
+      pt={marginTop}
+      pb={marginBottom}
     >
       <Box display="flex" flexDirection="column" w="full">
         <Heading
@@ -119,7 +121,6 @@ export default function Section2({
                           <BoxMotion
                             key={id}
                             position="relative"
-                            h={{ base: "70px", lg: "14vmin" }}
                             w="full"
                             variants={itemBotToTop(i * 0.1)}
                             initial="offscreen"
@@ -130,22 +131,24 @@ export default function Section2({
                             {is_text_only ? (
                               <Text color="dark">{name}</Text>
                             ) : (
-                              <Image
-                                onClick={() => {
-                                  link && window.open(link, `_blank`);
-                                }}
-                                src={getImage({
-                                  collectionName,
-                                  recordId: id,
-                                  filename: logo,
-                                })}
-                                alt={name}
-                                fill
-                                style={{
-                                  objectFit: "contain",
-                                  objectPosition: "left center",
-                                }}
-                              />
+                              <AspectRatio position="relative" ratio={1}>
+                                <Image
+                                  onClick={() => {
+                                    link && window.open(link, `_blank`);
+                                  }}
+                                  src={getImage({
+                                    collectionName,
+                                    recordId: id,
+                                    filename: logo,
+                                  })}
+                                  alt={name}
+                                  fill
+                                  style={{
+                                    objectFit: "contain",
+                                    objectPosition: "left center",
+                                  }}
+                                />
+                              </AspectRatio>
                             )}
                           </BoxMotion>
                         );

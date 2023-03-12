@@ -1,28 +1,38 @@
-import { Box, Text } from "@chakra-ui/react";
+import { Box, Text, useMediaQuery } from "@chakra-ui/react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { useRouter } from "next/router";
+import Hospitality1 from "../../assets/svg/Hospitality1.svg";
+import Hospitality2 from "../../assets/svg/Hospitality2.svg";
+import Hospitality3 from "../../assets/svg/Hospitality3.svg";
 import {
   itemBotToTop,
   marginRightContact,
   marginRightContact2,
+  marginTop,
   sectionMarginLeft,
   sectionMarginLeft2,
 } from "../../utils/consts";
 import BoxMotion from "../BoxMotion";
+import Button from "../Button";
 import Divider from "../Divider";
 import TeamShowCase from "../TeamShowCase";
 import WorksShowCase from "../WorksShowCase";
+import CompanyMobile from "./CompanyMobile";
 
 export default function Section1({ team, work }: { team: any; work: any }) {
-  const { replace, query } = useRouter();
+  const { replace, query, push } = useRouter();
+
+  const [isLarge] = useMediaQuery("(min-width: 991px)", {
+    ssr: true,
+    fallback: false,
+  });
 
   return (
     <Box
       w={{ base: "full", lg: "70%" }}
-      h="full"
-      display="flex"
-      flexDirection="column"
-      py={{ base: "10vh", lg: "15vh" }}
+      pt={marginTop}
+      pb={{ base: 12, lg: 24 }}
     >
       <BoxMotion
         w="full"
@@ -33,7 +43,7 @@ export default function Section1({ team, work }: { team: any; work: any }) {
         pl={sectionMarginLeft}
         pr={marginRightContact}
       >
-        <Text opacity={0.7} fontSize="sm" mb={12}>
+        <Text fontSize={{ base: "sm", lg: "md" }} mb={{ base: 6, lg: 12 }}>
           The founding philosophy behind Rubicube Hospitality is in advancing
           hospitality success through great collaborations with hotel/resort/
           villa property owners and investors. We translate fresh ideas and
@@ -43,101 +53,153 @@ export default function Section1({ team, work }: { team: any; work: any }) {
         </Text>
       </BoxMotion>
 
-      <Box
-        display="flex"
-        alignItems="center"
-        pl={sectionMarginLeft}
-        pr={marginRightContact}
-      >
-        <Box display="flex" flexDirection="column" h="100%" gap={10}>
-          {contents.map(
-            (
-              { bottomDesc, isList, subtitle, title, topDesc, bottomList },
-              i: any
-            ) => {
-              return (
-                <Box key={i}>
-                  <Box
-                    display="flex"
-                    fontSize="small"
-                    gap="5%"
-                    flexDirection={{ base: "column", lg: "row" }}
-                  >
-                    <Text
-                      w={["full", null, null, "35%"]}
-                      fontSize="2xl"
-                      wordBreak="break-word"
-                      mb={[6, null, null, 0]}
-                      as={motion.h4}
-                      variants={itemBotToTop(0.4)}
-                      initial="offscreen"
-                      whileInView="onscreen"
-                      viewport={{ once: false }}
-                    >
-                      <span style={{ opacity: 0.6 }}>0{i + 1}.</span> {title}
-                    </Text>
-                    <BoxMotion
-                      variants={itemBotToTop(0.6)}
-                      initial="offscreen"
-                      whileInView="onscreen"
-                      viewport={{ once: false }}
-                      w={["full", null, null, "60%"]}
-                    >
-                      <Text mb={[6, null, null, 10]} opacity={0.6}>
-                        {topDesc}
-                      </Text>
-
-                      <Text as="h5" mb={1} fontWeight={500}>
-                        {subtitle}
-                      </Text>
-
-                      {isList ? (
-                        <Box
-                          as="ol"
-                          display="flex"
-                          flexDirection="column"
-                          mb={10}
-                        >
-                          {bottomList?.map((item: any, i: any) => {
-                            return (
-                              <Box
-                                ml={{ base: 4, lg: 0 }}
-                                key={i}
-                                as="li"
-                                opacity={0.6}
-                                color="light"
-                              >
-                                {item}
-                              </Box>
-                            );
-                          })}
-                        </Box>
-                      ) : (
-                        <Text opacity={0.6} mb={10}>
-                          {bottomDesc}
-                        </Text>
-                      )}
-                    </BoxMotion>
-                  </Box>
-                  {i < contents.length - 1 && (
+      {isLarge ? (
+        <Box
+          display="flex"
+          alignItems="center"
+          w="full"
+          pl={sectionMarginLeft}
+          pr={marginRightContact}
+        >
+          <Box display="flex" flexDirection="column" h="100%" gap={10}>
+            {contents.map(
+              (
+                {
+                  bottomDesc,
+                  isList,
+                  subtitle,
+                  title,
+                  topDesc,
+                  bottomList,
+                  icon,
+                  isListWithTitle,
+                  bottomListTitle,
+                },
+                i: any
+              ) => {
+                return (
+                  <Box key={i}>
                     <Box
-                      h="1.5px"
-                      w="full"
-                      bg="light"
-                      position="relative"
-                      opacity={0.2}
-                    />
-                  )}
-                </Box>
-              );
-            }
-          )}
+                      display="flex"
+                      fontSize="small"
+                      flexDirection={{ base: "column", lg: "row" }}
+                    >
+                      <Box
+                        h={{ base: 12, lg: 16 }}
+                        w={{ base: 12, lg: 16 }}
+                        position="relative"
+                        mr={8}
+                      >
+                        <Image
+                          src={icon}
+                          fill
+                          alt={title}
+                          style={{
+                            objectFit: "contain",
+                          }}
+                        />
+                      </Box>
+                      <Text
+                        w={["full", null, null, "25%"]}
+                        fontSize="2xl"
+                        wordBreak="break-word"
+                        mb={[6, null, null, 0]}
+                        as={motion.h4}
+                        variants={itemBotToTop(0.4)}
+                        initial="offscreen"
+                        whileInView="onscreen"
+                        viewport={{ once: false }}
+                        mr="5%"
+                      >
+                        {/* 0{i + 1}.  */}
+                        {title}
+                      </Text>
+                      <BoxMotion
+                        variants={itemBotToTop(0.6)}
+                        initial="offscreen"
+                        whileInView="onscreen"
+                        viewport={{ once: false }}
+                        w={["full", null, null, "70%"]}
+                        fontSize="sm"
+                      >
+                        <Text mb={[6, null, null, 10]}>{topDesc}</Text>
+
+                        <Text as="h5" mb={1} fontWeight={500}>
+                          {subtitle}
+                        </Text>
+
+                        {isList ? (
+                          <Box
+                            as="ol"
+                            display="flex"
+                            flexDirection="column"
+                            mb={10}
+                            ml={4}
+                            gap={2}
+                          >
+                            {bottomList?.map((item: any, i: any) => {
+                              if (isListWithTitle)
+                                return (
+                                  <Box
+                                    as="li"
+                                    key={i}
+                                    color="light"
+                                    fontWeight={300}
+                                    fontSize="sm"
+                                  >
+                                    <Text as="h5" opacity={1} fontWeight={500}>
+                                      {bottomListTitle && bottomListTitle[i]}.
+                                    </Text>
+
+                                    <Text opacity={0.6}>{item}</Text>
+                                  </Box>
+                                );
+                              return (
+                                <Box
+                                  as="li"
+                                  key={i}
+                                  color="light"
+                                  fontWeight={300}
+                                  fontSize="sm"
+                                  opacity={0.6}
+                                >
+                                  <Text>{item}</Text>
+                                </Box>
+                              );
+                            })}
+                          </Box>
+                        ) : (
+                          <Text opacity={0.6} mb={10}>
+                            {bottomDesc}
+                          </Text>
+                        )}
+                      </BoxMotion>
+                    </Box>
+                    {i < contents.length - 1 && (
+                      <Box
+                        h="1.5px"
+                        w="full"
+                        bg="light"
+                        position="relative"
+                        opacity={0.2}
+                      />
+                    )}
+                  </Box>
+                );
+              }
+            )}
+          </Box>
         </Box>
-      </Box>
+      ) : (
+        <Box pl={sectionMarginLeft} pr={marginRightContact} mb={16}>
+          <CompanyMobile contents={contents} type="hospitality" />
+        </Box>
+      )}
 
       <Box pl={sectionMarginLeft} pr={marginRightContact} mt={10}>
         <Divider text="Hospitality Division Team" lineOpacity={0.2} mb={10} />
       </Box>
+
       <Box pl={sectionMarginLeft2} pr={marginRightContact2}>
         <TeamShowCase
           leaders={team}
@@ -159,6 +221,15 @@ export default function Section1({ team, work }: { team: any; work: any }) {
           buttonBgColor="#325D92"
         />
       </Box>
+
+      <Box ml={sectionMarginLeft} mt={{ base: 6, lg: 10 }}>
+        <Button
+          text="View Hospitality Works"
+          onClick={() => {
+            push(`/works?show=all&filter=hospitality`);
+          }}
+        />
+      </Box>
     </Box>
   );
 }
@@ -166,17 +237,21 @@ export default function Section1({ team, work }: { team: any; work: any }) {
 const contents = [
   {
     title: "Hotel/Resort Management",
+    icon: Hospitality1,
     subtitle: "What we do",
     topDesc: (
       <>
         Delivery of high-quality personal service leveraging the unique
-        character of each hotel/ resort, creating superior guest experiences,
+        character of each hotel/resort, creating superior guest experiences,
         extraordinary guest satisfaction, and high online reputation scores.
+        <br />
+        <br />
         Using creative strategies and best practices, the objective is to
-        outperform the competition and become local market leader
+        outperform the competition and become local market leader.
       </>
     ),
     isList: false,
+    isListWithTitle: false,
     bottomDesc: (
       <>
         Sales & Marketing, Engineering, Human resources & Talent development,
@@ -186,7 +261,8 @@ const contents = [
     ),
   },
   {
-    title: "Owners Advisor",
+    title: "Owner’s Representative",
+    icon: Hospitality2,
     subtitle: "What we do",
     topDesc: (
       <>
@@ -200,16 +276,25 @@ const contents = [
       </>
     ),
     isList: true,
+    isListWithTitle: true,
+    bottomListTitle: [
+      "Market Research & Concept",
+      "Brand Development",
+      "Design & Build",
+      "Hospitality Management",
+      "Marketing & Sustainability",
+    ],
     bottomList: [
-      "Advise on concept design and operational functionality of the hotel infrastructural designs at every stage of development.",
-      "Selection of most suitable management for the property and continuous liaison between owner,management, and other third party specialists/consultants during all phases: pre-opening conversion, fully operational, initial and ongoing operations.",
-      "Advisory services concerning Re-branding.",
-      "Maintain complete control and coordination between the Owner and the operating party and also ensure all service level agreements are in compliance.",
-      "Preparation of a preliminary Annual Business plan with a detailed focus on revenue forecasting.",
+      "3Cs Research (Company/Core, Competitors, Customer/Client/Consumer), Research Data, such as Competitive advantage, Vision & Mission, Value Proposition, Attributes, Target Market, Competitions, Products/Services, Key Stakeholders.",
+      "Naming Development, Brand Strategy, Brand Platform, Brand Personality, Brand Architecture, Brand Experience, Brand Narrative, Identity Development, Brand Management, Brand Playbook.",
+      "Planning, Project Managing & Construction",
+      "Hotel/Resort Management, Owner’s Representative, Asset Management",
+      "Creative Content, Hotel Website Development, Social & Digital Marketing, CRM Loyalty Program",
     ],
   },
   {
     title: "Asset Management",
+    icon: Hospitality3,
     topDesc: (
       <>
         Rubicube Hospitality provides collective hospitality expertise gained
@@ -225,89 +310,12 @@ const contents = [
     ),
     subtitle: "Our Process with 4 key focus areas",
     isList: true,
+    isListWithTitle: false,
     bottomList: [
       "Revenue Generation",
       "Financial Returns",
       "Marketing Positioning",
       "Guest Experiences & Human Resources",
-    ],
-  },
-  {
-    title: "Feasibility Study",
-    topDesc: (
-      <>
-        A comprehensive feasibility study will provide important market analysis
-        and financial evaluation of the project facilities and operations
-        perspectives.
-        <br />
-        <br />A feasibility study and hotel business plan forms the cornerstone
-        of your preparations for the new or remodeled hotel. It shows the
-        investors return of investment (ROI). This forms an important and
-        crucial step in the initial planning process.
-      </>
-    ),
-    subtitle: "Our Process",
-    isList: true,
-    bottomList: [
-      "Location Analysis",
-      "Total Costs Calculation",
-      "Room Rates and Year-round Occupancy Levels",
-      "Local Hotel Supply and Demand Investigation",
-      "Establishing and Projecting Hotel Revenue Sources",
-      "Hotel Feasibility Study Projected ROI",
-    ],
-  },
-  {
-    title: "Change Management",
-    topDesc: (
-      <>
-        To develop a customized strategy plan and reposition the property more
-        efficiently amongst its competitive market set. Hotel management
-        specialists will identify and focus on the unique selling points (USP)
-        of the property to increase financial performance of all levels.
-      </>
-    ),
-    subtitle: "Our Process",
-    isList: false,
-    bottomDesc: (
-      <>
-        Business & Marketing Plan
-        <br />
-        Revenue Generation
-        <br />
-        Cost Management
-        <br />
-        Policy & Procedure
-        <br />
-        Guest Experience
-        <br />
-        HR & Talent Development
-        <br />
-        Financial & Risk Management
-        <br />
-        Reputation Management
-        <br />
-        Health & Safety and Security
-      </>
-    ),
-  },
-  {
-    title: "Other Creative Services",
-    topDesc: (
-      <>
-        Rubicube Creative specializes in developing a holistic hotel brand
-        positioning and identity design that incorporates brand research and
-        business strategy.
-      </>
-    ),
-    subtitle: "What we do",
-    isList: true,
-    bottomList: [
-      "Hotel Website Development",
-      "CRM Loyalty Program",
-      "Mystery Audit Program",
-      "Brand Development",
-      "Social & Digital Marketing",
     ],
   },
 ];

@@ -8,11 +8,13 @@ export default function Footer({
   isShowing = true,
   isLight = true,
   position,
+  style,
 }: {
   isHomepage?: boolean;
   isShowing?: boolean;
   isLight?: boolean;
   position?: any;
+  style?: any;
 }) {
   const [scrollPosition, setScrollPosition] = useState(0);
 
@@ -34,6 +36,7 @@ export default function Footer({
       position="relative"
       display={position == "relative" ? "flex" : "unset"}
       justifyContent={position == "relative" ? "space-between" : "unset"}
+      style={style}
     >
       <AdhyaGroup key="adhya-group" isLight={isLight} position={position} />
       <SocialButtons isLight={isLight} position={position} />

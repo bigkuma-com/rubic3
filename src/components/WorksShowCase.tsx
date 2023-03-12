@@ -45,8 +45,6 @@ export default function WorksShowCase({
     setworksEnd(arrayChunk(works, isLarge ? 3 : 2));
   }, [isLarge, works]);
 
-  console.log("works", worksEnd, works);
-
   return (
     <>
       {isLarge ? (
@@ -165,20 +163,21 @@ export default function WorksShowCase({
           whileInView="onscreen"
           viewport={{ once: true }}
         >
-          <SimpleGrid columns={1} position="relative" w="full" bg="yellow.200">
-            {works.map(({ collectionName, id, name, thumbnail, slug }: any) => {
-              console.log("name", name);
-              return (
-                <WorkCard
-                  collectionName={collectionName}
-                  key={id}
-                  name={name}
-                  id={id}
-                  thumbnail={thumbnail}
-                  slug={slug}
-                />
-              );
-            })}
+          <SimpleGrid columns={1} position="relative" w="full">
+            {works
+              .slice(0, 3)
+              .map(({ collectionName, id, name, thumbnail, slug }: any) => {
+                return (
+                  <WorkCard
+                    collectionName={collectionName}
+                    key={id}
+                    name={name}
+                    id={id}
+                    thumbnail={thumbnail}
+                    slug={slug}
+                  />
+                );
+              })}
           </SimpleGrid>
         </BoxMotion>
       )}

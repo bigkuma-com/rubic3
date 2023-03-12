@@ -1,196 +1,227 @@
-import { Box, Text, useMediaQuery } from "@chakra-ui/react";
-import { AnimatePresence, LayoutGroup } from "framer-motion";
+import { AspectRatio, Box, Text, useMediaQuery } from "@chakra-ui/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useState } from "react";
 import Image360 from "../../assets/images/RC Digital Service Wheel.webp";
+import D3601 from "../../assets/svg/D3601.svg";
+import D3602 from "../../assets/svg/D3602.svg";
+import D3603 from "../../assets/svg/D3603.svg";
+import D3604 from "../../assets/svg/D3604.svg";
 import {
   itemBotToTop,
   marginRightContact,
+  marginRightContact2,
+  marginTop,
   sectionMarginLeft,
+  sectionMarginLeft2,
 } from "../../utils/consts";
 import BoxMotion from "../BoxMotion";
+import Button from "../Button";
 import Divider from "../Divider";
 import TeamShowCase from "../TeamShowCase";
+import WorksShowCase from "../WorksShowCase";
+import CompanyMobile from "./CompanyMobile";
 
-export default function Section3({ team }: { team: any }) {
+export default function Section3({ team, work }: { team: any; work: any }) {
   const { replace, query, push } = useRouter();
-  const [menuSelected, setMenuSelected] = useState(-1);
 
   const [isLarge] = useMediaQuery("(min-width: 991px)", {
     ssr: true,
     fallback: false,
   });
 
-  console.log("30", team);
-
   return (
-    <LayoutGroup>
-      <Box
-        w={{ base: "full", lg: "70%" }}
-        h="full"
-        display="flex"
-        pl={sectionMarginLeft}
-        pr={marginRightContact}
-        py={{ base: "10vh", lg: "15vh" }}
-        flexDirection="column"
-      >
-        <BoxMotion
-          layout
-          variants={itemBotToTop(0.2)}
-          initial="offscreen"
-          whileInView="onscreen"
-          viewport={{ once: false }}
+    <Box
+      w={{ base: "full", lg: "70%" }}
+      pt={marginTop}
+      pb={{ base: 12, lg: 24 }}
+      h="full"
+    >
+      {isLarge ? (
+        <Box
+          display="flex"
+          alignItems="center"
+          w="full"
+          flexDirection="column"
+          pl={sectionMarginLeft}
+          pr={marginRightContact}
         >
-          <BoxMotion layout w="full" position="relative">
+          <AspectRatio w="full" h="full" ratio={1} position="relative">
             <Image
               src={Image360}
               alt="360 digital"
-              height={isLarge ? 700 : 400}
+              fill
               style={{ objectFit: "contain", objectPosition: "center center" }}
             />
-          </BoxMotion>
+          </AspectRatio>
 
-          <BoxMotion layout mt={16} mb={5}>
-            <Text as="h2" color="dark">
-              Our Services
-            </Text>
-          </BoxMotion>
+          <Box w="full" mt={12}>
+            <Divider text="Our Services" color="dark" mb={10} />
+          </Box>
 
-          <BoxMotion
-            layout
-            display="flex"
-            flexDir="column"
-            gap={3}
-            w="full"
-            mr="25%"
-            zIndex={5}
-            h="full"
-            color="dark"
-          >
-            {contents.map(({ title, subtitle, list, listContent }, i) => {
-              return (
-                <BoxMotion layout key={i} opacity={1} className="animate-fade">
-                  <Box display="flex" flexDir="column" gap={2}>
-                    <BoxMotion layout>
-                      {i === 0 && <Box h="0.5px" w="full" bg="dark" mb={1} />}
-                    </BoxMotion>
-
-                    <BoxMotion
-                      layout
+          <Box display="flex" flexDirection="column" h="100%" w="full" gap={10}>
+            {contents.map(
+              ({ title, icon, list, listContent, subtitle }, i: any) => {
+                return (
+                  <Box key={i} color="dark">
+                    <Box
                       display="flex"
-                      w="full"
-                      alignItems="center"
-                      justifyContent="space-between"
+                      fontSize="md"
+                      flexDirection={{ base: "column", lg: "row" }}
+                      mb={6}
                     >
-                      <Text
-                        as="h4"
-                        fontSize={{ base: "xl", lg: "3xl" }}
-                        fontWeight={300}
-                        cursor="pointer"
-                        color="dark"
-                        onClick={() => {
-                          setMenuSelected(menuSelected === i ? -1 : i);
-                        }}
+                      <BoxMotion
+                        variants={itemBotToTop(0.2)}
+                        initial="offscreen"
+                        whileInView="onscreen"
+                        viewport={{ once: false }}
+                        display="flex"
+                        gap={4}
+                        w={["full", null, null, "30%"]}
+                        mb={[6, null, null, 0]}
+                        mr={"5%"}
                       >
-                        <span>0{i + 1}.</span> {title}
-                      </Text>
-                    </BoxMotion>
-
-                    <BoxMotion layout>
-                      <AnimatePresence>
-                        {menuSelected === i && (
-                          <BoxMotion
-                            pb={4}
-                            display="flex"
-                            flexDirection="column"
-                            initial={{ opacity: 0 }}
-                            animate={{
-                              opacity: 1,
-                              transition: {
-                                duration: 0.5,
-                                ease: "easeInOut",
-                              },
+                        <Box
+                          h={{ base: 12, lg: 16 }}
+                          w={{ base: 12, lg: 16 }}
+                          position="relative"
+                        >
+                          <Image
+                            src={icon}
+                            fill
+                            alt={title}
+                            style={{
+                              objectFit: "contain",
                             }}
-                            exit={{
-                              opacity: 0,
-                              transition: {
-                                duration: 0.5,
-                                ease: "easeInOut",
-                              },
-                            }}
-                          >
-                            <Text
-                              fontWeight={400}
-                              letterSpacing="wider"
-                              fontSize="xs"
-                              my={5}
-                              color="dark"
-                            >
-                              {subtitle}
-                            </Text>
-                            <Box
-                              as="ul"
-                              listStyleType="none"
-                              display="flex"
-                              flexDirection="column"
-                              gap={4}
-                            >
-                              {list.map((v, i) => {
-                                return (
-                                  <Box key={v}>
-                                    <Text
-                                      key={v}
-                                      as="li"
-                                      color="dark"
-                                      fontWeight={400}
-                                    >
-                                      {v}
-                                    </Text>
-                                    <Text
-                                      mt={1}
-                                      opacity={0.6}
-                                      fontSize="xs"
-                                      color="dark"
-                                    >
-                                      {listContent[i]}
-                                    </Text>
-                                  </Box>
-                                );
-                              })}
-                            </Box>
-                          </BoxMotion>
-                        )}
-                      </AnimatePresence>
-                    </BoxMotion>
+                          />
+                        </Box>
+                        <Text
+                          fontSize="xl"
+                          as="h4"
+                          fontWeight={500}
+                          alignSelf={{ lg: "unset", base: "flex-end" }}
+                          m={0}
+                          color="inherit"
+                        >
+                          {title}
+                        </Text>
+                      </BoxMotion>
+                      <BoxMotion
+                        variants={itemBotToTop(0.4)}
+                        initial="offscreen"
+                        whileInView="onscreen"
+                        viewport={{ once: false }}
+                        w={["full", null, null, "70%"]}
+                      >
+                        <Text
+                          color="inherit"
+                          fontSize="sm"
+                          mb={6}
+                          fontWeight={400}
+                        >
+                          {subtitle}
+                        </Text>
+                        <Text
+                          mb={2}
+                          fontWeight="black"
+                          fontSize="sm"
+                          color="inherit"
+                        >
+                          What we do
+                        </Text>
 
-                    <BoxMotion layout>
-                      <Box h="0.5px" w="full" bg="dark" opacity={0.6} />
-                    </BoxMotion>
+                        <Box
+                          as="ul"
+                          listStyleType="none"
+                          display="flex"
+                          flexDirection="column"
+                          gap={1}
+                        >
+                          {list.map((v, i) => {
+                            return (
+                              <Text
+                                key={v}
+                                as="li"
+                                color="dark"
+                                fontWeight={500}
+                              >
+                                {v}
+                              </Text>
+                            );
+                          })}
+                        </Box>
+                      </BoxMotion>
+                    </Box>
+                    {i < contents.length - 1 && (
+                      <Box
+                        h="1.5px"
+                        w="full"
+                        position="relative"
+                        opacity={0.2}
+                        bg="dark"
+                      />
+                    )}
                   </Box>
-                </BoxMotion>
-              );
-            })}
-          </BoxMotion>
-        </BoxMotion>
+                );
+              }
+            )}
+          </Box>
+        </Box>
+      ) : (
+        <Box pl={sectionMarginLeft} pr={marginRightContact} mb={16}>
+          <CompanyMobile contents={contents} type="360" color="dark" />
+        </Box>
+      )}
 
-        <Box w="full" h="full" position="relative" mt={16}>
-          <Divider text="Division" color="dark" />
+      <Box>
+        <Box pl={sectionMarginLeft} pr={marginRightContact} mt={10}>
+          <Divider
+            text="Creative Division Team"
+            lineOpacity={0.2}
+            mb={10}
+            color="dark"
+          />
+        </Box>
+
+        <Box pl={sectionMarginLeft2} pr={marginRightContact2}>
           <TeamShowCase
             leaders={team}
             buttonBorderColor="dark"
             buttonColor="dark"
             buttonBgColor="#FFC925"
+            type="360"
+          />
+        </Box>
+
+        <Box pl={sectionMarginLeft} pr={marginRightContact} mt={10}>
+          <Divider text="Related Work" lineOpacity={0.2} mb={10} color="dark" />
+        </Box>
+        <Box pl={sectionMarginLeft2} pr={marginRightContact2}>
+          <WorksShowCase
+            works={work}
+            buttonBorderColor="dark"
+            buttonColor="dark"
+            buttonBgColor="#FFC925"
+          />
+        </Box>
+
+        <Box ml={sectionMarginLeft} mt={{ base: 6, lg: 10 }}>
+          <Button
+            text="View 360 Works"
+            isLight={false}
+            onClick={() => {
+              push(`/works?show=all&filter=360`);
+            }}
           />
         </Box>
       </Box>
-    </LayoutGroup>
+    </Box>
   );
 }
 
 const contents = [
   {
     title: "Creative Content",
+    icon: D3601,
     subtitle:
       "Content marketing is the key to reach your target audience and the foundation of a successful digital marketing strategy.",
     list: ["Copywriting", "Photography", "Video Production", "Motion Graphic"],
@@ -203,6 +234,7 @@ const contents = [
   },
   {
     title: "Digital Marketing",
+    icon: D3602,
     subtitle:
       "Our one-stop digital marketing service is tailored to establish your online presence and drive maximum results.",
     list: [
@@ -220,6 +252,7 @@ const contents = [
   },
   {
     title: "Social Media Marketing",
+    icon: D3603,
     subtitle:
       "In this social media driven society, we utilize popular social media platforms as a creative channel to boost your brand image and engage with your target market.",
     list: [
@@ -237,6 +270,7 @@ const contents = [
   },
   {
     title: "Hosting & Security",
+    icon: D3604,
     subtitle:
       "With our cloud-based servers and full maintenance services, you can rest assured that your business’ hosting needs are covered.",
     list: ["Hosting", "Web Security", "Maintenance", "Email Hosting"],

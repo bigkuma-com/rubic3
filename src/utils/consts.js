@@ -18,6 +18,9 @@ export const sectionMarginRight = [5, 6, 10, 52];
 export const sectionMarginLeft2 = [0, null, null, 16];
 export const sectionMarginRight2 = [0, null, null, 52];
 
+export const marginTop = { base: 36, lg: 28 };
+export const marginBottom = { base: 12, lg: 0 };
+
 export const themeColor = [
   "var(--chakra-colors-dark)",
   "var(--chakra-colors-light)",

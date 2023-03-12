@@ -39,7 +39,7 @@ export default function SocialButtons({
       exit="exit"
       p={2}
       mr={-2}
-      mb={-2}
+      // mb={-2}
     >
       <Box display="flex" alignItems="flex-end">
         <BoxMotion

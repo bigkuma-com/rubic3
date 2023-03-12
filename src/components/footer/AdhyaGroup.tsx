@@ -36,7 +36,7 @@ export default function AdhyaGroup({
       exit="exit"
       p={2}
       ml={-2}
-      mb={-2}
+      // mb={-2}
     >
       <BoxMotion
         animate={{

@@ -3,6 +3,7 @@ import {
   AccordionButton,
   AccordionItem,
   AccordionPanel,
+  AspectRatio,
   Box,
   Heading,
   SimpleGrid,
@@ -17,7 +18,9 @@ import IconAccordionPlus from "../../assets/js/IconAccordionPlus";
 import { getImage } from "../../utils/api";
 import {
   itemBotToTop,
+  marginBottom,
   marginRightContact,
+  marginTop,
   sectionMarginLeft,
 } from "../../utils/consts";
 import BoxMotion from "../BoxMotion";
@@ -43,8 +46,6 @@ export default function Section2({
     setMaxItem(isLarge ? 24 : 21);
   }, [isLarge]);
 
-  console.log("clients: ", clientTypes);
-
   if (!isLarge) {
     return (
       <Box
@@ -54,11 +55,12 @@ export default function Section2({
         flexDirection="column"
         pl={sectionMarginLeft}
         pr={marginRightContact}
-        py={{ base: "10vh", lg: "15vh" }}
+        pt={marginTop}
+        pb={marginBottom}
         gap={8}
       >
         <Divider text="Our Major Clients" color="dark" mb={0} />
-        <SimpleGrid columns={[3, null, null, 6]} spacing={5}>
+        <SimpleGrid columns={[3, null, null, 6]} spacing={6}>
           {clientTypes
             .find(({ type }: any) => type == "featured")
             .data.slice(0, maxItem)
@@ -67,7 +69,6 @@ export default function Section2({
                 <BoxMotion
                   key={id}
                   position="relative"
-                  h={{ base: "100px", lg: "14vmin" }}
                   w="full"
                   variants={itemBotToTop(i * 0.5)}
                   initial="offscreen"
@@ -76,22 +77,24 @@ export default function Section2({
                   cursor={url ? "pointer" : "unset"}
                   whileHover={{ scale: url ? 1.1 : 1 }}
                 >
-                  <Image
-                    onClick={() => {
-                      url && window.open(url, `_blank`);
-                    }}
-                    src={getImage({
-                      collectionName,
-                      recordId: id,
-                      filename: logo,
-                    })}
-                    alt={name}
-                    fill
-                    style={{
-                      objectFit: "contain",
-                      objectPosition: "left center",
-                    }}
-                  />
+                  <AspectRatio ratio={1} position="relative">
+                    <Image
+                      onClick={() => {
+                        url && window.open(url, `_blank`);
+                      }}
+                      src={getImage({
+                        collectionName,
+                        recordId: id,
+                        filename: logo,
+                      })}
+                      alt={name}
+                      fill
+                      style={{
+                        objectFit: "contain",
+                        objectPosition: "left center",
+                      }}
+                    />
+                  </AspectRatio>
                 </BoxMotion>
               );
             })}
@@ -201,11 +204,10 @@ export default function Section2({
           w={{ base: "full", lg: "70%" }}
           h="full"
           minH="100vh"
-          display="flex"
-          alignItems="center"
           pl={sectionMarginLeft}
           pr={marginRightContact}
-          py={{ base: "10vh", lg: "15vh" }}
+          pt={marginTop}
+          pb={marginBottom}
         >
           <Box display="flex" flexDirection="column" w="full">
             <Box
@@ -251,7 +253,7 @@ export default function Section2({
                       position="relative"
                       h={{ base: "70px", lg: "14vmin" }}
                       w="full"
-                      variants={itemBotToTop(i * 0.1)}
+                      variants={itemBotToTop(i * 0.01)}
                       initial="offscreen"
                       whileInView="onscreen"
                       viewport={{ once: false }}

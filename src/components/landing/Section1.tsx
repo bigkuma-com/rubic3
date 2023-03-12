@@ -161,6 +161,7 @@ export default function Section1({ sliders }: { sliders: any }) {
                         recordId: id,
                         filename: file,
                       })}
+                      disablePictureInPicture
                     />
                   ) : (
                     <Image
