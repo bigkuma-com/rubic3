@@ -1,4 +1,10 @@
-import { Box, Heading, Text, useMediaQuery } from "@chakra-ui/react";
+import {
+  AspectRatio,
+  Box,
+  Heading,
+  Text,
+  useMediaQuery,
+} from "@chakra-ui/react";
 import { NextSeo } from "next-seo";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -8,10 +14,11 @@ import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import ArrowLeftSm from "../../assets/js/ArrowLeftSm";
 import ArrowRightSm from "../../assets/js/ArrowRightSm";
+import Button from "../../components/Button";
 import Footer from "../../components/footer";
 import Header from "../../components/header";
 import { findOne, getFullList, getImage } from "../../utils/api";
-import { marginX, showOnLarge } from "../../utils/consts";
+import { marginRightContact, marginX, showOnLarge } from "../../utils/consts";
 
 export default function Work({ work, next_work, other_works }: any) {
   const { push, asPath } = useRouter();
@@ -113,7 +120,7 @@ export default function Work({ work, next_work, other_works }: any) {
         ]}
       />
       <Box bg="dark" w="full" h={{ base: "full", lg: "100vh" }}>
-        <Header />
+        <Header contactMarginRight={marginRightContact} />
         <Box
           display={showOnLarge}
           position="fixed"
@@ -277,7 +284,7 @@ export default function Work({ work, next_work, other_works }: any) {
                           <Box key={i}>
                             <Box
                               position="relative"
-                              w="60%"
+                              w="65%"
                               h="25vmin"
                               mb={2}
                               cursor="pointer"
@@ -323,6 +330,14 @@ export default function Work({ work, next_work, other_works }: any) {
                       })}
                     </Box>
 
+                    <Box mt={6}>
+                      <Button
+                        text="View All Works"
+                        onClick={() => {
+                          push("/works");
+                        }}
+                      />
+                    </Box>
                     {next_work && (
                       <Box
                         position="absolute"
@@ -428,10 +443,10 @@ export default function Work({ work, next_work, other_works }: any) {
                           push(`/works/${other.slug}`);
                         }}
                       >
-                        <Box
+                        <AspectRatio
+                          ratio={3 / 2}
                           position="relative"
                           w={{ base: "full", lg: "60%" }}
-                          h={{ base: "20vh", lg: "25vmin" }}
                           mb={2}
                         >
                           <Image
@@ -453,13 +468,22 @@ export default function Work({ work, next_work, other_works }: any) {
                               objectPosition: "center center",
                             }}
                           />
-                        </Box>
+                        </AspectRatio>
                         <Text opacity={0.7} fontSize="sm">
                           {other.name}
                         </Text>
                       </Box>
                     );
                   })}
+                </Box>
+
+                <Box my={5}>
+                  <Button
+                    text="View All Works"
+                    onClick={() => {
+                      push("/works");
+                    }}
+                  />
                 </Box>
               </Box>
             )}
