@@ -175,7 +175,7 @@ export default function Section3({ team, work }: { team: any; work: any }) {
       <Box>
         <Box pl={sectionMarginLeft} pr={marginRightContact} mt={10}>
           <Divider
-            text="Creative Division Team"
+            text="360 Digital Division Team"
             lineOpacity={0.2}
             mb={10}
             color="dark"
@@ -206,7 +206,7 @@ export default function Section3({ team, work }: { team: any; work: any }) {
 
         <Box ml={sectionMarginLeft} mt={{ base: 6, lg: 10 }}>
           <Button
-            text="View 360 Works"
+            text="View Digital Works"
             isLight={false}
             onClick={() => {
               push(`/works?show=all&filter=360`);
