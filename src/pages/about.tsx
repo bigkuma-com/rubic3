@@ -343,8 +343,6 @@ export async function getStaticProps() {
 
   const finalResult = Object.values(result);
 
-  console.log(finalResult);
-
   return {
     props: {
       partners: JSON.parse(JSON.stringify(partners)),

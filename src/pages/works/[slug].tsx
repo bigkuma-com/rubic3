@@ -21,8 +21,6 @@ export default function Work({ work, next_work, other_works }: any) {
     fallback: false,
   });
 
-  console.log(work)
-
   const {
     name,
     description_long,

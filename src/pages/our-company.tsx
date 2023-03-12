@@ -56,8 +56,6 @@ export default function OurCompany({ team, works }: { team: any; works: any }) {
     }
   }, [query]);
 
-  console.log("works", works);
-
   return (
     <>
       <NextSeo
@@ -268,8 +266,6 @@ export async function getStaticProps() {
     collection: "works",
     params: { sort: "order", expand: "filters" },
   });
-
-  console.log("resultWorks", resultWorks);
 
   const categorizedTeam = categoirzeTeam(resultLeaders);
   const categorizedWorks = categoirzeWorks(resultWorks);

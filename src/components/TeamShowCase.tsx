@@ -158,15 +158,6 @@ export default function TeamShowCase({
                           }: any,
                           j: number
                         ) => {
-                          console.log(
-                            name,
-                            type,
-                            title,
-                            title_creative,
-                            title_360,
-                            title_hospitality
-                          );
-
                           return (
                             <Box
                               key={id}
