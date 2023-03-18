@@ -32,7 +32,19 @@ const seo = {
   description: "What we do.",
 };
 
-export default function OurCompany({ team, works }: { team: any; works: any }) {
+export default function OurCompany({
+  team,
+  works,
+  teamHospitality,
+  teamCreative,
+  team360,
+}: {
+  team: any;
+  works: any;
+  teamHospitality: any;
+  teamCreative:any;
+  team360:any;
+}) {
   const { push, query, replace } = useRouter();
 
   const [isLarge] = useMediaQuery("(min-width: 991px)", {
@@ -237,15 +249,15 @@ export default function OurCompany({ team, works }: { team: any; works: any }) {
         </AnimatePresence>
 
         {section == 0 && (
-          <Section1 team={team["Creative"]} work={works["Creative"]} />
+          <Section1 team={teamCreative["Creative"]} work={works["Creative"]} />
         )}
 
         {section == 1 && (
-          <Section2 team={team["Hospitality"]} work={works["Hospitality"]} />
+          <Section2 team={teamHospitality["Hospitality"]} work={works["Hospitality"]} />
         )}
 
         {section == 2 && (
-          <Section3 team={team["360 Digital"]} work={works["360 Digital"]} />
+          <Section3 team={team360["360 Digital"]} work={works["360 Digital"]} />
         )}
 
         <Footer
@@ -267,13 +279,33 @@ export async function getStaticProps() {
     params: { sort: "order", expand: "filters" },
   });
 
+  const resHospitality = await getFullList({
+    collection: "team",
+    params: { sort: "order_hospitality", expand: "filter" },
+  });
+  const res360 = await getFullList({
+    collection: "team",
+    params: { sort: "order_360", expand: "filter" },
+  })
+  const resCreative = await getFullList({
+    collection: "team",
+    params: { sort: "order_creative", expand: "filter" },
+  })
+
   const categorizedTeam = categoirzeTeam(resultLeaders);
   const categorizedWorks = categoirzeWorks(resultWorks);
+
+  const categorizedHospitality = categoirzeTeam(resHospitality);
+  const categorized360 = categoirzeTeam(res360);
+  const categorizedCreative = categoirzeTeam(resCreative);
 
   return {
     props: {
       team: JSON.parse(JSON.stringify(categorizedTeam)),
       works: JSON.parse(JSON.stringify(categorizedWorks)),
+      teamHospitality: JSON.parse(JSON.stringify(categorizedHospitality)),
+      team360: JSON.parse(JSON.stringify(categorized360)),
+      teamCreative: JSON.parse(JSON.stringify(categorizedCreative)),
     },
     revalidate: 2,
   };

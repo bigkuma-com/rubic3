@@ -77,7 +77,9 @@ export default function Section1({ team, work }: { team: any; work: any }) {
                         />
                       </Box>
                       <Text
-                        fontSize="2xl"
+                        fontSize="1.4rem"
+                        whiteSpace="pre"
+                        wordBreak="keep-all"
                         as="h4"
                         alignSelf={{ lg: "unset", base: "flex-end" }}
                         m={0}

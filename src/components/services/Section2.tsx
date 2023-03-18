@@ -101,8 +101,8 @@ export default function Section1({ team, work }: { team: any; work: any }) {
                       </Box>
                       <Text
                         w={["full", null, null, "25%"]}
-                        fontSize="2xl"
-                        wordBreak="break-word"
+                        fontSize="1.4rem"
+                        wordBreak="keep-all"
                         mb={[6, null, null, 0]}
                         as={motion.h4}
                         variants={itemBotToTop(0.4)}

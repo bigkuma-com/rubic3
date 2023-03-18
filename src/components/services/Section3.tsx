@@ -95,7 +95,8 @@ export default function Section3({ team, work }: { team: any; work: any }) {
                           />
                         </Box>
                         <Text
-                          fontSize="xl"
+                          fontSize="1.4rem"
+                          wordBreak="keep-all"
                           as="h4"
                           fontWeight={500}
                           alignSelf={{ lg: "unset", base: "flex-end" }}
