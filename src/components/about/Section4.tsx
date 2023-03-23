@@ -121,7 +121,7 @@ export default function Section2({
                     {({ isExpanded }) => (
                       <>
                         <Box>
-                          <AccordionButton px={0} py={4}>
+                          <AccordionButton px={0} py={4} _hover={{}}>
                             <Text
                               fontSize="lg"
                               fontWeight={400}
@@ -347,7 +347,13 @@ export default function Section2({
                         {({ isExpanded }) => (
                           <>
                             <Box>
-                              <AccordionButton px={0} py={4} _hover={{fontWeight:500}} fontWeight={400} className="animate-font-weight">
+                              <AccordionButton
+                                px={0}
+                                py={4}
+                                _hover={{ fontWeight: 500 }}
+                                fontWeight={400}
+                                className="animate-font-weight"
+                              >
                                 <Text
                                   fontSize="xl"
                                   fontWeight={"inherit"}

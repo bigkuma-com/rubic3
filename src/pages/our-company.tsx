@@ -278,6 +278,8 @@ export default function OurCompany({
         <Footer
           isLight={section != 2}
           position={isLarge ? undefined : "relative"}
+          backgroundColor={sidebarServices[section].color}
+          hasBackground={isLarge}
         />
       </BoxMotion>
     </>

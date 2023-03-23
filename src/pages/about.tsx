@@ -288,6 +288,8 @@ export default function About({
         <Footer
           isLight={!isEven}
           position={isLarge || section === 4 ? undefined : "relative"}
+          hasBackground={isLarge}
+          backgroundColor={themeColor[+isEven]}
         />
       </BoxMotion>
     </>

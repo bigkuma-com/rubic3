@@ -44,7 +44,7 @@ export default function CompanyMobile({
                 {({ isExpanded }) => (
                   <>
                     <Box>
-                      <AccordionButton px={0} py={4}>
+                      <AccordionButton px={0} py={4} _hover={{}}>
                         <Box position="relative" w={10} h={10} mr={4}>
                           <Image
                             src={icon}

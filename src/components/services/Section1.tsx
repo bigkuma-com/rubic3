@@ -34,6 +34,24 @@ export default function Section1({ team, work }: { team: any; work: any }) {
       pt={marginTop}
       pb={{ base: 12, lg: 24 }}
     >
+      <BoxMotion
+        w="full"
+        variants={itemBotToTop(0.2)}
+        initial="offscreen"
+        whileInView="onscreen"
+        viewport={{ once: false }}
+        pl={sectionMarginLeft}
+        pr={marginRightContact}
+      >
+        <Text fontSize={{ base: "sm", lg: "md" }} mb={{ base: 6, lg: 12 }}>
+          Our multi-disciplinary expertise is at your disposal across the full
+          range of encompasses branding and brand strategy, graphics and
+          identity, architecture and interiors, products and packaging,
+          exhibitions and installations, websites and digital experiences,
+          advertising and communications, printing and production.
+        </Text>
+      </BoxMotion>
+
       {isLarge ? (
         <Box
           display="flex"

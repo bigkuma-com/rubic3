@@ -89,7 +89,7 @@ export default function Works() {
   }, [query, isLarge]);
 
   useEffect(() => {
-    if (query.show !== "all") return;
+    if (query.show !== "all" && isLarge) return;
 
     if (query.filter == undefined || query.filter === "all") {
       setSelectedFilter("");
@@ -130,7 +130,7 @@ export default function Works() {
   }, [query]);
 
   useEffect(() => {
-    if (query.show !== "all") {
+    if (query.show !== "all" && isLarge) {
       setSelectedFilter("");
       setNumOfBlocks(12);
     }

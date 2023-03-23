@@ -110,11 +110,11 @@ export default function SocialButtons({
 const socials = [
   {
     icon: <IconInstagram />,
-    url: "https://www.instagram.com/rubicubecreative.id/",
+    url: "https://www.instagram.com/rubicube.group/",
   },
   {
     icon: <IconFacebook />,
-    url: "https://facebook.com/rubicubecreative/",
+    url: "https://www.facebook.com/rubicube.group",
   },
   {
     icon: <IconYoutube />,
