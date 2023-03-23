@@ -49,7 +49,7 @@ export default function Section3({ leaders }: { leaders: any }) {
           Our Team
         </Heading>
 
-        <TeamShowCase leaders={leaders} />
+        <TeamShowCase leaders={leaders} type="team" />
       </Box>
     </Box>
   );

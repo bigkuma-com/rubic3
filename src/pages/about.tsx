@@ -317,7 +317,7 @@ export async function getStaticProps() {
     (client) => client.type === "associate"
   );
   const clients = resultsClients;
-  const leaders = resultLeaders;
+  const leaders = resultLeaders.filter((leader) => leader.title !== "");
   const careers = resultCareers;
   const partnersAssociations = resultsPartnersAssociations.reduce(
     (acc: any, curr: any) => {

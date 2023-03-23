@@ -42,8 +42,8 @@ export default function OurCompany({
   team: any;
   works: any;
   teamHospitality: any;
-  teamCreative:any;
-  team360:any;
+  teamCreative: any;
+  team360: any;
 }) {
   const { push, query, replace } = useRouter();
 
@@ -249,15 +249,30 @@ export default function OurCompany({
         </AnimatePresence>
 
         {section == 0 && (
-          <Section1 team={teamCreative["Creative"]} work={works["Creative"]} />
+          <Section1
+            team={teamCreative["Creative"].filter(
+              (leader: any) => leader.title_creative !== ""
+            )}
+            work={works["Creative"]}
+          />
         )}
 
         {section == 1 && (
-          <Section2 team={teamHospitality["Hospitality"]} work={works["Hospitality"]} />
+          <Section2
+            team={teamHospitality["Hospitality"].filter(
+              (leader: any) => leader.title_hospitality !== ""
+            )}
+            work={works["Hospitality"]}
+          />
         )}
 
         {section == 2 && (
-          <Section3 team={team360["360 Digital"]} work={works["360 Digital"]} />
+          <Section3
+            team={team360["360 Digital"].filter(
+              (leader: any) => leader.title_360 !== ""
+            )}
+            work={works["360 Digital"]}
+          />
         )}
 
         <Footer
@@ -286,11 +301,11 @@ export async function getStaticProps() {
   const res360 = await getFullList({
     collection: "team",
     params: { sort: "order_360", expand: "filter" },
-  })
+  });
   const resCreative = await getFullList({
     collection: "team",
     params: { sort: "order_creative", expand: "filter" },
-  })
+  });
 
   const categorizedTeam = categoirzeTeam(resultLeaders);
   const categorizedWorks = categoirzeWorks(resultWorks);

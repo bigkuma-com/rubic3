@@ -22,7 +22,7 @@ export default function TeamShowCase({
   buttonBorderColor = "light",
 }: {
   leaders: any;
-  type?: "creative" | "360" | "hospitality";
+  type: "creative" | "360" | "hospitality" | "team";
   buttonColor?: string;
   buttonBgColor?: string;
   buttonBorderColor?: string;

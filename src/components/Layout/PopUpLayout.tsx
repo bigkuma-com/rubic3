@@ -25,7 +25,7 @@ export default function PopUpLayout({
   setDisplay: any;
   dataLeadership?: any;
   isLeadership?: boolean;
-  type?: "creative" | "360" | "hospitality";
+  type: "creative" | "360" | "hospitality" | "team";
 }) {
   const boxRef = useRef(null);
   useOutsideClick({ ref: boxRef, handler: () => setDisplay(false) });
