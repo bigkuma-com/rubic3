@@ -230,6 +230,7 @@ export default function Section5({ careers }: { careers: any }) {
       </Box>
 
       <PopUpLayout
+      type="team"
         display={isCardOpen && selectedCareer > -1}
         setDisplay={(isCardOpen: boolean | ((prevState: boolean) => boolean)) =>
           setIsCardOpen(isCardOpen)
