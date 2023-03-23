@@ -82,11 +82,11 @@ export default function Works() {
     }
   );
 
-  useEffect(()=>{
-    if(!query.show && isLarge){
-      replace('/works?show=featured')
+  useEffect(() => {
+    if (!query.show && isLarge) {
+      replace("/works?show=featured");
     }
-  },[query,isLarge])
+  }, [query, isLarge]);
 
   useEffect(() => {
     if (query.show !== "all") return;
@@ -265,69 +265,47 @@ export default function Works() {
               initial="initial"
               animate="animate"
               exit="exit"
+              position="relative"
             >
               <BoxMotion>
                 <Button
-                  text={isLarge ? "Filter by" : "Filter"}
+                  text={query?.filter ?? "all"}
+                  textTransform="capitalize"
                   onClick={() => {
                     setIsFilterOpen(!isFilterOpen);
                   }}
                 />
               </BoxMotion>
-            </BoxMotion>
-          </Box>
 
-          <Box
-            position={{ base: "absolute", lg: "fixed" }}
-            zIndex={1001}
-            top={{ base: 24, lg: 6 }}
-            transform="translateY(20%)"
-            right={{ base: 4, lg: "17rem" }}
-          >
-            <AnimatePresence>
-              {isFilterOpen && (
-                <BoxMotion
-                  mt={6}
-                  ml={5}
-                  display="flex"
-                  flexDirection="column"
-                  gap={3}
-                  variants={containerFilter}
-                  initial="hidden"
-                  animate="show"
-                  exit="hidden"
-                >
-                  <Box
-                    key="all"
-                    _hover={{ opacity: 0.6 }}
-                    cursor="pointer"
-                    onClick={() => {
-                      replace({
-                        query: { ...query, filter: "all" },
-                      });
-                      setSelectedFilter("");
-                      setIsFilterOpen(false);
-                      setDataLoading(true);
-                      setTimeout(() => {
-                        setDataLoading(false);
-                      }, 100);
-                    }}
-                  >
-                    <Text as={motion.span} variants={itemFilter} fontSize="sm">
-                      All
-                    </Text>
-                  </Box>
-                  {filters?.map(({ name, id }) => {
-                    return (
+              <Box
+                position={{ base: "absolute", lg: "absolute" }}
+                zIndex={1001}
+                top={0}
+                transform="translateY(20%)"
+                left={{ base: -4, lg: 0 }}
+              >
+                <AnimatePresence>
+                  {isFilterOpen && (
+                    <BoxMotion
+                      mt={6}
+                      ml={5}
+                      display="flex"
+                      flexDirection="column"
+                      gap={3}
+                      variants={containerFilter}
+                      initial="hidden"
+                      animate="show"
+                      exit="hidden"
+                    >
                       <Box
-                        key={id}
+                        key="all"
                         _hover={{ opacity: 0.6 }}
                         cursor="pointer"
                         onClick={() => {
-                          setSelectedFilter(id);
                           replace({
-                            query: { ...query, filter: name.toLowerCase() },
+                            query: { ...query, filter: "all" },
                           });
+                          setSelectedFilter("");
                           setIsFilterOpen(false);
                           setDataLoading(true);
                           setTimeout(() => {
@@ -340,14 +318,42 @@ export default function Works() {
                           variants={itemFilter}
                           fontSize="sm"
                         >
-                          {name}
+                          All
                         </Text>
                       </Box>
-                    );
-                  })}
-                </BoxMotion>
-              )}
-            </AnimatePresence>
+                      {filters?.map(({ name, id }) => {
+                        return (
+                          <Box
+                            key={id}
+                            _hover={{ opacity: 0.6 }}
+                            cursor="pointer"
+                            onClick={() => {
+                              setSelectedFilter(id);
+                              replace({
+                                query: { ...query, filter: name.toLowerCase() },
+                              });
+                              setIsFilterOpen(false);
+                              setDataLoading(true);
+                              setTimeout(() => {
+                                setDataLoading(false);
+                              }, 100);
+                            }}
+                          >
+                            <Text
+                              as={motion.span}
+                              variants={itemFilter}
+                              fontSize="sm"
+                            >
+                              {name}
+                            </Text>
+                          </Box>
+                        );
+                      })}
+                    </BoxMotion>
+                  )}
+                </AnimatePresence>
+              </Box>
+            </BoxMotion>
           </Box>
 
           <AnimatePresence>

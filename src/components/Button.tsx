@@ -19,8 +19,9 @@ export default function Button({
   isLight = true,
   iconOnLeft = false,
   fontSize = "unset",
+  textTransform = "unset",
 }: {
-  text: string;
+  text: string | string[];
   onClick?: any;
   withIcon?: boolean;
   arrowDown?: boolean;
@@ -34,6 +35,7 @@ export default function Button({
   isLight?: boolean;
   iconOnLeft?: boolean;
   fontSize?: string;
+  textTransform?: any;
 }) {
   return (
     <Box
@@ -89,7 +91,12 @@ export default function Button({
         ) : (
           <ArrowRightSm />
         ))}
-      <Text as="span" fontSize="xs" color="inherit" >
+      <Text
+        as="span"
+        fontSize="xs"
+        color="inherit"
+        textTransform={textTransform ?? "unset"}
+      >
         {text}
       </Text>
       {withIcon &&
