@@ -135,11 +135,11 @@ export default function Section2({
                             </Text>
                             {isExpanded ? (
                               <Box color="dark">
-                                <IconAccordionMinus />
+                                <IconAccordionMinus w={36} h={36} />
                               </Box>
                             ) : (
                               <Box color="dark">
-                                <IconAccordionPlus />
+                                <IconAccordionPlus w={36} h={36} />
                               </Box>
                             )}
                           </AccordionButton>
@@ -368,11 +368,11 @@ export default function Section2({
                                 </Text>
                                 {isExpanded ? (
                                   <Box color="dark">
-                                    <IconAccordionMinus />
+                                    <IconAccordionMinus w={40} h={40} />
                                   </Box>
                                 ) : (
                                   <Box color="dark">
-                                    <IconAccordionPlus />
+                                    <IconAccordionPlus w={40} h={40} />
                                   </Box>
                                 )}
                               </AccordionButton>

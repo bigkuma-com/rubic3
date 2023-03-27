@@ -210,7 +210,7 @@ export default function Section3({ team, work }: { team: any; work: any }) {
             text="View Digital Works"
             isLight={false}
             onClick={() => {
-              push(`/works?show=all&filter=360`);
+              push(`/works?show=all&filter=360+digital`);
             }}
           />
         </Box>

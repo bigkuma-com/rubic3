@@ -16,7 +16,7 @@ export default function Divider({
   return (
     <BoxMotion
       display="flex"
-      alignItems="flex-end"
+      alignItems="center"
       justifyContent="space-between"
       mb={mb ?? { base: 5, lg: 14 }}
       initial="offscreen"
@@ -29,6 +29,7 @@ export default function Divider({
           as="h3"
           fontSize={{ base: "md", lg: "lg" }}
           mr={5}
+          mb={2}
           color={color}
         >
           {text}

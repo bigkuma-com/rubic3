@@ -1,5 +1,4 @@
-import { Box, Heading } from "@chakra-ui/react";
-import { motion } from "framer-motion";
+import { Box, Heading, Text } from "@chakra-ui/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import ImageBgSection1 from "../../assets/images/Homepage Background Work Thumbnail.webp";
@@ -51,24 +50,32 @@ export default function Section2() {
       <Box
         w={{ base: "full", lg: "50%" }}
         color="white"
-        mt={{base:0,lg:"12%"}}
+        mt={{ base: 0, lg: "12%" }}
         pr={{ base: 0, lg: "7%" }}
         display="flex"
         flexDir={"column"}
         gap={8}
         zIndex={5}
       >
-        <Heading
-          fontSize={["3xl", null, null, "4xl", "5xl"]}
-          as={motion.h2}
+        <BoxMotion
           variants={itemBotToTop(0)}
           initial="offscreen"
           whileInView="onscreen"
           viewport={{ once: false }}
         >
-          We use the power of creativity to build better futures for our people,
-          planet, businesses, and communities.
-        </Heading>
+          <Text
+            fontSize={{ base: "xs", lg: "md" }}
+            as="h3"
+            mb={2}
+            opacity={0.7}
+          >
+            Singapore, Indonesia
+          </Text>
+          <Heading fontSize={["3xl", null, null, "4xl", "5xl"]} as="h2">
+            We use the power of creativity to build better futures for our
+            people, planet, businesses, and communities.
+          </Heading>
+        </BoxMotion>
 
         <BoxMotion
           variants={itemBotToTop(0.3)}
