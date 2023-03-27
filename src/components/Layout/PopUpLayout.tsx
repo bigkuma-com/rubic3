@@ -55,7 +55,7 @@ export default function PopUpLayout({
             animate="animate"
             exit="exit"
             w={{ base: "90%", lg: "80%" }}
-            h={{ base: "90%", lg: "80%" }}
+            h={{ base: "90%", lg: "85%" }}
             bg="light"
             position="relative"
             px={[4, null, null, 20]}
