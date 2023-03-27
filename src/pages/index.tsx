@@ -1,6 +1,8 @@
 import { Box } from "@chakra-ui/react";
+import { LayoutGroup } from "framer-motion";
 import { NextSeo } from "next-seo";
 import "swiper/css";
+import BoxMotion from "../components/BoxMotion";
 import Footer from "../components/footer";
 import Header from "../components/header";
 import Section1 from "../components/landing/Section1";
@@ -66,8 +68,12 @@ export default function Home({ sliders }: any) {
         <Header contactMarginRight={marginRightContact} />
         <Section1 sliders={sliders} />
         <Section2 />
-        <Section3 />
-        <Section4 />
+        <LayoutGroup>
+          <Section3 />
+          <BoxMotion layout>
+            <Section4 />
+          </BoxMotion>
+        </LayoutGroup>
         <Footer position="relative" />
       </Box>
     </>

@@ -10,7 +10,7 @@ export default function Section4() {
   });
 
   return (
-    <Box bg="dark" px={marginXSection} pb={{ base: "10vh", lg: "20vh" }}>
+    <Box bg="dark" px={marginXSection} pb={20}>
       <Divider text="Contact" />
 
       <Box mr={{ base: 0, lg: "25%" }} w="full" zIndex={6}>

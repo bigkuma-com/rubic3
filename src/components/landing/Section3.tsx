@@ -37,7 +37,7 @@ export default function Section3() {
   });
 
   return (
-    <Box mt={20} px={marginXSection} h={{ base: "55vh", xl: "65vh" }} bg="dark">
+    <Box my={20} px={marginXSection} h="full" bg="dark">
       <Divider text="Our Division" />
 
       <LayoutGroup>
