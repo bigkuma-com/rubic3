@@ -32,6 +32,7 @@ import {
 import { makeBold } from "../../utils/functions";
 import { ICoordinate } from "../../utils/types";
 
+
 const blockSpacing = {
   height: 12,
   width: 15,
