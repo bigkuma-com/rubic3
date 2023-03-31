@@ -177,7 +177,8 @@ export default function About({
               exit="exit"
               pl={marginX}
               position="fixed"
-              py={2}
+              pt={6}
+              pb={2}
               bg={themeColor[+isEven]}
               left={0}
               top={16}
