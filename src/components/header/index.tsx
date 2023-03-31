@@ -65,10 +65,6 @@ export default function Header({
   }, [isNavOpen]);
 
   useEffect(() => {
-    !isModalOpen && setIsNavOpen(false);
-  }, [isModalOpen]);
-
-  useEffect(() => {
     scrollPosition > 20 ? setShowBg(true) : setShowBg(false);
   }, [scrollPosition]);
 
@@ -101,7 +97,6 @@ export default function Header({
           ? "transparent"
           : bg
       }
-      // bg={!showBg || isTransparent ? "transparent" : bg ?? "dark"}
       className="animate-bg"
     >
       <Box position="relative" cursor="pointer" onClick={() => push("/")}>
@@ -158,7 +153,7 @@ export default function Header({
           <Box
             cursor="pointer"
             onClick={() => {
-              setIsModalOpen(true);
+              setIsModalOpen(!isModalOpen);
               setIsNavOpen(!isNavOpen);
             }}
           >
