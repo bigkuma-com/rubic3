@@ -70,7 +70,7 @@ export default function Section2({
                   key={id}
                   position="relative"
                   w="full"
-                  variants={itemBotToTop(i * 0.5)}
+                  variants={itemBotToTop(i * 0.01)}
                   initial="offscreen"
                   whileInView="onscreen"
                   viewport={{ once: false }}
@@ -163,7 +163,7 @@ export default function Section2({
                                     key={id}
                                     position="relative"
                                     w="full"
-                                    variants={itemBotToTop(i * 0.05)}
+                                    variants={itemBotToTop(i * 0.01)}
                                     initial="offscreen"
                                     whileInView="onscreen"
                                     viewport={{ once: true }}
@@ -399,7 +399,7 @@ export default function Section2({
                                         key={id}
                                         position="relative"
                                         w="full"
-                                        variants={itemBotToTop(i * 0.05)}
+                                        variants={itemBotToTop(i * 0.01)}
                                         initial="offscreen"
                                         whileInView="onscreen"
                                         viewport={{ once: true }}

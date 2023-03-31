@@ -82,7 +82,7 @@ export default function Section2({
                         return (
                           <BoxMotion
                             key={id}
-                            variants={itemBotToTop(i * 0.1)}
+                            variants={itemBotToTop(i * 0.01)}
                             initial="offscreen"
                             whileInView="onscreen"
                             cursor={link ? "pointer" : "unset"}
@@ -122,7 +122,7 @@ export default function Section2({
                             key={id}
                             position="relative"
                             w="full"
-                            variants={itemBotToTop(i * 0.1)}
+                            variants={itemBotToTop(i * 0.01)}
                             initial="offscreen"
                             whileInView="onscreen"
                             cursor={link ? "pointer" : "unset"}
