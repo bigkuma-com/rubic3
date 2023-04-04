@@ -77,8 +77,6 @@ export default function Header({
     !isModalOpen && setIsNavOpen(false);
   }, [isModalOpen]);
 
-  console.log(isModalOpen, isNavOpen);
-
   return (
     <BoxMotion
       display="flex"
