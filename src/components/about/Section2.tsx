@@ -55,10 +55,13 @@ export default function Section2({
           {[
             "Our Partners",
             "Property.Place & Hospitality",
-            "Food & Beverage",
             "Retail & Lifestyle",
             "Products & Services",
             "Associations",
+            "Property & Hospitality",
+            "Digital & Entertainment",
+            "Food & Beverage",
+            "RetaiL. Lifestyles & Placem Making",
           ].map((title, i) => {
             if (!partnersAssociations[title]) return null;
             return (

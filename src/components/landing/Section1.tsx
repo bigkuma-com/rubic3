@@ -96,7 +96,7 @@ export default function Section1({ sliders }: { sliders: any }) {
           disableOnInteraction: false,
         }}
         effect={"fade"}
-        loop={true}
+        loop={false}
         lazy={true}
         modules={[Autoplay, EffectFade, Lazy]}
         onSlideChange={(swiper) => {
@@ -172,7 +172,7 @@ export default function Section1({ sliders }: { sliders: any }) {
                         })}
                         width="100%"
                         height="100%"
-                        playing={playing}
+                        playing={playing && i == section}
                         onPlay={() => {
                           setShowLoading(false);
                         }}
@@ -185,6 +185,9 @@ export default function Section1({ sliders }: { sliders: any }) {
                         onReady={() => {
                           setShowLoading(false);
                         }}
+                        pip={false}
+                        stopOnUnmount
+
                       />
                       <AnimatePresence>
                         {showControl && (
