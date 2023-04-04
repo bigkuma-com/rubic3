@@ -73,6 +73,12 @@ export default function Header({
     handler: () => setIsModalOpen(false),
   });
 
+  useEffect(() => {
+    !isModalOpen && setIsNavOpen(false);
+  }, [isModalOpen]);
+
+  console.log(isModalOpen, isNavOpen);
+
   return (
     <BoxMotion
       display="flex"
@@ -153,8 +159,8 @@ export default function Header({
           <Box
             cursor="pointer"
             onClick={() => {
-              setIsModalOpen(!isModalOpen);
               setIsNavOpen(!isNavOpen);
+              isLarge && setIsModalOpen(true);
             }}
           >
             <BoxMotion

@@ -1,11 +1,16 @@
-import { Box, Text } from "@chakra-ui/react";
+import { Box, Spinner, Text } from "@chakra-ui/react";
+import { AnimatePresence } from "framer-motion";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { useIdleTimer } from "react-idle-timer";
 import { Autoplay, EffectFade, Lazy } from "swiper";
 import "swiper/css";
 import "swiper/css/effect-fade";
 import { Swiper, SwiperSlide } from "swiper/react";
+import IconPause from "../../assets/js/IconPause";
+import IconPlay from "../../assets/js/IconPlay";
 import { getImage } from "../../utils/api";
 import {
   animateBottomToTop,
@@ -14,14 +19,28 @@ import {
   marginY,
 } from "../../utils/consts";
 import BoxMotion from "../BoxMotion";
+const ReactPlayer = dynamic(() => import("react-player"), { ssr: false });
 
 export default function Section1({ sliders }: { sliders: any }) {
   const { push } = useRouter();
 
   const [swiper, setSwiper] = useState<any>(null);
   const [section, setSection] = useState(0);
+  const [playing, setPlaying] = useState(false);
+  const [showControl, setShowControl] = useState(true);
+  const [showLoading, setShowLoading] = useState(false);
 
   const slideTo = (index: any) => swiper.slideTo(index);
+
+  const onIdle = () => {
+    setShowControl(false);
+  };
+
+  const onActive = () => {
+    setShowControl(true);
+  };
+
+  const {} = useIdleTimer({ onIdle, onActive, timeout: 1500 });
 
   return (
     <BoxMotion
@@ -35,38 +54,40 @@ export default function Section1({ sliders }: { sliders: any }) {
       animate="animate"
       exit="exit"
     >
-      <Box
-        as="ul"
-        position="absolute"
-        left="50%"
-        bottom={marginY}
-        transform="translateX(-50%)"
-        zIndex={500}
-        display="flex"
-        gap={3}
-        listStyleType="none"
-      >
-        {sliders.map(({}, i: any) => {
-          return (
-            <Box
-              as="li"
-              cursor="pointer"
-              key={i}
-              py={2}
-              _hover={{
-                opacity: 1,
-              }}
-              opacity={i == section ? 1 : 0.3}
-              transition="opacity 0.2s ease-in-out"
-              onClick={() => {
-                slideTo(i + 1);
-              }}
-            >
-              <Box h="2px" w="30px" bg="light" borderRadius="md" />
-            </Box>
-          );
-        })}
-      </Box>
+      {sliders?.length > 1 && (
+        <Box
+          as="ul"
+          position="absolute"
+          left="50%"
+          bottom={marginY}
+          transform="translateX(-50%)"
+          zIndex={500}
+          display="flex"
+          gap={3}
+          listStyleType="none"
+        >
+          {sliders.map(({}, i: any) => {
+            return (
+              <Box
+                as="li"
+                cursor="pointer"
+                key={i}
+                py={2}
+                _hover={{
+                  opacity: 1,
+                }}
+                opacity={i == section ? 1 : 0.3}
+                transition="opacity 0.2s ease-in-out"
+                onClick={() => {
+                  slideTo(i + 1);
+                }}
+              >
+                <Box h="2px" w="30px" bg="light" borderRadius="md" />
+              </Box>
+            );
+          })}
+        </Box>
+      )}
 
       <Swiper
         speed={1000}
@@ -80,6 +101,7 @@ export default function Section1({ sliders }: { sliders: any }) {
         modules={[Autoplay, EffectFade, Lazy]}
         onSlideChange={(swiper) => {
           setSection(swiper.realIndex);
+          setPlaying(false);
         }}
         onSwiper={setSwiper}
       >
@@ -141,28 +163,64 @@ export default function Section1({ sliders }: { sliders: any }) {
                   bg="dark"
                 >
                   {is_video ? (
-                    <video
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        backgroundColor: "black",
-                      }}
-                      autoPlay={i == section}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.play();
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.pause();
-                      }}
-                      loop
-                      muted={i != section}
-                      src={getImage({
-                        collectionName: collectionName,
-                        recordId: id,
-                        filename: file,
-                      })}
-                      disablePictureInPicture
-                    />
+                    <>
+                      <ReactPlayer
+                        url={getImage({
+                          collectionName: collectionName,
+                          recordId: id,
+                          filename: file,
+                        })}
+                        width="100%"
+                        height="100%"
+                        playing={playing}
+                        onPlay={() => {
+                          setShowLoading(false);
+                        }}
+                        onBuffer={() => {
+                          setShowLoading(true);
+                        }}
+                        onStart={() => {
+                          setShowLoading(false);
+                        }}
+                        onReady={() => {
+                          setShowLoading(false);
+                        }}
+                      />
+                      <AnimatePresence>
+                        {showControl && (
+                          <BoxMotion
+                            layout
+                            position="unset"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 0.8 }}
+                            exit={{ opacity: 0 }}
+                          >
+                            <Box
+                              position="fixed"
+                              top="50%"
+                              left="50%"
+                              transform="translate(-50%, -50%)"
+                              color="light"
+                              cursor={showLoading ? "progress" : "pointer"}
+                              onClick={() => {
+                                !showLoading && setPlaying(!playing);
+                              }}
+                              bg="dark"
+                              p={2}
+                              borderRadius="full"
+                            >
+                              {showLoading ? (
+                                <Spinner size="xl" />
+                              ) : playing ? (
+                                <IconPause size={50} />
+                              ) : (
+                                <IconPlay size={50} />
+                              )}
+                            </Box>
+                          </BoxMotion>
+                        )}
+                      </AnimatePresence>
+                    </>
                   ) : (
                     <Image
                       src={getImage({

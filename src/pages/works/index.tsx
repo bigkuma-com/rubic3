@@ -107,7 +107,7 @@ export default function Works() {
   }, [query, filters]);
 
   useEffect(() => {
-    if (query.show === "all") return;
+    if (query.show !== "featured") return;
     if (wrapperRef === null) return;
 
     setContainerSize({
@@ -174,7 +174,7 @@ export default function Works() {
     width: w,
   } = blockSpacing;
 
-  if (query.show == "all" || !isLarge)
+  if (query.show !== "featured" || !isLarge)
     return (
       <>
         <NextSeo
@@ -217,7 +217,7 @@ export default function Works() {
               sizes: "76x76",
             },
           ]}
-        />{" "}
+        />
         <Box
           bg="dark"
           w="full"
@@ -499,7 +499,7 @@ export default function Works() {
           setPan({ x: panX, y: panY });
         }}
       >
-        <Header contactMarginRight={marginRightContact} />
+        <Header contactMarginRight={marginRightContact} isTransparent bg="transparent" />
 
         <Box
           position="fixed"

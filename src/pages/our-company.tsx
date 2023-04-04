@@ -156,7 +156,7 @@ export default function OurCompany({
               exit="exit"
               pl={marginX}
               position="fixed"
-              pt={6}
+              pt={3}
               pb={2}
               bg={sidebarServices[section].color}
               left={0}
