@@ -49,7 +49,7 @@ const seo = {
 };
 
 export default function Works() {
-  const { query, replace, push } = useRouter();
+  const { query, replace, push, isReady } = useRouter();
   const wrapperRef = useRef<any>(null);
 
   const [isLarge] = useMediaQuery("(min-width: 991px)", {
@@ -83,12 +83,14 @@ export default function Works() {
   );
 
   useEffect(() => {
-    if (!query.show && isLarge) {
+    if (isReady && !query.show && isLarge) {
       replace("/works?show=featured");
     }
-  }, [query, isLarge]);
+  }, [query, isLarge, isReady]);
 
   useEffect(() => {
+    if (!isReady) return;
+
     if (query.show !== "all" && isLarge) return;
 
     if (query.filter == undefined || query.filter === "all") {
@@ -104,7 +106,7 @@ export default function Works() {
         }
       });
     }
-  }, [query, filters]);
+  }, [query, filters, isReady]);
 
   useEffect(() => {
     if (query.show !== "featured") return;
@@ -133,8 +135,12 @@ export default function Works() {
     if (query.show !== "all" && isLarge) {
       setSelectedFilter("");
       setNumOfBlocks(12);
+    } else {
+      if (data) {
+        setDataLoading(false);
+      }
     }
-  }, [query]);
+  }, [query, data]);
 
   const onIdle = () => {
     if (query.show == "all" || !isLarge) return;
@@ -174,7 +180,7 @@ export default function Works() {
     width: w,
   } = blockSpacing;
 
-  if (query.show !== "featured" || !isLarge)
+  if (query.show === "all" || !isLarge)
     return (
       <>
         <NextSeo
@@ -260,100 +266,105 @@ export default function Works() {
             transform="translateY(20%)"
             right={{ base: 4, lg: 64 }}
           >
-            <BoxMotion
-              variants={animateTopToBottom}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              position="relative"
-            >
-              <BoxMotion>
-                <Button
-                  text={query?.filter ?? "all"}
-                  textTransform="capitalize"
-                  onClick={() => {
-                    setIsFilterOpen(!isFilterOpen);
-                  }}
-                />
-              </BoxMotion>
-
-              <Box
-                position={{ base: "absolute", lg: "absolute" }}
-                zIndex={1001}
-                top={0}
-                transform="translateY(20%)"
-                left={{ base: -4, lg: 0 }}
+            <AnimatePresence>
+              <BoxMotion
+                variants={animateTopToBottom}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                position="relative"
               >
-                <AnimatePresence>
-                  {isFilterOpen && (
-                    <BoxMotion
-                      mt={6}
-                      ml={5}
-                      display="flex"
-                      flexDirection="column"
-                      gap={3}
-                      variants={containerFilter}
-                      initial="hidden"
-                      animate="show"
-                      exit="hidden"
-                    >
-                      <Box
-                        key="all"
-                        _hover={{ opacity: 0.6 }}
-                        cursor="pointer"
-                        onClick={() => {
-                          replace({
-                            query: { ...query, filter: "all" },
-                          });
-                          setSelectedFilter("");
-                          setIsFilterOpen(false);
-                          setDataLoading(true);
-                          setTimeout(() => {
-                            setDataLoading(false);
-                          }, 100);
-                        }}
+                <BoxMotion>
+                  <Button
+                    text={query?.filter ?? "all"}
+                    textTransform="capitalize"
+                    onClick={() => {
+                      setIsFilterOpen(!isFilterOpen);
+                    }}
+                  />
+                </BoxMotion>
+
+                <Box
+                  position={{ base: "absolute", lg: "absolute" }}
+                  zIndex={1001}
+                  top={0}
+                  transform="translateY(20%)"
+                  left={{ base: -4, lg: 0 }}
+                >
+                  <AnimatePresence>
+                    {isFilterOpen && (
+                      <BoxMotion
+                        mt={6}
+                        ml={5}
+                        display="flex"
+                        flexDirection="column"
+                        gap={3}
+                        variants={containerFilter}
+                        initial="hidden"
+                        animate="show"
+                        exit="hidden"
                       >
-                        <Text
-                          as={motion.span}
-                          variants={itemFilter}
-                          fontSize="sm"
+                        <Box
+                          key="all"
+                          _hover={{ opacity: 0.6 }}
+                          cursor="pointer"
+                          onClick={() => {
+                            replace({
+                              query: { ...query, filter: "all" },
+                            });
+                            setSelectedFilter("");
+                            setIsFilterOpen(false);
+                            setDataLoading(true);
+                            setTimeout(() => {
+                              setDataLoading(false);
+                            }, 100);
+                          }}
                         >
-                          All
-                        </Text>
-                      </Box>
-                      {filters?.map(({ name, id }) => {
-                        return (
-                          <Box
-                            key={id}
-                            _hover={{ opacity: 0.6 }}
-                            cursor="pointer"
-                            onClick={() => {
-                              setSelectedFilter(id);
-                              replace({
-                                query: { ...query, filter: name.toLowerCase() },
-                              });
-                              setIsFilterOpen(false);
-                              setDataLoading(true);
-                              setTimeout(() => {
-                                setDataLoading(false);
-                              }, 100);
-                            }}
+                          <Text
+                            as={motion.span}
+                            variants={itemFilter}
+                            fontSize="sm"
                           >
-                            <Text
-                              as={motion.span}
-                              variants={itemFilter}
-                              fontSize="sm"
+                            All
+                          </Text>
+                        </Box>
+                        {filters?.map(({ name, id }) => {
+                          return (
+                            <Box
+                              key={id}
+                              _hover={{ opacity: 0.6 }}
+                              cursor="pointer"
+                              onClick={() => {
+                                setSelectedFilter(id);
+                                replace({
+                                  query: {
+                                    ...query,
+                                    filter: name.toLowerCase(),
+                                  },
+                                });
+                                setIsFilterOpen(false);
+                                setDataLoading(true);
+                                setTimeout(() => {
+                                  setDataLoading(false);
+                                }, 100);
+                              }}
                             >
-                              {name}
-                            </Text>
-                          </Box>
-                        );
-                      })}
-                    </BoxMotion>
-                  )}
-                </AnimatePresence>
-              </Box>
-            </BoxMotion>
+                              <Text
+                                as={motion.span}
+                                variants={itemFilter}
+                                fontSize="sm"
+                              >
+                                {name}
+                              </Text>
+                            </Box>
+                          );
+                        })}
+                      </BoxMotion>
+                    )}
+                  </AnimatePresence>
+                </Box>
+              </BoxMotion>
+            </AnimatePresence>
           </Box>
 
           <AnimatePresence>
@@ -499,7 +510,11 @@ export default function Works() {
           setPan({ x: panX, y: panY });
         }}
       >
-        <Header contactMarginRight={marginRightContact} isTransparent bg="transparent" />
+        <Header
+          contactMarginRight={marginRightContact}
+          isTransparent
+          bg="transparent"
+        />
 
         <Box
           position="fixed"
