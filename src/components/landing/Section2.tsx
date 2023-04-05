@@ -69,7 +69,7 @@ export default function Section2() {
             mb={2}
             opacity={0.7}
           >
-            Singapore, Indonesia
+            Singapore | Indonesia
           </Text>
           <Heading fontSize={["3xl", null, null, "4xl", "5xl"]} as="h2">
             We use the power of creativity to build better futures for our

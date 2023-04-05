@@ -54,14 +54,12 @@ export default function Section2({
         <Box>
           {[
             "Our Partners",
-            "Property.Place & Hospitality",
-            "Retail & Lifestyle",
-            "Products & Services",
-            "Associations",
-            "Property & Hospitality",
             "Digital & Entertainment",
             "Food & Beverage",
-            "RetaiL. Lifestyles & Placem Making",
+            "Property & Hospitality",
+            "RetaiL. Lifestyle & Place Making",
+            "Products & Services",
+            "Associations",
           ].map((title, i) => {
             if (!partnersAssociations[title]) return null;
             return (
