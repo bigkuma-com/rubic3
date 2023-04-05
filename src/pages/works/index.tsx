@@ -5,13 +5,13 @@ import {
   SimpleGrid,
   Spinner,
   Text,
-  useMediaQuery,
+  useMediaQuery
 } from "@chakra-ui/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { NextSeo } from "next-seo";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useEffect, useRef, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import { useIdleTimer } from "react-idle-timer";
 import ArrowRightSm from "../../assets/js/ArrowRightSm";
 import IconChevronDown from "../../assets/js/IconChevronDown";
@@ -27,7 +27,7 @@ import {
   itemBotToTop,
   marginRightContact,
   marginY,
-  showOnLarge,
+  showOnLarge
 } from "../../utils/consts";
 import { makeBold } from "../../utils/functions";
 import { ICoordinate } from "../../utils/types";
@@ -747,7 +747,7 @@ export default function Works() {
   );
 }
 
-function ImageWrapperFeatured({
+const ImageWrapperFeatured = memo(function ImageWrapperFeatured({
   top,
   left,
   className,
@@ -914,9 +914,15 @@ function ImageWrapperFeatured({
       </Box>
     </>
   );
-}
+});
 
-function ImageWrapperAll({ data, idx }: { data: any; idx: number }) {
+const ImageWrapperAll = memo(function ImageWrapperAll({
+  data,
+  idx,
+}: {
+  data: any;
+  idx: number;
+}) {
   const { push } = useRouter();
   const [hover, setHover] = useState(false);
 
@@ -1050,7 +1056,7 @@ function ImageWrapperAll({ data, idx }: { data: any; idx: number }) {
       </Box>
     </BoxMotion>
   );
-}
+});
 
 const containerFilter = {
   hidden: { opacity: 0, transition: { duration: 0.5, ease: "easeInOut" } },
