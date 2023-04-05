@@ -57,7 +57,7 @@ export default function Section2({
             "Digital & Entertainment",
             "Food & Beverage",
             "Property & Hospitality",
-            "RetaiL. Lifestyle & Place Making",
+            "Retail. Lifestyle & Place Making",
             "Products & Services",
             "Associations",
           ].map((title, i) => {
