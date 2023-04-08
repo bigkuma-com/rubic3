@@ -15,6 +15,7 @@ import {
   animateOpacityHalf,
   animateScaling,
   itemBotToTop,
+  marginXSection,
   phoneRegExp,
 } from "../utils/consts";
 
@@ -46,7 +47,7 @@ export default function Contact() {
         .max(15, "Must be 15 characters or less")
         .required("Required"),
       email: Yup.string().email("Invalid email address").required("Required"),
-      company: Yup.string(),
+      company: Yup.string().required("Required"),
       phone: Yup.string()
         .matches(phoneRegExp, "Phone number is not valid")
         .required("Required"),
@@ -166,7 +167,7 @@ export default function Contact() {
         </AnimatePresence>
 
         <Box
-          px={[5, 6, 10, "20%"]}
+          px={marginXSection}
           py={[28, null, null, "12%"]}
           w="full"
           minH="100vh"
@@ -370,25 +371,10 @@ export default function Contact() {
 
                 <Box
                   display="flex"
-                  // justifyContent="space-between"
                   justifyContent="flex-end"
                   mb={24}
                   flexDirection={{ base: "column", lg: "row" }}
                 >
-                  {/* <Checkbox
-                    w={{ base: "full", lg: "70%" }}
-                    mb={[6, null, null, 0]}
-                    colorScheme="dark"
-                    borderRadius="50%"
-                    className="checkbox"
-                    color="light"
-                    id="subscribe"
-                    {...formik.getFieldProps("subscribe")}
-                  >
-                    I want to stay up-to-date with the latest Rubicube news and
-                    consent to providing my email to subscribe to email
-                    marketing updates.
-                  </Checkbox> */}
                   <Button
                     type="submit"
                     text="Submit"

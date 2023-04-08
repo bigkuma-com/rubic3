@@ -142,3 +142,9 @@ select:-webkit-autofill:focus {
     // transform-origin: right top;
   }
 }
+
+.slide-container{
+  video {
+    object-fit: cover;
+  }
+}

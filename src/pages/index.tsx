@@ -72,9 +72,9 @@ export default function Home({ sliders }: any) {
           <Section3 />
           <BoxMotion layout>
             <Section4 />
+            <Footer position="relative" />
           </BoxMotion>
         </LayoutGroup>
-        <Footer position="relative" />
       </Box>
     </>
   );

@@ -5,7 +5,7 @@ import {
   SimpleGrid,
   Spinner,
   Text,
-  useMediaQuery
+  useMediaQuery,
 } from "@chakra-ui/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { NextSeo } from "next-seo";
@@ -27,7 +27,7 @@ import {
   itemBotToTop,
   marginRightContact,
   marginY,
-  showOnLarge
+  showOnLarge,
 } from "../../utils/consts";
 import { makeBold } from "../../utils/functions";
 import { ICoordinate } from "../../utils/types";
@@ -261,7 +261,7 @@ export default function Works() {
 
           <Box
             position={{ base: "absolute", lg: "fixed" }}
-            zIndex={1001}
+            zIndex={500}
             top={{ base: 24, lg: 6 }}
             transform="translateY(20%)"
             right={{ base: 4, lg: 64 }}
@@ -375,7 +375,7 @@ export default function Works() {
                 position="fixed"
                 top={0}
                 left={0}
-                zIndex={1000}
+                zIndex={400}
                 bg="black"
                 initial={{ opacity: 0 }}
                 animate={{
@@ -856,7 +856,6 @@ const ImageWrapperFeatured = memo(function ImageWrapperFeatured({
                 }}
                 exit={{
                   backgroundColor: "rgba(0,0,0,0.0)",
-
                   transition: {
                     ease: "easeInOut",
                     duration: 0.5,

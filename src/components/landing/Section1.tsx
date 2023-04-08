@@ -29,6 +29,7 @@ export default function Section1({ sliders }: { sliders: any }) {
   const [playing, setPlaying] = useState(false);
   const [showControl, setShowControl] = useState(true);
   const [showLoading, setShowLoading] = useState(false);
+  const [showThumbnail, setShowThumbnail] = useState(true);
 
   const slideTo = (index: any) => swiper.slideTo(index);
 
@@ -115,6 +116,7 @@ export default function Section1({ sliders }: { sliders: any }) {
               id,
               is_video,
               file,
+              thumbnail,
               duration,
             }: any,
             i: any
@@ -161,10 +163,32 @@ export default function Section1({ sliders }: { sliders: any }) {
                   h={{ base: "35vmax", md: "100vh" }}
                   position="relative"
                   bg="dark"
+                  className={`slide-container`}
                 >
                   {is_video ? (
                     <>
+                      {showThumbnail && (
+                        <Box
+                          position="fixed"
+                          h="full"
+                          w="full"
+                          top={0}
+                          left={0}
+                        >
+                          <Image
+                            fill
+                            src={getImage({
+                              collectionName: collectionName,
+                              recordId: id,
+                              filename: thumbnail,
+                            })}
+                            alt={title + " Thumbnail"}
+                            style={{ objectFit: "cover" }}
+                          />
+                        </Box>
+                      )}
                       <ReactPlayer
+                        style={{ objectFit: "cover" }}
                         url={getImage({
                           collectionName: collectionName,
                           recordId: id,
@@ -181,13 +205,13 @@ export default function Section1({ sliders }: { sliders: any }) {
                         }}
                         onStart={() => {
                           setShowLoading(false);
+                          setShowThumbnail(false);
                         }}
                         onReady={() => {
                           setShowLoading(false);
                         }}
                         pip={false}
                         stopOnUnmount
-
                       />
                       <AnimatePresence>
                         {showControl && (
