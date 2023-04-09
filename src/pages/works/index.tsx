@@ -261,7 +261,7 @@ export default function Works() {
 
           <Box
             position={{ base: "absolute", lg: "fixed" }}
-            zIndex={500}
+            zIndex={{ base: 500, lg: 1001 }}
             top={{ base: 24, lg: 6 }}
             transform="translateY(20%)"
             right={{ base: 4, lg: 64 }}
