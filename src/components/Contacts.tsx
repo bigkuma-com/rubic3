@@ -202,11 +202,11 @@ const contents = [
         name: "Indonesia",
         description: (
           <>
-            Mall of Indonesia
+            Jl. Raya Kebayoran Lama No. 396
             <br />
-            Frenchwalk Blok G/03, Kelapa Gading
+            Kebon Jeruk
             <br />
-            Jakarta Utara 14240
+            Jakarta Barat 11540
           </>
         ),
       },
@@ -253,11 +253,11 @@ const contents = [
         },
         address: (
           <>
-            Mall of Indonesia
+            Jl. Raya Kebayoran Lama No. 396
             <br />
-            Frenchwalk Blok G/03, Kelapa Gading
+            Kebon Jeruk
             <br />
-            Jakarta Utara 14240
+            Jakarta Barat 11540
           </>
         ),
       },
