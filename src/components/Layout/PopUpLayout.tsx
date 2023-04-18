@@ -127,7 +127,8 @@ export default function PopUpLayout({
                   <Text
                     fontSize={{ base: "xs", lg: "sm" }}
                     color="dark"
-                    opacity={0.7}
+                    opacity={0.7} 
+                    whiteSpace="pre-wrap"
                   >
                     {dataLeadership.description}
                   </Text>

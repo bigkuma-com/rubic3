@@ -1,12 +1,10 @@
-import { useMediaQuery } from "@chakra-ui/react";
+import { Box, useMediaQuery } from "@chakra-ui/react";
 import Image from "next/image";
-import IconAdhyaLight from "../../assets/svg/icon-member-of-adhya-light.svg";
-import IconAdhya from "../../assets/svg/icon-member-of-adhya.svg";
+import IconAdhya from "../../assets/images/Logo Part of Adhya Group3.png";
+import IconAdhyaLight from "../../assets/images/Logo Part of Adhya Group4.png";
 import {
   animateBottomToTop,
-  marginX,
   marginXHeader,
-  marginY,
   marginYHeader,
   themeColor,
 } from "../../utils/consts";
@@ -46,27 +44,34 @@ export default function AdhyaGroup({
           },
         }}
       >
-        {isLight ? (
-          <Image
-            src={IconAdhyaLight}
-            height={isLarge ? 30 : 20}
-            width={isLarge ? 140 : 100}
-            alt="Adhya"
-            style={{
-              objectFit: "contain",
-            }}
-          />
-        ) : (
-          <Image
-            src={IconAdhya}
-            height={isLarge ? 30 : 20}
-            width={isLarge ? 140 : 100}
-            alt="Adhya"
-            style={{
-              objectFit: "contain",
-            }}
-          />
-        )}
+        <Box
+          onClick={() => {
+            window.open(`https://adhya.id/`, `_blank`);
+          }}
+          cursor="pointer"
+        >
+          {isLight ? (
+            <Image
+              src={IconAdhyaLight}
+              height={isLarge ? 40 : 20}
+              width={isLarge ? 150 : 100}
+              alt="Adhya"
+              style={{
+                objectFit: "contain",
+              }}
+            />
+          ) : (
+            <Image
+              src={IconAdhya}
+              height={isLarge ? 40 : 20}
+              width={isLarge ? 150 : 100}
+              alt="Adhya"
+              style={{
+                objectFit: "contain",
+              }}
+            />
+          )}
+        </Box>
       </BoxMotion>
     </BoxMotion>
   );

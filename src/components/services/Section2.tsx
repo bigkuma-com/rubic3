@@ -19,6 +19,7 @@ import Divider from "../Divider";
 import TeamShowCase from "../TeamShowCase";
 import WorksShowCase from "../WorksShowCase";
 import CompanyMobile from "./CompanyMobile";
+import Contacts from "./Contact";
 
 export default function Section1({ team, work }: { team: any; work: any }) {
   const { replace, query, push } = useRouter();
@@ -230,9 +231,38 @@ export default function Section1({ team, work }: { team: any; work: any }) {
           }}
         />
       </Box>
+
+      <Box pl={sectionMarginLeft2} pr={marginRightContact2} mt={10}>
+        <Contacts contacts={contacts}  />
+      </Box>
     </Box>
   );
 }
+
+const contacts = [
+  {
+    location: "Singapore",
+    whatsapp: { name: "+65.8498.1278", url: "https://wa.me/6584981278" },
+    email: "info.sg@rubic3.com",
+    instagram: {
+      name: "rubicube.hospitality",
+      url: "https://www.instagram.com/rubicube.hospitality/",
+    },
+    facebook: {
+      name: "rubicube hospitality sg",
+      url: "https://facebook.com/rubicubehospitalitysg/",
+    },
+    address: (
+      <>
+        60 Paya Lebar Road #11-26
+        <br />
+        Paya Lebar Square
+        <br />
+        Singapore 409051
+      </>
+    ),
+  },
+];
 
 const contents = [
   {

@@ -26,13 +26,9 @@ export default function Section1() {
   return (
     <Box
       w={{ base: "full", lg: "70%" }}
-      h="full"
-      minH="100vh"
-      display="flex"
-      alignItems="center"
       pl={sectionMarginLeft}
       pr={marginRightContact}
-      pt={isLarge ? 0 : marginTop}
+      pt={marginTop}
       pb={marginBottom}
     >
       <Box display="flex" flexDirection="column">
@@ -58,15 +54,20 @@ export default function Section1() {
         >
           <Text as="p" fontSize="sm">
             <Text as="span" opacity={0.6}>
-              Rubicube Group is a holistic branding and management advisory that
-              excels in brand strategy, identity development, hotel management,
-              F&B management, digital marketing, and communication. Rubicube
-              Group operates in Singapore, Indonesia, and Malaysia, working with
-              clients ranging from independent and international brands since
-              2008.
+              {`Rubicube Group is a dynamic and innovative branding and management advisory firm that has been making waves in the industry since 2008. Our team of experts excels in a wide range of services, including brand strategy, identity development, hotel management, F&B management, digital marketing, and communication, among others.`}
+              <br />
+              <br />
+              {`Our unique approach to branding and management is rooted in our commitment to a holistic, 360-degree perspective. We believe that every aspect of a business, from its brand identity to its digital presence, must work together seamlessly to achieve success. That's why we take a comprehensive approach to every project, ensuring that every detail is carefully considered and executed to perfection.`}
+              <br />
+              <br />
+              {`With a presence in Singapore, Indonesia, and Malaysia, Rubicube Group has worked with a diverse range of clients, from independent startups to international brands. Our client-centric approach has earned us a reputation for excellence and innovation, and we are proud to have helped many businesses achieve their goals and realize their full potential.`}
+              <br />
+              <br />
+              {`Today, we are thrilled to announce that Rubicube Group has joined the Adhya Group, allowing us to expand our company divisions and services even further. With Adhya Group's extensive resources and expertise, we are excited to continue providing exceptional, holistic solutions to businesses across the region.`}
+              <br />
+              <br />
             </Text>
-            <br />
-            <br />
+
             <b>
               Today, we are proud to announce that we have joined the Adhya
               Group and have extended our company divisions and services.
@@ -82,6 +83,7 @@ export default function Section1() {
           gap={{ base: 4, lg: 10 }}
           alignItems={{ base: "flex-start", lg: "center" }}
           flexDir={{ base: "column", lg: "row" }}
+          mb={{ base: 6, lg: 20 }}
         >
           {rubicServices.map(({ image, link, title }, i) => {
             return (

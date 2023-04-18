@@ -1,4 +1,4 @@
-import { Box, Heading, Link } from "@chakra-ui/react";
+import { Box, Heading, Link, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { Fragment } from "react";
 import IconEmailSm from "../assets/js/IconEmailSm";
@@ -87,11 +87,16 @@ export default function Contacts({
                             w={{ base: "full", lg: "fit-content" }}
                             mb={{ base: i === 2 ? 0 : "10%", lg: 0 }}
                           >
-                            <Heading fontSize="lg" mb={3} opacity={0.6}>
+                            <Text
+                              fontWeight={500}
+                              fontSize="md"
+                              mb={3}
+                              opacity={0.6}
+                            >
                               {location}
-                            </Heading>
+                            </Text>
                             <Box fontSize="sm" fontWeight="light" opacity={0.6}>
-                              <Link href="#">{address}</Link>
+                              <Text>{address}</Text>
 
                               <Box
                                 bg="light"

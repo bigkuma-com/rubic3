@@ -19,6 +19,7 @@ import Divider from "../Divider";
 import TeamShowCase from "../TeamShowCase";
 import WorksShowCase from "../WorksShowCase";
 import CompanyMobile from "./CompanyMobile";
+import Contacts from "./Contact";
 
 export default function Section1({ team, work }: { team: any; work: any }) {
   const { replace, query, push } = useRouter();
@@ -207,10 +208,65 @@ export default function Section1({ team, work }: { team: any; work: any }) {
             }}
           />
         </Box>
+
+        <Box pl={sectionMarginLeft2} pr={marginRightContact2} mt={10}>
+          <Contacts contacts={contacts} />
+        </Box>
       </Box>
     </Box>
   );
 }
+
+const contacts = [
+  {
+    location: "Singapore",
+    whatsapp: { name: "+65.8498.1278", url: "https://wa.me/6584981278" },
+    email: "info.sg@rubic3.com",
+    instagram: {
+      name: "rubicubecreative.sg",
+      url: "https://www.instagram.com/rubicubecreative.sg/",
+    },
+    facebook: {
+      name: "rubicube creative singapore",
+      url: "https://facebook.com/rubicubecreative/",
+    },
+    address: (
+      <>
+        160 Robinson Road #14-04
+        <br />
+        Singapore Business Federation Centre
+        <br />
+        Singapore 068914
+      </>
+    ),
+  },
+  {
+    location: "Indonesia",
+    name: "Office & Studio",
+    whatsapp: {
+      name: "+62.812.9292.6551",
+      url: "https://wa.me/6281292926551",
+    },
+    email: "info@rubic3.com",
+    instagram: {
+      name: "rubicubecreative.id",
+      url: "https://www.instagram.com/rubicubecreative.id/",
+    },
+    facebook: {
+      name: "rubicube creative indonesia",
+      url: "https://facebook.com/rubicubecreative/",
+    },
+    address: (
+      <>
+        Jl. Raya Kebayoran Lama No. 396
+        <br />
+        Kebon Jeruk
+        <br />
+        Jakarta Barat 11540
+      </>
+    ),
+  },
+];
 
 const contents = [
   {
