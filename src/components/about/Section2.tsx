@@ -60,6 +60,11 @@ export default function Section2({
             "Retail. Lifestyle & Place Making",
             "Products & Services",
             "Associations",
+            "Industrial & Distribution",
+            "Creative & Entertainment",
+            "Property & Placemaking",
+            "Food & Beverages",
+            "Retail & E-Commerce",
           ].map((title, i) => {
             if (!partnersAssociations[title]) return null;
             return (
@@ -69,7 +74,8 @@ export default function Section2({
                   color="dark"
                   mb={6}
                 />
-                {title == "Products & Services" ? (
+                {title == "Products & Services" ||
+                title == "Industrial & Distribution" ? (
                   <SimpleGrid columns={[2]} mt={2} mb={8} columnGap={4}>
                     {partnersAssociations[title].map(
                       ({
