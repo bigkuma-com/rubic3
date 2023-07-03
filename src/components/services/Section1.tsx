@@ -190,14 +190,14 @@ export default function Section1({ team, work }: { team: any; work: any }) {
         </Box>
 
         <Box pl={sectionMarginLeft2} pr={marginRightContact2}>
-          <TeamShowCase leaders={team} type="creative" />
+          <TeamShowCase leaders={team} type="creative" buttonBorderColor="light" />
         </Box>
 
         <Box pl={sectionMarginLeft} pr={marginRightContact} mt={10}>
           <Divider text="Related Work" lineOpacity={0.2} mb={10} />
         </Box>
         <Box pl={sectionMarginLeft2} pr={marginRightContact2}>
-          <WorksShowCase works={work} />
+          <WorksShowCase works={work} buttonBorderColor="light" />
         </Box>
 
         <Box ml={sectionMarginLeft} mt={{ base: 6, lg: 10 }}>
@@ -209,7 +209,7 @@ export default function Section1({ team, work }: { team: any; work: any }) {
           />
         </Box>
 
-        <Box pl={sectionMarginLeft2} pr={marginRightContact2} mt={10}>
+        <Box pl={sectionMarginLeft} pr={marginRightContact2} mt={10}>
           <Contacts contacts={contacts} />
         </Box>
       </Box>

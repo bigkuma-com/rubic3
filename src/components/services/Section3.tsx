@@ -216,7 +216,7 @@ export default function Section3({ team, work }: { team: any; work: any }) {
           />
         </Box>
 
-        <Box pl={sectionMarginLeft2} pr={marginRightContact2} mt={10}>
+        <Box pl={sectionMarginLeft} pr={marginRightContact2} mt={10}>
           <Contacts contacts={contacts} color="dark" />
         </Box>
       </Box>
