@@ -59,11 +59,11 @@ export default function Section2({
             "Property & Hospitality",
             "Retail. Lifestyle & Place Making",
             "Products & Services",
-            "Industrial & Distribution",
             "Creative & Entertainment",
             "Property & Placemaking",
             "Food & Beverages",
             "Retail & E-Commerce",
+            "Industrial & Distribution",
             "Associations",
           ].map((title, i) => {
             if (!partnersAssociations[title]) return null;
