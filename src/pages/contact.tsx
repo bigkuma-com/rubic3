@@ -28,7 +28,7 @@ const seo = {
 export default function Contact() {
   const { reload } = useRouter();
 
-  const [activeInquiry, setActiveInquity] = useState(0);
+  const [office, setOffice] = useState("Indonesia");
   const [isLoading, setIsLoading] = useState(false);
   const [isPopOpen, setIsPopOpen] = useState(false);
 
@@ -60,7 +60,7 @@ export default function Contact() {
 
       const data = {
         ...values,
-        type: activeInquiry === 1 ? "Project" : "General",
+        office
       };
 
       postOne({ collection: "contacts", data }).then((res) => {
@@ -223,23 +223,23 @@ export default function Contact() {
                   w="full"
                 >
                   <Button
-                    text="Rubicube Singapore"
-                    withIcon={false}
-                    px={6}
-                    py={5}
-                    isActive={activeInquiry === 0}
-                    onClick={() => {
-                      setActiveInquity(0);
-                    }}
-                  />
-                  <Button
                     text="Rubicube Indonesia"
                     withIcon={false}
                     px={6}
                     py={5}
-                    isActive={activeInquiry === 1}
+                    isActive={office === "Indonesia"}
                     onClick={() => {
-                      setActiveInquity(1);
+                      setOffice("Indonesia");
+                    }}
+                  />
+                  <Button
+                    text="Rubicube Singapore"
+                    withIcon={false}
+                    px={6}
+                    py={5}
+                    isActive={office === "Singapore"}
+                    onClick={() => {
+                      setOffice("Singapore");
                     }}
                   />
                 </BoxMotion>
