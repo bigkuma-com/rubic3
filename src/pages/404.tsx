@@ -8,7 +8,7 @@ import Header from "../components/header";
 import { itemBotToTop } from "../utils/consts";
 
 const seo = {
-  url: "https://rubic3.com/404",
+  url: "https://www.rubic3.com/404",
   title: "404 | Rubic3",
   description: "Hey, you found the 404 page!",
 };

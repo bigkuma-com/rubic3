@@ -44,7 +44,7 @@ const itemBotToTop = (delay = 0) => ({
 });
 
 const seo = {
-  url: "https://rubic3.com/about",
+  url: "https://www.rubic3.com/about",
   title: "About - Rubicube Group",
   description:
     "With a track record of 14 years, Our deep understanding of and research into the forces of digital disruption, coupled with the new thinking required to unlock growth provides excellence, long-lasting results.",

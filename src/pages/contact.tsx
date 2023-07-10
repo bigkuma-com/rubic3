@@ -20,7 +20,7 @@ import {
 } from "../utils/consts";
 
 const seo = {
-  url: "https://rubic3.com/contact",
+  url: "https://www.rubic3.com/contact",
   title: "Contact Us - Rubicube Group",
   description: "Hello! You can drop us a message.",
 };

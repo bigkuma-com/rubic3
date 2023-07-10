@@ -27,7 +27,7 @@ import {
 import { categoirzeTeam, categoirzeWorks } from "../utils/functions";
 
 const seo = {
-  url: "https://rubic3.com/our-company",
+  url: "https://www.rubic3.com/our-company",
   title: "Our Company - Rubicube Group",
   description: "What we do.",
 };

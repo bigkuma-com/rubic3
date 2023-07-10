@@ -8,7 +8,7 @@ import Header from "../components/header";
 import { itemBotToTop } from "../utils/consts";
 
 const seo = {
-  url: "https://rubic3.com/500",
+  url: "https://www.rubic3.com/500",
   title: "500 | Rubic3",
   description: "Server-side error occurred.",
 };

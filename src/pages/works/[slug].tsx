@@ -39,7 +39,7 @@ export default function Work({ work, next_work, other_works }: any) {
   } = work;
 
   const seo = {
-    url: "https://rubic3.com/works",
+    url: "https://www.rubic3.com/works",
     title: `${name} | Our Works - Rubicube Group`,
     description: description_short,
   };

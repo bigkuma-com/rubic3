@@ -13,7 +13,7 @@ import { getFullList } from "../utils/api";
 import { marginRightContact } from "../utils/consts";
 
 const seo = {
-  url: "https://rubic3.com",
+  url: "https://www.rubic3.com",
   title: "Home - Rubicube Group",
   description:
     "Rubicube Group is a holistic branding and management advisory that excels in brand strategy, identity development, hotel management, F&B management, digital marketing, and communication. Our role is to provide businesses with access to the best advisory and expertise to deliver transformative business results to become leading brands.",

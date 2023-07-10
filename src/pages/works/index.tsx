@@ -43,7 +43,7 @@ const blockSpacing = {
 };
 
 const seo = {
-  url: "https://rubic3.com/works",
+  url: "https://www.rubic3.com/works",
   title: "Our Works - Rubicube Group",
   description: "Excellent work done for great clients",
 };
