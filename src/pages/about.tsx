@@ -84,7 +84,7 @@ export default function About({
   useEffect(() => {
     const i = sidebarAbout.findIndex((item) => item.query == query?.selected);
 
-    if (i > -1) {
+    if (i > -1 ) {
       setSection(i);
     }
   }, [query]);
@@ -274,9 +274,9 @@ export default function About({
 
         {section == 0 && <Section1 />}
 
-        {section == 1 && (
+        {/* {section == 1 && (
           <Section2 partnersAssociations={partnersAssociations} />
-        )}
+        )} */}
 
         {section == 2 && <Section3 leaders={leaders} />}
 

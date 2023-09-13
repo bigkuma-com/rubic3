@@ -1,6 +1,6 @@
 import { Box } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { itemBotToTop, sidebarAbout } from "../utils/consts";
+import { itemBotToTop } from "../utils/consts";
 import BoxMotion from "./BoxMotion";
 
 export default function NavLef({
@@ -38,6 +38,7 @@ export default function NavLef({
           listStyleType="none"
         >
           {contents.map((item: any, i: number) => {
+            if (i === 1) return;
             return (
               <BoxMotion
                 key={i}
@@ -79,7 +80,7 @@ export default function NavLef({
           height: "0%",
         }}
         animate={{
-          height: `${((section + 1) / contents.length)*100}%`,
+          height: `${((section + 1) / contents.length) * 100}%`,
           backgroundColor: color,
           transition: {
             backgroundColor: {
