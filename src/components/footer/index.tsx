@@ -1,7 +1,6 @@
 import { Box } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import BoxMotion from "../BoxMotion";
-import AdhyaGroup from "./AdhyaGroup";
 import SocialButtons from "./SocialButtons";
 
 export default function Footer({
@@ -55,7 +54,8 @@ export default function Footer({
           zIndex={99}
         />
       )}
-      <AdhyaGroup key="adhya-group" isLight={isLight} position={position} />
+      <div />
+      {/* <AdhyaGroup key="adhya-group" isLight={isLight} position={position} /> */}
       <SocialButtons isLight={isLight} position={position} />
     </Box>
   );
