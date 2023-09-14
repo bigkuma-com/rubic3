@@ -22,8 +22,8 @@ export default function WhatsappButton() {
       >
         <Box
           position="relative"
-          width="60px"
-          height="60px"
+          width="50px"
+          height="50px"
           cursor="pointer"
           _hover={{ opacity: 0.8 }}
           onClick={() => {
