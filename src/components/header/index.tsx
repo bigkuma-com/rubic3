@@ -11,7 +11,6 @@ import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import IconArrowRightDark from "../../assets/js/IconArrowRightDark";
 import LogoRubicGroup from "../../assets/js/LogoRubicGroup";
-import IconAdhya from "../../assets/svg/icon-member-of-adhya.svg";
 import {
   animateDiagonalTopRight,
   animateOpacityHalf,
@@ -295,7 +294,7 @@ export default function Header({
                 })}
               </Box>
 
-              <Box
+              {/* <Box
                 position="absolute"
                 bottom={"5rem"}
                 left={{ base: 12, lg: "8rem" }}
@@ -309,7 +308,7 @@ export default function Header({
                     objectFit: "contain",
                   }}
                 />
-              </Box>
+              </Box> */}
             </BoxMotion>
           )}
         </AnimatePresence>
