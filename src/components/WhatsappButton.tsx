@@ -4,7 +4,7 @@ import WaIcon from "../assets/images/WA_icon-01.webp";
 import {
   animateBottomToTop,
   marginXHeader,
-  marginYHeader,
+  marginYHeader2,
 } from "../utils/consts";
 import BoxMotion from "./BoxMotion";
 
@@ -13,8 +13,8 @@ export default function WhatsappButton() {
     <Box position="relative" zIndex={999}>
       <BoxMotion
         position="fixed"
-        bottom={marginYHeader}
-        left={marginXHeader}
+        bottom={marginYHeader2}
+        right={marginXHeader}
         variants={animateBottomToTop}
         initial="initial"
         animate="animate"
