@@ -49,6 +49,8 @@ export default function TeamShowCase({
     selectedCard > -1 && setSelectedLeader(leaders[selectedCard]);
   }, [leaders, selectedCard]);
 
+  if (leaders?.length == 0) return null;
+
   return (
     <>
       {isLarge ? (

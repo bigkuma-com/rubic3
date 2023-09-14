@@ -38,7 +38,7 @@ export default function NavLef({
           listStyleType="none"
         >
           {contents.map((item: any, i: number) => {
-            if (i === 1) return;
+            if (item?.query === "partners-associations") return;
             return (
               <BoxMotion
                 key={i}

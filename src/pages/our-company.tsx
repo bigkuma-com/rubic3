@@ -251,27 +251,39 @@ export default function OurCompany({
 
         {section == 0 && (
           <Section1
-            team={teamCreative["Creative"].filter(
-              (leader: any) => leader.title_creative !== ""
-            )}
+            team={
+              teamCreative["Creative"]
+                ? teamCreative["Creative"]?.filter(
+                    (leader: any) => leader.title_creative !== ""
+                  )
+                : []
+            }
             work={works["Creative"]}
           />
         )}
 
         {section == 1 && (
           <Section2
-            team={teamHospitality["Hospitality"].filter(
-              (leader: any) => leader.title_hospitality !== ""
-            )}
+            team={
+              teamHospitality["Hospitality"]
+                ? teamHospitality["Hospitality"]?.filter(
+                    (leader: any) => leader.title_hospitality !== ""
+                  )
+                : []
+            }
             work={works["Hospitality"]}
           />
         )}
 
         {section == 2 && (
           <Section3
-            team={team360["360 Digital"].filter(
-              (leader: any) => leader.title_360 !== ""
-            )}
+            team={
+              team360["360 Digital"]
+                ? team360["360 Digital"]?.filter(
+                    (leader: any) => leader.title_360 !== ""
+                  )
+                : []
+            }
             work={works["360 Digital"]}
           />
         )}
