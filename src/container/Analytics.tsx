@@ -28,6 +28,7 @@ export default function Analytics() {
         gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}');
         `}
       </Script>
+
       <Script
         async
         strategy="afterInteractive"
@@ -40,6 +41,21 @@ export default function Analytics() {
         gtag('js', new Date());
 
         gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_PROD}');
+        `}
+      </Script>
+
+      <Script
+        async
+        strategy="afterInteractive"
+        src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_GTAG}`}
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_GTAG}');
         `}
       </Script>
     </>

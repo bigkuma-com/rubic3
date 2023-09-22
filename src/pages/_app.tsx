@@ -34,8 +34,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           showOnShallow={true}
           options={{ showSpinner: false }}
         />
-<WhatsappButton/>
-
+        <WhatsappButton />
         <Component {...pageProps} />
       </ChakraProvider>
     </>
