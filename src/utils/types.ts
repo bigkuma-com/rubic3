@@ -17,3 +17,14 @@ export interface ICoordinate {
   x: number;
   y: number;
 }
+export interface IEmailResponseData  {
+  message: string;
+};
+
+export interface IEmailRequestData  {
+  name: string;
+  company: string;
+  email: string;
+  phone: string;
+  message: string;
+};

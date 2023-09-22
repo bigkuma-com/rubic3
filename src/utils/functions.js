@@ -65,7 +65,7 @@ export function isEmpty(value) {
 }
 
 export function categoirzeTeam(data) {
-  const categorizedData={};
+  const categorizedData = {};
 
   data.forEach((obj) => {
     obj.expand.filter?.forEach((filter) => {
@@ -80,7 +80,7 @@ export function categoirzeTeam(data) {
 }
 
 export function categoirzeWorks(data) {
-  const categorizedData={};
+  const categorizedData = {};
 
   data.forEach((obj) => {
     obj.expand.filters?.forEach((filter) => {

@@ -1,4 +1,5 @@
 import { Box, Heading, Input, Spinner, Text, Textarea } from "@chakra-ui/react";
+import axios from "axios";
 import { useFormik } from "formik";
 import { AnimatePresence, motion } from "framer-motion";
 import { NextSeo } from "next-seo";
@@ -60,14 +61,24 @@ export default function Contact() {
 
       const data = {
         ...values,
-        office
+        office,
       };
 
       postOne({ collection: "contacts", data }).then((res) => {
-        setIsLoading(false);
-        setTimeout(() => {
-          reload();
-        }, 3000);
+        axios
+          .post(`/api/send-mail`, {
+            name: values.name,
+            email: values.email,
+            company: values.company,
+            phone: values.phone,
+            message: values.message,
+          })
+          .then(() => {
+            setIsLoading(false);
+            setTimeout(() => {
+              reload();
+            }, 5000);
+          });
       });
     },
   });
