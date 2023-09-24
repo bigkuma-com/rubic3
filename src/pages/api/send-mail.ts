@@ -59,7 +59,7 @@ export async function mail({
   subject: string;
   content: any;
 }) {
-  let transporter = nodemailer.createTransport({
+  let transporter = await nodemailer.createTransport({
     service: "gmail",
     auth: {
       user: process.env.NODEMAILER_EMAIL,
@@ -67,20 +67,34 @@ export async function mail({
     },
   });
 
-  var mailOptions = {
+  let mailOptions = {
     from: process.env.NODEMAILER_EMAIL,
     to: process.env.NODEMAILER_SEND_TO,
     subject: subject,
     html: content,
   };
 
-  transporter.sendMail(mailOptions, function (error: any, info: any) {
-    if (error) {
-      console.log(error);
-      throw new Error(error);
-    } else {
-      console.log("Email Sent");
-      return true;
-    }
+  await new Promise((resolve, reject) => {
+    transporter.verify(function (error: any, success: any) {
+      if (error) {
+        console.log(error);
+        reject(error);
+      } else {
+        console.log("Server is ready to take our messages");
+        resolve(success);
+      }
+    });
+  });
+
+  await new Promise((resolve, reject) => {
+    transporter.sendMail(mailOptions, async function (error: any, info: any) {
+      if (error) {
+        console.log(error);
+        throw new Error(error);
+      } else {
+        console.log("Email Sent");
+        return true;
+      }
+    });
   });
 }
