@@ -73,7 +73,8 @@ export default function Contact() {
             phone: values.phone,
             message: values.message,
           })
-          .then(() => {
+          .then(() => {})
+          .finally(() => {
             setIsLoading(false);
             setTimeout(() => {
               reload();
