@@ -78,8 +78,7 @@ export default function Contact() {
             setIsLoading(false);
             setTimeout(() => {
               reload();
-              // setIsPopOpen(false);
-            }, 8000);
+            }, 10000);
           });
       });
     },
