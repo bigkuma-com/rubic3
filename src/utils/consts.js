@@ -4,7 +4,7 @@ import RubicHospitality from "../assets/images/FA Rubicube Hospitality Logo2.png
 
 export const marginXHeader = { base: 4, lg: 8 };
 export const marginYHeader = { base: 4, lg: 6 };
-export const marginYHeader2 = { base: 4, lg: 16 };
+export const marginYHeader2 = { base: 14, lg: 16 };
 export const marginRightContact = { base: 4, lg: 28 };
 export const marginRightContact2 = { base: 0, lg: 28 };
 
