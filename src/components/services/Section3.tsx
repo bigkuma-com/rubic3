@@ -227,7 +227,10 @@ export default function Section3({ team, work }: { team: any; work: any }) {
 const contacts = [
   {
     location: "Singapore",
-    whatsapp: { name: "+65.8498.1278", url: "https://wa.me/6584981278" },
+    whatsapp: {
+      name: "+65.8498.1278",
+      url: "https://wa.me/6584981278?text=Hi%20Rubicube%20Group%2C%20I%20have%20already%20visited%20your%20website.%20Can%20I%20get%20more%20information%20about%20the%20services%20provided%20by%20Rubicube%20Group%3F",
+    },
     email: "info.sg@rubic3.com",
     instagram: {
       name: "rubicubecreative.sg",
@@ -252,7 +255,7 @@ const contacts = [
     name: "Office & Studio",
     whatsapp: {
       name: "+62.812.9292.6551",
-      url: "https://wa.me/6281292926551",
+      url: "https://wa.me/6281292926551?text=Hi%20Rubicube%20Group%2C%20I%20have%20already%20visited%20your%20website.%20Can%20I%20get%20more%20information%20about%20the%20services%20provided%20by%20Rubicube%20Group%3F",
     },
     email: "info@rubic3.com",
     instagram: {
@@ -265,11 +268,11 @@ const contacts = [
     },
     address: (
       <>
-        Jl. Raya Kebayoran Lama No. 396
+        Jl. Boulevard Barat Raya
         <br />
-        Kebon Jeruk
+        Blok LC 7 No 57, Kelapa Gading
         <br />
-        Jakarta Barat 11540
+        Jakarta Utara 14240
       </>
     ),
   },
