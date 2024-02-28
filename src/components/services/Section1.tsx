@@ -252,7 +252,7 @@ const contacts = [
     name: "Office & Studio",
     whatsapp: {
       name: "+62.812.2267.6978",
-      url: "https://wa.me/6281292926551",
+      url: "https://wa.me/6281222676978",
     },
     email: "info@rubic3.com",
     instagram: {
