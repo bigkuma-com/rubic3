@@ -254,7 +254,7 @@ const contacts = [
     location: "Indonesia",
     name: "Office & Studio",
     whatsapp: {
-      name: "+62.812.9292.6551",
+      name: "+62.812.2267.6978",
       url: "https://wa.me/6281292926551?text=Hi%20Rubicube%20Group%2C%20I%20have%20already%20visited%20your%20website.%20Can%20I%20get%20more%20information%20about%20the%20services%20provided%20by%20Rubicube%20Group%3F",
     },
     email: "info@rubic3.com",
@@ -277,7 +277,6 @@ const contacts = [
     ),
   },
 ];
-
 
 const contents = [
   {

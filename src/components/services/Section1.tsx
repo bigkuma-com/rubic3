@@ -190,7 +190,11 @@ export default function Section1({ team, work }: { team: any; work: any }) {
         </Box>
 
         <Box pl={sectionMarginLeft2} pr={marginRightContact2}>
-          <TeamShowCase leaders={team} type="creative" buttonBorderColor="light" />
+          <TeamShowCase
+            leaders={team}
+            type="creative"
+            buttonBorderColor="light"
+          />
         </Box>
 
         <Box pl={sectionMarginLeft} pr={marginRightContact} mt={10}>
@@ -247,7 +251,7 @@ const contacts = [
     location: "Indonesia",
     name: "Office & Studio",
     whatsapp: {
-      name: "+62.812.9292.6551",
+      name: "+62.812.2267.6978",
       url: "https://wa.me/6281292926551",
     },
     email: "info@rubic3.com",

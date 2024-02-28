@@ -61,7 +61,7 @@ export default function SocialButtons({
             className="text-shadow"
             mr={6}
           >
-            ©2023 Rubicube Group. All Right Reserved
+            ©2024 Rubicube Group. All Right Reserved
           </Text>
         </BoxMotion>
         <Box
