@@ -54,24 +54,8 @@ export default function Section1() {
         >
           <Text as="p" fontSize="sm">
             <Text as="span" opacity={0.6}>
-              {`Rubicube Group is a dynamic and innovative branding and management advisory firm that has been making waves in the industry since 2008. Our team of experts excels in a wide range of services, including brand strategy, identity development, hotel management, F&B management, digital marketing, and communication, among others.`}
-              <br />
-              <br />
-              {`Our unique approach to branding and management is rooted in our commitment to a holistic, 360-degree perspective. We believe that every aspect of a business, from its brand identity to its digital presence, must work together seamlessly to achieve success. That's why we take a comprehensive approach to every project, ensuring that every detail is carefully considered and executed to perfection.`}
-              <br />
-              <br />
-              {`With a presence in Singapore, Indonesia, and Malaysia, Rubicube Group has worked with a diverse range of clients, from independent startups to international brands. Our client-centric approach has earned us a reputation for excellence and innovation, and we are proud to have helped many businesses achieve their goals and realize their full potential.`}
-              <br />
-              <br />
-              {`Today, we are thrilled to announce that Rubicube Group has joined the Adhya Group, allowing us to expand our company divisions and services even further. With Adhya Group's extensive resources and expertise, we are excited to continue providing exceptional, holistic solutions to businesses across the region.`}
-              <br />
-              <br />
+              {`Rubicube Group, established in 2008, is a distinguished branding and management advisory firm renowned for innovative solutions in brand strategy, identity development, hotel management, digital marketing, and communication. Our approach is holistic, aiming to seamlessly integrate all aspects of a business, from brand identity to digital presence, to ensure success. Operating in Singapore and Indonesia, we have partnered with a diverse clientele, from startups to international brands. Our commitment to client-centric strategies has made us a leader in helping businesses achieve their goals and unlock their full potential.`}
             </Text>
-
-            <b>
-              Today, we are proud to announce that we have joined the Adhya
-              Group and have extended our company divisions and services.
-            </b>
           </Text>
         </BoxMotion>
         <BoxMotion
@@ -134,11 +118,6 @@ const rubicServices = [
     image: RubicCreative,
     title: "Rubicube Creativity",
     link: "/our-company?selected=creative",
-  },
-  {
-    image: Rubic360,
-    title: "Rubicube 360 Digital",
-    link: "/our-company?selected=360",
   },
   {
     image: RubicHospitality,
