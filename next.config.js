@@ -12,6 +12,7 @@ const nextConfig = {
       "rubic3.pocketbase.bigkuma.com",
       "picsum.photos",
       "images.unsplash.com",
+      "103.109.0.214",
     ],
   },
   async redirects() {
