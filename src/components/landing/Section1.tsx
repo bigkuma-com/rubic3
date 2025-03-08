@@ -160,7 +160,7 @@ export default function Section1({ sliders }: { sliders: any }) {
                   </Text>
                 </BoxMotion>
                 <Box
-                  h={{ base: "35vmax", md: "100vh" }}
+                  // h={{ base: "35vmax", md: "100vh" }}
                   position="relative"
                   bg="dark"
                   className={`slide-container`}
