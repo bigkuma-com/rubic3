@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { Fragment } from "react";
-import Rubic360 from "../../assets/images/FA Rubicube 360 Digital logo2.png";
 import RubicCreative from "../../assets/images/FA Rubicube Creativity Logo2.png";
 import RubicHospitality from "../../assets/images/FA Rubicube Hospitality Logo2.png";
 import {
@@ -97,11 +96,11 @@ export default function Section1() {
                   </BoxMotion>
                 </Box>
 
-                {i < 2 && (
+                {i < rubicServices.length - 1 && (
                   <Box
                     h={{ base: "1px", lg: "80px" }}
                     w={{ base: "full", lg: "1px" }}
-                    bg="light"
+                    bg="gray.100"
                   />
                 )}
               </Fragment>
