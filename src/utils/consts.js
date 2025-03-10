@@ -51,12 +51,12 @@ export const sidebarServices = [
     color: "#325D92",
     logo: RubicHospitality,
   },
-  {
-    name: "Rubicube 360 Digital",
-    query: "360",
-    color: "#FFC925",
-    logo: Rubic360,
-  },
+  // {
+  //   name: "Rubicube 360 Digital",
+  //   query: "360",
+  //   color: "#FFC925",
+  //   logo: Rubic360,
+  // },
 ];
 
 export const animateBottomToTop = {
