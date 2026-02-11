@@ -13,6 +13,7 @@ const nextConfig = {
       "picsum.photos",
       "images.unsplash.com",
       "103.109.0.214",
+      "rubic3-pb.siy.app",
     ],
   },
   async redirects() {
