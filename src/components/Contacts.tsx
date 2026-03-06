@@ -245,8 +245,8 @@ const contents = {
       location: "Indonesia",
       name: "Office & Studio",
       whatsapp: {
-        name: "+62.811.9889.5819‬",
-        url: "https://wa.me/‪6281198895819",
+        name: "",
+        url: "",
       },
       email: "info@rubic3.com",
       instagram: {
